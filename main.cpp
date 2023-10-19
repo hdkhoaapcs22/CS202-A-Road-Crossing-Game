@@ -1,4 +1,4 @@
-#include "src/Application.h"
+#include "src/gui/Application.h"
 
 #include "raylib.h"
 

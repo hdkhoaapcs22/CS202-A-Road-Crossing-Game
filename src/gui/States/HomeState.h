@@ -3,6 +3,7 @@
 
 #include "State.h"
 
+#include "raylib.h"
 
 class HomeState : public State {
 public:

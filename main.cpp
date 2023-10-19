@@ -1,6 +1,4 @@
-#include "Application.h"
-
-#include "raylib.h"
+#include "src/gui/Application.h"
 
 int main(void) {
     Application app;

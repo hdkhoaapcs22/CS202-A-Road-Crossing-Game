@@ -1,7 +1,5 @@
 #include "HomeState.h"
 
-#include "raylib.h"
-
 HomeState::HomeState(StateStack &stack, Context context)
 : State(stack, context) {
 }

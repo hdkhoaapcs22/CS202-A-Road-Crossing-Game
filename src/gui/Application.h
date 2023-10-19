@@ -5,8 +5,6 @@
 #include "ResourceHolders/TextureHolder.h"
 #include "StateStack.h"
 
-#include "raylib.h"
-
 class Application {
 public:
     static constexpr float WINDOW_WIDTH = 1024;

@@ -3,8 +3,6 @@
 #include "States/HomeState.h"
 #include "States/StateIdentifiers.h"
 
-#include "raylib.h"
-
 #include <iostream>
 
 Application::Application()

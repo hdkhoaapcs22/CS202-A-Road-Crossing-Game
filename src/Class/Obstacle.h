@@ -1,12 +1,24 @@
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 
-#include "Lane.h"
+#define CELL_IN_LANE 13
+#include <cstdlib>
+#include <vector>
 
 class Obstacle {
+public:
+    enum class ObstacleName {
+        Rock,
+        Tree
+    };
+    Obstacle();
+    ObstacleName randomObstacleName();
+    int randomCoordinateXOfObstacles();
+    Obstacle createObstacles();
+
 private:
     int coordinateXOfObstacles;
-    Lane* lanePtr;
+    ObstacleName obstacleName;
 };
 
 #endif

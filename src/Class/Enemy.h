@@ -1,8 +1,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Lane.h"
-
 class Enemy {
 public:
     void moveEnemy(int direction, float dt);
@@ -26,7 +24,6 @@ protected:
 
 private:
     int coordinateXOfEnemy;
-    Lane* lanePtr;
     const int speed;
     const int width;
 };

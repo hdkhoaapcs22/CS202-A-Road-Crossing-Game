@@ -2,6 +2,7 @@
 #define STATES_HOMESTATE_H
 
 #include "State.h"
+#include "../../Class/Core.h"
 
 #include "raylib.h"
 
@@ -12,6 +13,9 @@ public:
 
     bool update(float dt);
     void draw();
+
+private:
+    Core mCore;
 };
 
 #endif // STATES_HOMESTATE_H

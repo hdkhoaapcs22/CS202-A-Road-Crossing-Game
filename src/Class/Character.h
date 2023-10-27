@@ -1,7 +1,7 @@
 #ifndef Character_H
 #define Character_H
 
-#include "Lane.h"
+#include "Map.h"
 
 class Character {
 public:
@@ -9,9 +9,17 @@ public:
     static const int MOVE_DOWN = 2;
     static const int MOVE_LEFT = 3;
     static const int MOVE_RIGHT = 4;
+    static const int WIDTH_OF_EACH_CELL = 78;
+    static const int FIRST_POSITION_OF_CHARACTER = 507;
+    static const int LAST_POSITION_OF_CHARACTER = 975;
+    static const int timeMovement;
 
 public:
-    void moveCharacter(int direction, float dt);
+    Character();
+    void updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr,
+                                   int direction, float dt);
+    Lane* getLanePtr();
+    void assignLane(Lane* firstLane);
 
 private:
     int coordinateXOfCharacter;

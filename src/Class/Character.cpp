@@ -2,26 +2,43 @@
 
 #include <iostream>
 
-void Character::moveCharacter(int direction, float dt) {
-    switch (direction)
-    {
-    case MOVE_UP:
-        std::cout << "Up\n";
-        break;
+Character::Character()
+: coordinateXOfCharacter(FIRST_POSITION_OF_CHARACTER)
+, lanePtr(nullptr) {
+}
 
-    case MOVE_DOWN:
-        std::cout << "Down\n";
-        break;
-
-    case MOVE_LEFT:
-        std::cout << "Left\n";
-        break;
-    
-    case MOVE_RIGHT:
-        std::cout << "Right\n";
-        break;
-    
-    default:
-        break;
+void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr,
+                                          int direction, float dt) {
+    switch (direction) {
+        case MOVE_UP: {
+            lanePtr = nextLanePtr;
+            break;
+        }
+        case MOVE_DOWN: {
+            lanePtr = prevLanePtr;
+            break;
+        }
+        case MOVE_LEFT: {
+            if (coordinateXOfCharacter > (WIDTH_OF_EACH_CELL / 2)) {
+                coordinateXOfCharacter -= WIDTH_OF_EACH_CELL;
+            }
+            break;
+        }
+        case MOVE_RIGHT: {
+            if (coordinateXOfCharacter < LAST_POSITION_OF_CHARACTER) {
+                coordinateXOfCharacter += WIDTH_OF_EACH_CELL;
+            }
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void Character::assignLane(Lane* firstLane) {
+    lanePtr = firstLane;
+}
+
+Lane* Character::getLanePtr() {
+    return lanePtr;
 }

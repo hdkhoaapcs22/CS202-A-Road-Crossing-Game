@@ -9,10 +9,13 @@ public:
     static const int numberOfLanes = 10;
     static const int laneWidth = 14;
     void update(float dt);
+    Lane *getNextLane(Lane *curLanePtr);
+    Lane *getPreviousLane(Lane *curLanePtr);
 
 private:
-    std::deque<Lane*> lanes;
+    std::deque<Lane *> lanes;
     void moveLanes(float dt);
+    Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
 };
 
 #endif

@@ -5,6 +5,7 @@
 
 class Lane {
 public:
+    static const int CELL_IN_LANE = 13;
     enum class LaneName {
         RoadLane,
         SafeLane,

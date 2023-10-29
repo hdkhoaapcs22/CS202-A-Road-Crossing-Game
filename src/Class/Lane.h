@@ -11,7 +11,8 @@ public:
         SafeLane,
         RiverLane
     };
-
+    
+    virtual void update(float dt) = 0;
 private:
     int coordinateYOfLane;
     std::string saveID;

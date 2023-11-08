@@ -10,11 +10,15 @@ Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
             break;
         }
     }
+
     if (direction == "DOWN") {
         return *(--it);
     }
 
-    return *(++it);
+    if (direction == "UP")
+        return *(++it);
+
+    return nullptr;
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {

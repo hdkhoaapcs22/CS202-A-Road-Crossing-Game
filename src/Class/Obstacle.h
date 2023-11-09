@@ -13,6 +13,7 @@ public:
     Obstacle();
     ObstacleName randomObstacleName();
     int randomCoordinateXOfObstacles();
+    int getCoordinateX() const;
 
 private:
     int coordinateXOfObstacles;

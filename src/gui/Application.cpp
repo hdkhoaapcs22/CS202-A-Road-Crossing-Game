@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "../Config.h"
 #include "ResourceHolders/ResourceIdentifiers.h"
 #include "States/HomeState.h"
 #include "States/StateIdentifiers.h"
@@ -10,8 +11,8 @@ Application::Application()
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     SetConfigFlags(FLAG_WINDOW_ALWAYS_RUN);
 
-    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "RoadCrossing");
-    SetTargetFPS(FPS);
+    InitWindow(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT, "RoadCrossing");
+    SetTargetFPS(Config::FPS);
 
     loadTextures();
     loadFonts();

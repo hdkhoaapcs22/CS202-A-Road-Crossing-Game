@@ -18,3 +18,7 @@ int Obstacle::randomCoordinateXOfObstacles() {
     int randomCoordinateXOfObstacles = rand() % Lane::CELL_IN_LANE;
     return randomCoordinateXOfObstacles;
 }
+
+int Obstacle::getCoordinateX() const {
+    return coordinateXOfObstacles;
+}

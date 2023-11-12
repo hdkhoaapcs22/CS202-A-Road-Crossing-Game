@@ -1,10 +1,11 @@
 #include "RoadLane.h"
 
-RoadLane::RoadLane(Enemy::EnemyID enemyID)
-: Lane()
+RoadLane::RoadLane(Enemy::EnemyID enemyID, int coordinateYOfLane)
+: Lane(coordinateYOfLane, Lane::LaneName::RoadLane)
 , hasTrafficLight(false)
 , isRedSignal(false)
-, breakTimer(0) {
+, breakTimer(0)
+, enemyID(enemyID) {
     int x = rand() % 2;
     if (x == 0) {
         direct = Direction::Left;
@@ -27,9 +28,26 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID)
 
 void RoadLane::manageTraffic(float dt) {
     if (!hasTrafficLight || !isRedSignal) {
-        for (Enemy *enemy : enemies) {
-            enemy->moveEnemy(dt);
+        int tmp = enemies.size();
+        for (int i = tmp - 1; i >= 0; --i) {
+            enemies[i]->moveEnemy(dt);
+            if (i == tmp - 1) {
+                manageEnemies(enemies[tmp - 1]);
+                if (direct == Direction::Left) {
+                    createEnemy(enemyID, 0);
+                } else {
+                    createEnemy(enemyID, Config::WINDOW_WIDTH);
+                }
+            }
         }
+    }
+}
+
+void RoadLane::manageEnemies(Enemy *enemy) {
+    if (enemy->getCoordinateXOfEnemy() > Config::WINDOW_WIDTH
+        || enemy->getCoordinateXOfEnemy() < 0) {
+        delete enemies.back();
+        enemies.pop_back();
     }
 }
 

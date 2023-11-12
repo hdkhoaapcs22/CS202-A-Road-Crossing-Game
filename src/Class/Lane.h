@@ -5,17 +5,17 @@
 
 class Lane {
 public:
-    Lane()
-    : coordinateYOfLane(0)
-    , saveID("")
-    , laneName(LaneName::RoadLane){};
-
-    static const int CELL_IN_LANE = 13;
     enum class LaneName {
         RoadLane,
         SafeLane,
         RiverLane
     };
+
+    Lane();
+    Lane(int coordinateYOfLane);
+    Lane(int coordinateYOfLane, LaneName laneName);
+
+    static const int CELL_IN_LANE = 13;
 
     virtual void update(float dt) = 0;
 

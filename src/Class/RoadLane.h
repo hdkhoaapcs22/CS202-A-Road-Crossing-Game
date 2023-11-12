@@ -18,7 +18,7 @@
 
 class RoadLane : public Lane {
 public:
-    RoadLane(Enemy::EnemyID enemyID);
+    RoadLane(Enemy::EnemyID enemyID, int coordinateYOfLane);
     void update(float dt) override;
     ~RoadLane();
 
@@ -35,6 +35,7 @@ private:
     void createEnemy(Enemy::EnemyID enemyID, int startingX);
     void checkHasTrafficLight();
     void manageTraffic(float dt);
+    void manageEnemies(Enemy *enemy);
 };
 
 #endif

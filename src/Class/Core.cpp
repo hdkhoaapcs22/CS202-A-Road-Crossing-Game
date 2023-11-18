@@ -3,6 +3,9 @@
 void Core::update(float dt) {
 }
 
-Character& Core::getCharacter() {
-    return character;
+void Core::moveCharacter(int direction, float dt) {
+    Lane *nextLanePtr = gameMap.getNextLane(character.getLanePtr());
+    Lane *prevLanePtr = gameMap.getPreviousLane(character.getLanePtr());
+    character.updateLocationOfCharacter(nextLanePtr, prevLanePtr, direction,
+                                        dt);
 }

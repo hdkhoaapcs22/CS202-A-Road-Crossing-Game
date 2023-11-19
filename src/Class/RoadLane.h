@@ -21,7 +21,7 @@ public:
     RoadLane(Enemy::EnemyID enemyID, int coordinateYOfLane);
     void update(float dt) override;
     ~RoadLane();
-
+    bool checkCollision(int leftHitbox, int rightHitbox);
 private:
     static const int BREAK_TIME = 3;
     bool hasTrafficLight;

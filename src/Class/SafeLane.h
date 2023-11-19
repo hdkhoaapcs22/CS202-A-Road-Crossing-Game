@@ -6,15 +6,13 @@
 
 class SafeLane : public Lane {
 public:
-    SafeLane();
+    SafeLane(int coordinateYOfLane);
     ~SafeLane();
     void update(float dt);
+    bool checkOverlap(int x);
 
 private:
     std::vector<Obstacle*> obstacles;
-
-private:
-    bool checkOverlap(int x);
 };
 
 #endif

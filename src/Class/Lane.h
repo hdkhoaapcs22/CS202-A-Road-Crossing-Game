@@ -19,6 +19,12 @@ public:
 
     virtual void update(float dt) = 0;
 
+    int getCoordinateYOfLane() const;
+
+    LaneName getLaneName();
+
+    void move(float dt, double speedMultipler, int baseSpeed);
+
 private:
     int coordinateYOfLane;
     std::string saveID;

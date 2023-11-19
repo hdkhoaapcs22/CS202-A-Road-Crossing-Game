@@ -80,6 +80,13 @@ RoadLane::~RoadLane() {
     }
 }
 
+bool RoadLane::checkCollision(int leftHitbox, int rightHitbox) {
+    for (Enemy *enemy : enemies)
+        if (enemy->checkCollision(leftHitbox, rightHitbox))
+            return true;
+    return false;
+}
+
 void RoadLane::createEnemy(Enemy::EnemyID enemyID, int startingX) {
     switch (enemyID) {
         case Enemy::EnemyID::Unstoppable1:

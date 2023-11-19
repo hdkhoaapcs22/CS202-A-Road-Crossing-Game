@@ -28,6 +28,7 @@ public:
     virtual int getWidth() const = 0;
     virtual EnemyID getEnemyID() const = 0;
     int getCoordinateXOfEnemy();
+    bool checkCollision(int leftHitbox, int rightHitbox);
 
 private:
     Direction direct;

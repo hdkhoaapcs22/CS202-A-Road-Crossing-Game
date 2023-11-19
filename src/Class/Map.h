@@ -3,18 +3,24 @@
 
 #include <deque>
 #include "Lane.h"
+#include "../Config.h"
 
 class Map {
 public:
-    static const int numberOfLanes = 10;
+    Map();
+    ~Map();
+    static const int sizeOfALane = Config::WINDOW_HEIGHT / Lane::CELL_IN_LANE;
     static const int laneWidth = 14;
-    void update(float dt);
+    static const int baseSpeed = 100;
+    void update(float dt, double speedMultiplier);
     Lane *getNextLane(Lane *curLanePtr);
     Lane *getPreviousLane(Lane *curLanePtr);
+    Lane *getFirstLane();
+    Lane *getFirstLaneOfCharacter();
 
 private:
     std::deque<Lane *> lanes;
-    void moveLanes(float dt);
+    void moveLanes(float dt, double speedMultiplier);
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
 };
 

@@ -17,7 +17,7 @@ Application::Application()
     loadFonts();
 
     // SetWindowIcon(LoadImageFromTexture(
-    //     TextureHolder::getInstance().get(TextureID::IconLogo)));
+    //     TextureHolder::get(TextureID::IconLogo)));
 
     registerStates();
     mStateStack.pushState(StateIDs::Home);
@@ -50,11 +50,11 @@ void Application::registerStates() {
 
 void Application::loadTextures() {
     // std::string BASE_PATH = "asset/texture/";
-    // TextureHolder::getInstance().load(TextureID::DefinitionSwitch,
+    // TextureHolder::load(TextureID::DefinitionSwitch,
     //                                   BASE_PATH + "DefinitionSwitch.png");
 }
 
 void Application::loadFonts() {
     // std::string BASE_PATH = "asset/font/";
-    // FontHolder::getInstance().load(FontID::Inter, BASE_PATH + "Inter.ttf");
+    // FontHolder::load(FontID::Inter, BASE_PATH + "Inter.ttf");
 }

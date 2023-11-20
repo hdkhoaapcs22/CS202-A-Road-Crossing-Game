@@ -45,6 +45,14 @@ FontHolder& FontHolder::getInstance() {
 }
 
 void FontHolder::load(FontID id, const std::string& filename) {
+    getInstance().loadHelper(id, filename);
+}
+
+Font& FontHolder::get(FontID id, int size) {
+    return getInstance().getHelper(id, size);
+}
+
+void FontHolder::loadHelper(FontID id, const std::string& filename) {
     for (int i = ROUNDING; i <= MAX_SIZE; i += ROUNDING) {
         std::unique_ptr<Font> resource(new Font());
         int glyphCount = (sizeof VN_CODEPOINTS) / (sizeof VN_CODEPOINTS[0]);
@@ -54,7 +62,7 @@ void FontHolder::load(FontID id, const std::string& filename) {
     }
 }
 
-Font& FontHolder::get(FontID id, int size) {
+Font& FontHolder::getHelper(FontID id, int size) {
     if (size > MAX_SIZE)
         size = MAX_SIZE;
     size = (size - 1) / ROUNDING * ROUNDING
@@ -70,7 +78,7 @@ Font& FontHolder::get(FontID id, int size) {
     return *found->second;
 }
 
-const Font& FontHolder::get(FontID id, int size) const {
+const Font& FontHolder::getHelper(FontID id, int size) const {
     if (size > MAX_SIZE)
         size = MAX_SIZE;
     size = (size - 1) / ROUNDING * ROUNDING

@@ -19,10 +19,9 @@ public:
 public:
     static FontHolder& getInstance();
 
-    void load(FontID id, const std::string& filename);
+    static void load(FontID id, const std::string& filename);
 
-    Font& get(FontID id, int size);
-    const Font& get(FontID id, int size) const;
+    static Font& get(FontID id, int size);
 
 private:
     FontHolder();
@@ -34,6 +33,11 @@ private:
 
 private:
     void insertResource(int size, FontID id, std::unique_ptr<Font> resource);
+
+    void loadHelper(FontID id, const std::string& filename);
+
+    Font& getHelper(FontID id, int size);
+    const Font& getHelper(FontID id, int size) const;
 };
 
 #endif // RESOURCEHOLDERS_FONTHOLDER_H

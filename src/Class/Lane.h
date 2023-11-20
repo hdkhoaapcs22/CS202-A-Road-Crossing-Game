@@ -2,6 +2,7 @@
 #define LANE_H
 
 #include <iostream>
+#include "../Config.h"
 
 class Lane {
 public:
@@ -12,21 +13,24 @@ public:
     };
 
     Lane();
-    Lane(int coordinateYOfLane);
-    Lane(int coordinateYOfLane, LaneName laneName);
+    Lane(float coordinateYOfLane);
+    Lane(float coordinateYOfLane, LaneName laneName);
 
     static const int CELL_IN_LANE = 13;
+    static const int NUMBER_OF_LANES = 10;
+    static const int SIZE_OF_A_LANE = Config::WINDOW_HEIGHT / NUMBER_OF_LANES;
+    static const int BASE_SPEED = 25;
 
     virtual void update(float dt) = 0;
 
-    int getCoordinateYOfLane() const;
+    float getCoordinateYOfLane() const;
 
     LaneName getLaneName();
 
-    void move(float dt, double speedMultipler, int baseSpeed);
+    void move(float dt, float speedMultipler, int indexLaneOfCharacter);
 
 private:
-    int coordinateYOfLane;
+    float coordinateYOfLane;
     std::string saveID;
     LaneName laneName;
 };

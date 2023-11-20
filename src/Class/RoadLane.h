@@ -18,7 +18,7 @@
 
 class RoadLane : public Lane {
 public:
-    RoadLane(Enemy::EnemyID enemyID, int coordinateYOfLane);
+    RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane);
     void update(float dt) override;
     ~RoadLane();
     bool checkCollision(int leftHitbox, int rightHitbox);
@@ -32,7 +32,7 @@ private:
     std::deque<Enemy *> enemies;
 
 private:
-    void createEnemy(Enemy::EnemyID enemyID, int startingX);
+    void createEnemy(Enemy::EnemyID enemyID, float startingX);
     void checkHasTrafficLight();
     void manageTraffic(float dt);
     void manageEnemies(Enemy *enemy);

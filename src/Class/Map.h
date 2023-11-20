@@ -9,11 +9,8 @@ class Map {
 public:
     Map();
     ~Map();
-    static const int NUMBER_OF_LANES = 10;
-    static const int SIZE_OF_A_LANE = Config::WINDOW_WIDTH / NUMBER_OF_LANES;
     static const int laneWidth = 14;
-    static const int baseSpeed = 100;
-    void update(float dt, double speedMultiplier);
+    void update(float dt, float speedMultiplier, Lane *characterLanePtr);
     Lane *getNextLane(Lane *curLanePtr);
     Lane *getPreviousLane(Lane *curLanePtr);
     Lane *getFirstLane();
@@ -21,7 +18,7 @@ public:
 
 private:
     std::deque<Lane *> lanes;
-    void moveLanes(float dt, double speedMultiplier);
+    void moveLanes(float dt, float speedMultiplier, Lane *characterLanePtr);
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
     void insertRoadLane(int numberOfSameLane);
     void insertSafeLane(int numberOfSameLane);

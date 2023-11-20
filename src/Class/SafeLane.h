@@ -6,7 +6,7 @@
 
 class SafeLane : public Lane {
 public:
-    SafeLane(int coordinateYOfLane);
+    SafeLane(float coordinateYOfLane);
     ~SafeLane();
     void update(float dt);
     bool checkOverlap(int x);

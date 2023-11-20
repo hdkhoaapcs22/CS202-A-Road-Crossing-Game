@@ -7,7 +7,7 @@
 class Core {
 public:
     Core();
-    double getSpeedMultiplier();
+    float getSpeedMultiplier();
     bool detectCollision();
     bool detectBlockMovement(int direction);
     void update(float dt);

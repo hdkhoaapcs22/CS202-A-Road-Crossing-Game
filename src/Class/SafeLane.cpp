@@ -1,6 +1,6 @@
 #include "SafeLane.h"
 
-SafeLane::SafeLane(int coordinateYOfLane)
+SafeLane::SafeLane(float coordinateYOfLane)
 : Lane(coordinateYOfLane, Lane::LaneName::SafeLane) {
     int obstaclesNum = rand() % 5;
     for (int i = 0; i < obstaclesNum; ++i) {

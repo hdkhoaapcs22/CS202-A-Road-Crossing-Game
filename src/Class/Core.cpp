@@ -8,7 +8,7 @@ Core::Core() {
     character.assignLane(gameMap.getFirstLaneOfCharacter());
 }
 
-double Core::getSpeedMultiplier() {
+float Core::getSpeedMultiplier() {
     if (score < 93)
         return 1.0 * score * score / 7200 + 1.0 * score / 120 + 1;
     return 3;
@@ -56,7 +56,7 @@ bool Core::detectBlockMovement(int direction) {
 }
 
 void Core::update(float dt) {
-    gameMap.update(dt, getSpeedMultiplier());
+    gameMap.update(dt, getSpeedMultiplier(), character.getLanePtr());
 }
 
 void Core::executeMovement(int direction, float dt) {

@@ -12,7 +12,6 @@ public:
     static const int WIDTH_OF_EACH_CELL = 78;
     static const int FIRST_POSITION_OF_CHARACTER = 507;
     static const int LAST_POSITION_OF_CHARACTER = 975;
-    static const int HEIGHT_OF_CHARACTER = 50;
     static const int WIDTH_OF_CHARACTER = 40;
     static const float TIME_MOVEMENT;
 

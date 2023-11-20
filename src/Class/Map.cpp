@@ -5,73 +5,50 @@
 // #include "RiverLane.h"
 
 Map::Map() {
-    int numberOfSameLane = rand() % 3 + 2;
+    int numberOfSameLane = rand() % 2 + 3;
     for (int i = 0; i < numberOfSameLane; ++i) {
         if (lanes.size() == 0)
             lanes.push_back(new SafeLane(0));
         else
-            lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() + sizeOfALane));
+            lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() + SIZE_OF_A_LANE));
     }
     numberOfSameLane = rand() % 4 + 1;
-    for (int i = 0; i < numberOfSameLane; ++i) {
-        Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
-        lanes.push_back(new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() + sizeOfALane));
-    }
-    while (lanes.size() <= Lane::CELL_IN_LANE) {
+    insertRoadLane(numberOfSameLane);
+    while (lanes.size() <= NUMBER_OF_LANES) {
         numberOfSameLane = rand() % 4 + 1;
         Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
-        while (lanes.back()->getLaneName() == laneName)
-            laneName = static_cast<Lane::LaneName>(rand() % 3);
         switch (laneName) {
             case Lane::LaneName::RoadLane:
-                for (int i = 0; i < numberOfSameLane; ++i) {
-                    Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
-                    lanes.push_back(
-                        new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() + sizeOfALane));
-                }
+                insertRoadLane(numberOfSameLane);
                 break;
             case Lane::LaneName::SafeLane:
-                for (int i = 0; i < numberOfSameLane; ++i)
-                    lanes.push_back(
-                        new SafeLane(lanes.back()->getCoordinateYOfLane() + sizeOfALane));
+                insertSafeLane(numberOfSameLane);
                 break;
             default:
-                /* for (int i = 0; i < numberOfSameLane; ++i)
-                    lanes.push_back(new RiverLane(lanes.back()->getCoordinateYOfLane() +
-                   sizeOfALane));*/
+                //insertRiverLane(numberOfSameLane);
                 break;
         }
     }
 }
 
 void Map::update(float dt, double speedMultiplier) {
-    for (Lane* lane : lanes) lane->update(dt);
     moveLanes(dt, speedMultiplier);
-    if (lanes.front()->getCoordinateYOfLane() == -sizeOfALane) {
+    for (Lane* lane : lanes) lane->update(dt);
+    if (lanes.front()->getCoordinateYOfLane() <= -SIZE_OF_A_LANE) {
         delete lanes.front();
         lanes.pop_front();
-        if (lanes.size() == Lane::CELL_IN_LANE) {
+        if (lanes.size() == NUMBER_OF_LANES) {
             int numberOfSameLane = rand() % 4 + 1;
             Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
-            while (lanes.back()->getLaneName() == laneName)
-                laneName = static_cast<Lane::LaneName>(rand() % 3);
             switch (laneName) {
                 case Lane::LaneName::RoadLane:
-                    for (int i = 0; i < numberOfSameLane; ++i) {
-                        Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
-                        lanes.push_back(new RoadLane(
-                            enemyID, lanes.back()->getCoordinateYOfLane() + sizeOfALane));
-                    }
+                    insertRoadLane(numberOfSameLane);
                     break;
                 case Lane::LaneName::SafeLane:
-                    for (int i = 0; i < numberOfSameLane; ++i)
-                        lanes.push_back(
-                            new SafeLane(lanes.back()->getCoordinateYOfLane() + sizeOfALane));
+                    insertSafeLane(numberOfSameLane);
                     break;
                 default:
-                    /* for (int i = 0; i < numberOfSameLane; ++i)
-                        lanes.push_back(new RiverLane(lanes.back()->getCoordinateYOfLane() +
-                        sizeOfALane));*/
+                    //insertRiverLane(numberOfSameLane);
                     break;
             }
         }
@@ -93,17 +70,32 @@ Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
     if (lanes.empty())
         return nullptr;
     std::deque<Lane*>::iterator it = lanes.begin();
-    for (; it != lanes.end(); ++it)
+    int i = 0;
+    for (; it != lanes.end(); ++it) {
         if (*it == curLanePtr)
             break;
+        ++i;
+    }
 
     if (direction == "DOWN")
         return (it == lanes.begin()) ? nullptr : *(--it);
 
     if (direction == "UP")
-        return (it == lanes.end() - 1) ? nullptr : *(++it);
+        return (i >= NUMBER_OF_LANES - 1) ? nullptr : *(++it);
 
     return nullptr;
+}
+
+void Map::insertRoadLane(int numberOfSameLane) {
+    for (int i = 0; i < numberOfSameLane; ++i) {
+        Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
+        lanes.push_back(new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() + SIZE_OF_A_LANE));
+    }
+}
+
+void Map::insertSafeLane(int numberOfSameLane) {
+    for (int i = 0; i < numberOfSameLane; ++i)
+        lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() + SIZE_OF_A_LANE));
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {
@@ -119,8 +111,5 @@ Lane* Map::getFirstLane() {
 }
 
 Lane* Map::getFirstLaneOfCharacter() {
-    for (std::deque<Lane*>::iterator it = lanes.begin(); it != lanes.end(); ++it)
-        if ((*it)->getLaneName() != Lane::LaneName::SafeLane)
-            return *(--it);
-    return nullptr;
+    return lanes[2];
 }

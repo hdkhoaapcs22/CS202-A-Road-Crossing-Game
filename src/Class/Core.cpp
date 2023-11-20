@@ -4,12 +4,13 @@
 
 Core::Core() {
     score = 0;
+    virtualScore = 0;
     character.assignLane(gameMap.getFirstLaneOfCharacter());
 }
 
 double Core::getSpeedMultiplier() {
     if (score < 93)
-        return 1.0 / 7200 * score * score + 1.0 / 120 * score + 1;
+        return 1.0 * score * score / 7200 + 1.0 * score / 120 + 1;
     return 3;
 }
 
@@ -44,11 +45,13 @@ bool Core::detectBlockMovement(int direction) {
             if (nextLanePtr == nullptr || nextLanePtr->getLaneName() != Lane::LaneName::SafeLane)
                 return false;
             return static_cast<SafeLane *>(nextLanePtr)->checkOverlap(coordinateXOfCharacterInCell);
-        default:
+        case Character::MOVE_DOWN:
             Lane *prevLanePtr = gameMap.getPreviousLane(character.getLanePtr());
             if (prevLanePtr == nullptr || prevLanePtr->getLaneName() != Lane::LaneName::SafeLane)
                 return false;
             return static_cast<SafeLane *>(prevLanePtr)->checkOverlap(coordinateXOfCharacterInCell);
+        default:
+            return false;
     }
 }
 
@@ -60,18 +63,26 @@ void Core::executeMovement(int direction, float dt) {
     if (detectBlockMovement(direction))
         return;
     moveCharacter(direction, dt);
-    if (direction == Character::MOVE_UP)
-        ++score;
+    switch (direction) {
+        case Character::MOVE_DOWN:
+            --virtualScore;
+            break;
+        case Character::MOVE_UP:
+            ++virtualScore;
+            if (virtualScore > score)
+                score = virtualScore;
+            break;
+        default:
+            break;
+    }
 }
 
-bool Core::isLose() {
+bool Core::isLost() {
     if (detectCollision())
         return true;
     if (character.getLanePtr() != gameMap.getFirstLane())
         return false;
-    int lowerBound = gameMap.getFirstLane()->getCoordinateYOfLane() + Map::sizeOfALane
-                   - Character::HEIGHT_OF_CHARACTER;
-    return lowerBound < 0;
+    return gameMap.getFirstLane()->getCoordinateYOfLane() < 0;
 }
 
 void Core::moveCharacter(int direction, float dt) {

@@ -40,16 +40,18 @@ bool Core::detectBlockMovement(int direction) {
                 return false;
             return static_cast<SafeLane *>(character.getLanePtr())
                 ->checkOverlap(coordinateXOfCharacterInCell + 1);
-        case Character::MOVE_UP:
+        case Character::MOVE_UP: {
             Lane *nextLanePtr = gameMap.getNextLane(character.getLanePtr());
             if (nextLanePtr == nullptr || nextLanePtr->getLaneName() != Lane::LaneName::SafeLane)
                 return false;
             return static_cast<SafeLane *>(nextLanePtr)->checkOverlap(coordinateXOfCharacterInCell);
-        case Character::MOVE_DOWN:
+        }
+        case Character::MOVE_DOWN:{
             Lane *prevLanePtr = gameMap.getPreviousLane(character.getLanePtr());
             if (prevLanePtr == nullptr || prevLanePtr->getLaneName() != Lane::LaneName::SafeLane)
                 return false;
             return static_cast<SafeLane *>(prevLanePtr)->checkOverlap(coordinateXOfCharacterInCell);
+        }
         default:
             return false;
     }

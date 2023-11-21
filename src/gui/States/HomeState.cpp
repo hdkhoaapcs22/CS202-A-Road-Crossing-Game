@@ -9,13 +9,13 @@ HomeState::~HomeState() {
 
 bool HomeState::update(float dt) {
     if (IsKeyPressed(KEY_W)) {
-        mCore.moveCharacter(Character::MOVE_UP, dt);
+        mCore.executeMovement(Character::MOVE_UP, dt);
     } else if (IsKeyPressed(KEY_S)) {
-        mCore.moveCharacter(Character::MOVE_DOWN, dt);
+        mCore.executeMovement(Character::MOVE_DOWN, dt);
     } else if (IsKeyPressed(KEY_A)) {
-        mCore.moveCharacter(Character::MOVE_LEFT, dt);
+        mCore.executeMovement(Character::MOVE_LEFT, dt);
     } else if (IsKeyPressed(KEY_D)) {
-        mCore.moveCharacter(Character::MOVE_RIGHT, dt);
+        mCore.executeMovement(Character::MOVE_RIGHT, dt);
     }
     mCore.update(dt);
     return true;

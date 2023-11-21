@@ -14,14 +14,16 @@ void Animation::update(float dt) {
     float timePerFrame = mDuration / mNumFrames;
     mElapsedTime += dt;
 
-    while (mElapsedTime >= timePerFrame && (mCurrentFrame <= mNumFrames || mRepeated)) {
+    while (mElapsedTime >= timePerFrame
+           && (mCurrentFrame <= mNumFrames || mRepeated)) {
         mElapsedTime -= timePerFrame;
 
         if (mFrameGridPosition.x + 1 < mSpriteSheetGridSize.x) {
             mFrameGridPosition.x++;
         } else {
             mFrameGridPosition.x = 0;
-            mFrameGridPosition.y = (int)(mFrameGridPosition.y + 1) % (int)mSpriteSheetGridSize.y;
+            mFrameGridPosition.y =
+                (int)(mFrameGridPosition.y + 1) % (int)mSpriteSheetGridSize.y;
         }
 
         if (mRepeated) {
@@ -29,19 +31,23 @@ void Animation::update(float dt) {
         } else {
             mCurrentFrame++;
         }
-
     }
 }
 
-void Animation::draw(Vector2 position) {
-    Rectangle sourceRect = {
-        mFrameGridPosition.x * mFrameSize.x,
-        mFrameGridPosition.y * mFrameSize.y,
-        mFrameSize.x,
-        mFrameSize.y
-    };
+void Animation::draw(Vector2 position, Vector2 size) {
+    if (size.x == 0 && size.y == 0) {
+        size = mFrameSize;
+    }
 
-    DrawTextureRec(mSpriteSheet, sourceRect, position, WHITE);
+    Rectangle sourceRect = {mFrameGridPosition.x * mFrameSize.x,
+                            mFrameGridPosition.y * mFrameSize.y, mFrameSize.x,
+                            mFrameSize.y};
+
+    Rectangle destRect = {position.x, position.y, size.x, size.y};
+
+    DrawTextureNPatch(mSpriteSheet,
+                      NPatchInfo({sourceRect, 0, 0, 0, 0, NPATCH_NINE_PATCH}),
+                      destRect, {0, 0}, 0, WHITE);
 }
 
 void Animation::setSpriteSheet(const Texture2D& spriteSheet) {

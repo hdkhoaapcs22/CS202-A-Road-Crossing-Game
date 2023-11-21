@@ -11,7 +11,7 @@ public:
     Animation();
     
     void update(float dt);
-    void draw(Vector2 position);
+    void draw(Vector2 position, Vector2 size = {0, 0});
 
     void setSpriteSheet(const Texture2D& spriteSheet);
     Texture2D getSpriteSheet() const;

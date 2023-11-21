@@ -49,9 +49,9 @@ void Application::registerStates() {
 }
 
 void Application::loadTextures() {
-    // std::string BASE_PATH = "asset/texture/";
-    // TextureHolder::load(TextureID::DefinitionSwitch,
-    //                                   BASE_PATH + "DefinitionSwitch.png");
+    std::string BASE_PATH = "asset/texture/";
+    TextureHolder::load(TextureID::ZombieIdleAnim,
+                        BASE_PATH + "ZombieIdleAnim.png");
 }
 
 void Application::loadFonts() {

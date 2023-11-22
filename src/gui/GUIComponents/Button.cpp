@@ -64,7 +64,7 @@ void Button::draw() {
         Rectangle sourceRect = {0, 0, (float)mTexture.width, (float)mTexture.height};
         Rectangle destRect = mRect;
 
-        DrawTexturePro(mTexture, sourceRect, destRect, {0, 0}, 0, WHITE);
+        DrawTexturePro(mTexture, sourceRect, destRect, {0, 0}, 0, colorFilter(WHITE));
     }
 
     if (mTextSize == 0) {
@@ -147,6 +147,7 @@ void Button::checkInteraction() {
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)
             && mState == ButtonState::Active) {
             mState = ButtonState::None;
+            SetMouseCursor(MOUSE_CURSOR_DEFAULT);
             mCallback();
         }
     } else {

@@ -64,9 +64,7 @@ void Button::draw() {
         Rectangle sourceRect = {0, 0, (float)mTexture.width, (float)mTexture.height};
         Rectangle destRect = mRect;
 
-        DrawTextureNPatch(
-            mTexture, NPatchInfo({sourceRect, 0, 0, 0, 0, NPATCH_NINE_PATCH}),
-            destRect, {0, 0}, 0, colorFilter(mContentColor));
+        DrawTexturePro(mTexture, sourceRect, destRect, {0, 0}, 0, WHITE);
     }
 
     if (mTextSize == 0) {

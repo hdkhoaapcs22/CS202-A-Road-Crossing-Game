@@ -2,7 +2,6 @@
 
 Animation::Animation()
 : mSpriteSheet(Texture2D())
-, mFrameSize(Vector2())
 , mNumFrames(0)
 , mCurrentFrame(0)
 , mDuration(0)
@@ -35,13 +34,16 @@ void Animation::update(float dt) {
 }
 
 void Animation::draw(Vector2 position, Vector2 size) {
+    Vector2 frameSize = {mSpriteSheet.width / mSpriteSheetGridSize.x,
+                         mSpriteSheet.height / mSpriteSheetGridSize.y};
+
     if (size.x == 0 && size.y == 0) {
-        size = mFrameSize;
+        size = frameSize;
     }
 
-    Rectangle sourceRect = {mFrameGridPosition.x * mFrameSize.x,
-                            mFrameGridPosition.y * mFrameSize.y, mFrameSize.x,
-                            mFrameSize.y};
+    Rectangle sourceRect = {mFrameGridPosition.x * frameSize.x,
+                            mFrameGridPosition.y * frameSize.y, frameSize.x,
+                            frameSize.y};
 
     Rectangle destRect = {position.x, position.y, size.x, size.y};
 
@@ -64,14 +66,6 @@ void Animation::setSpriteSheetGridSize(const Vector2& spriteSheetGridSize) {
 
 Vector2 Animation::getSpriteSheetGridSize() const {
     return mSpriteSheetGridSize;
-}
-
-void Animation::setFrameSize(const Vector2& frameSize) {
-    mFrameSize = frameSize;
-}
-
-Vector2 Animation::getFrameSize() const {
-    return mFrameSize;
 }
 
 void Animation::setNumFrames(int numFrames) {

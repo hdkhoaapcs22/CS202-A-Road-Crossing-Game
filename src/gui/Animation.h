@@ -19,9 +19,6 @@ public:
     void setSpriteSheetGridSize(const Vector2& spriteSheetGridSize);
     Vector2 getSpriteSheetGridSize() const;
 
-    void setFrameSize(const Vector2& frameSize);
-    Vector2 getFrameSize() const;
-
     void setNumFrames(int numFrames);
     int getNumFrames() const;
 
@@ -37,7 +34,6 @@ public:
 private:
     Texture2D mSpriteSheet;
     Vector2 mSpriteSheetGridSize;
-    Vector2 mFrameSize;
     Vector2 mFrameGridPosition;
     int mNumFrames;
     int mCurrentFrame;

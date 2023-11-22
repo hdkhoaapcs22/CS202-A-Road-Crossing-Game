@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "ResourceHolders/ResourceIdentifiers.h"
 #include "States/HomeState.h"
+#include "States/SettingsState.h"
+#include "States/CreditsState.h"
 #include "States/StateIdentifiers.h"
 
 #include <iostream>
@@ -46,12 +48,25 @@ void Application::render() {
 
 void Application::registerStates() {
     mStateStack.registerState<HomeState>(StateIDs::Home);
+    mStateStack.registerState<SettingsState>(StateIDs::Settings);
+    mStateStack.registerState<CreditsState>(StateIDs::Credits);
 }
 
 void Application::loadTextures() {
     std::string BASE_PATH = "asset/texture/";
     TextureHolder::load(TextureID::ZombieIdleAnim,
                         BASE_PATH + "ZombieIdleAnim.png");
+    TextureHolder::load(TextureID::MenuBackground,
+                        BASE_PATH + "MenuBackground.png");
+    TextureHolder::load(TextureID::MenuPlayButton,
+                        BASE_PATH + "MenuPlayButton.png");
+    TextureHolder::load(TextureID::MenuSettingsButton,
+                        BASE_PATH + "MenuSettingsButton.png");
+    TextureHolder::load(TextureID::MenuCreditsButton,
+                        BASE_PATH + "MenuCreditsButton.png");
+    TextureHolder::load(TextureID::PopUpMenu, BASE_PATH + "PopUpMenu.png");
+    TextureHolder::load(TextureID::PopUpCloseButton,
+                        BASE_PATH + "PopUpCloseButton.png");
 }
 
 void Application::loadFonts() {

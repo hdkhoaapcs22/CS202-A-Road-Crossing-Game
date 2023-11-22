@@ -1,28 +1,25 @@
-#ifndef STATES_HOMESTATE_H
-#define STATES_HOMESTATE_H
+#ifndef SRC_GUI_STATES_CREDITSSTATE_H
+#define SRC_GUI_STATES_CREDITSSTATE_H
 
 #include "State.h"
-#include "../../Class/Core.h"
 #include "../GUIComponents/Button.h"
 #include "../GUIComponents/GUITexture.h"
 #include "../ResourceHolders/TextureHolder.h"
 
 #include "raylib.h"
 
-class HomeState : public State {
+class CreditsState : public State {
 public:
-    HomeState(StateStack &stack, Context context);
-    ~HomeState();
+    CreditsState(StateStack &stack, Context context);
+    ~CreditsState();
 
     bool update(float dt);
     void draw();
-
 private:
     void initButtons();
-
 private:
     GUITexture::Ptr mBackground;
     std::vector<Button::Ptr> mButtons;
 };
 
-#endif // STATES_HOMESTATE_H
+#endif // SRC_GUI_STATES_CREDITSSTATE_H

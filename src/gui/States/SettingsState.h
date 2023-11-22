@@ -1,5 +1,5 @@
-#ifndef STATES_HOMESTATE_H
-#define STATES_HOMESTATE_H
+#ifndef SRC_GUI_STATES_SETTINGSSTATE_H
+#define SRC_GUI_STATES_SETTINGSSTATE_H
 
 #include "State.h"
 #include "../../Class/Core.h"
@@ -9,20 +9,18 @@
 
 #include "raylib.h"
 
-class HomeState : public State {
+class SettingsState : public State {
 public:
-    HomeState(StateStack &stack, Context context);
-    ~HomeState();
+    SettingsState(StateStack &stack, Context context);
+    ~SettingsState();
 
     bool update(float dt);
     void draw();
-
 private:
     void initButtons();
-
 private:
     GUITexture::Ptr mBackground;
     std::vector<Button::Ptr> mButtons;
 };
 
-#endif // STATES_HOMESTATE_H
+#endif // SRC_GUI_STATES_SETTINGSSTATE_H

@@ -3,7 +3,13 @@
 
 enum class TextureID {
     None,
-    ZombieIdleAnim
+    ZombieIdleAnim,
+    MenuBackground,
+    MenuPlayButton,
+    MenuSettingsButton,
+    MenuCreditsButton,
+    PopUpMenu,
+    PopUpCloseButton,
 };
 
 enum class FontID {

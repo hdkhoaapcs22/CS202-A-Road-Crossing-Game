@@ -10,8 +10,7 @@ public:
     bool detectCollision();
     bool detectBlockMovement();
     void update(float dt);
-    Character& getCharacter();
-    Map& getMap();
+    void moveCharacter(int direction, float dt);
 
 private:
     int score;

@@ -19,12 +19,20 @@ TextureHolder& TextureHolder::getInstance() {
 }
 
 void TextureHolder::load(TextureID id, const std::string& filename) {
+    getInstance().loadHelper(id, filename);
+}
+
+void TextureHolder::loadHelper(TextureID id, const std::string& filename) {
     std::unique_ptr<Texture2D> resource(new Texture());
     *resource = LoadTexture(filename.c_str());
     insertResource(id, std::move(resource));
 }
 
 Texture2D& TextureHolder::get(TextureID id) {
+    return getInstance().getHelper(id);
+}
+
+Texture2D& TextureHolder::getHelper(TextureID id) {
     auto found = mResourceMap.find(id);
     if (found == mResourceMap.end()) {
         return *mResourceMap[TextureID::None];
@@ -33,7 +41,7 @@ Texture2D& TextureHolder::get(TextureID id) {
     return *found->second;
 }
 
-const Texture2D& TextureHolder::get(TextureID id) const {
+const Texture2D& TextureHolder::getHelper(TextureID id) const {
     auto found = mResourceMap.find(id);
     if (found == mResourceMap.end()) {
         return *mResourceMap.at(TextureID::None);

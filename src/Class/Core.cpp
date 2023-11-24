@@ -84,7 +84,7 @@ bool Core::isLost() {
         return true;
     if (character.getLanePtr() != gameMap.getFirstLane())
         return false;
-    return gameMap.getFirstLane()->getCoordinateYOfLane() < 0;
+    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT;
 }
 
 void Core::moveCharacter(int direction, float dt) {

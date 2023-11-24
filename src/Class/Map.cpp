@@ -6,12 +6,8 @@
 
 Map::Map() {
     int numberOfSameLane = rand() % 2 + 3;
-    for (int i = 0; i < numberOfSameLane; ++i) {
-        if (lanes.size() == 0)
-            lanes.push_back(new SafeLane(0));
-        else
-            lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() + Lane::SIZE_OF_A_LANE));
-    }
+    lanes.push_back(new SafeLane(Config::WINDOW_HEIGHT));
+    insertSafeLane(numberOfSameLane - 1);
     numberOfSameLane = rand() % 4 + 1;
     insertRoadLane(numberOfSameLane);
     while (lanes.size() <= Lane::NUMBER_OF_LANES) {
@@ -34,7 +30,7 @@ Map::Map() {
 void Map::update(float dt, float speedMultiplier, Lane *characterLanePtr) {
     moveLanes(dt, speedMultiplier, characterLanePtr);
     for (Lane* lane : lanes) lane->update(dt);
-    if (lanes.front()->getCoordinateYOfLane() <= -Lane::SIZE_OF_A_LANE) {
+    if (lanes.front()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT + Lane::SIZE_OF_A_LANE) {
         delete lanes.front();
         lanes.pop_front();
         if (lanes.size() == Lane::NUMBER_OF_LANES) {
@@ -91,13 +87,13 @@ Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
 void Map::insertRoadLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i) {
         Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
-        lanes.push_back(new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() + Lane::SIZE_OF_A_LANE));
+        lanes.push_back(new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() - Lane::SIZE_OF_A_LANE));
     }
 }
 
 void Map::insertSafeLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i)
-        lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() + Lane::SIZE_OF_A_LANE));
+        lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() - Lane::SIZE_OF_A_LANE));
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {

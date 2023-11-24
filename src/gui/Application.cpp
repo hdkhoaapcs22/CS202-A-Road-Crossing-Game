@@ -2,6 +2,8 @@
 #include "../Config.h"
 #include "ResourceHolders/ResourceIdentifiers.h"
 #include "States/HomeState.h"
+#include "States/SettingsState.h"
+#include "States/CreditsState.h"
 #include "States/StateIdentifiers.h"
 
 #include <iostream>
@@ -18,7 +20,7 @@ Application::Application()
     loadFonts();
 
     // SetWindowIcon(LoadImageFromTexture(
-    //     TextureHolder::getInstance().get(TextureID::IconLogo)));
+    //     TextureHolder::get(TextureID::IconLogo)));
 
     registerStates();
     mStateStack.pushState(StateIDs::Home);
@@ -47,15 +49,28 @@ void Application::render() {
 
 void Application::registerStates() {
     mStateStack.registerState<HomeState>(StateIDs::Home);
+    mStateStack.registerState<SettingsState>(StateIDs::Settings);
+    mStateStack.registerState<CreditsState>(StateIDs::Credits);
 }
 
 void Application::loadTextures() {
-    // std::string BASE_PATH = "asset/texture/";
-    // TextureHolder::getInstance().load(TextureID::DefinitionSwitch,
-    //                                   BASE_PATH + "DefinitionSwitch.png");
+    std::string BASE_PATH = "asset/texture/";
+    TextureHolder::load(TextureID::ZombieIdleAnim,
+                        BASE_PATH + "ZombieIdleAnim.png");
+    TextureHolder::load(TextureID::MenuBackground,
+                        BASE_PATH + "MenuBackground.png");
+    TextureHolder::load(TextureID::MenuPlayButton,
+                        BASE_PATH + "MenuPlayButton.png");
+    TextureHolder::load(TextureID::MenuSettingsButton,
+                        BASE_PATH + "MenuSettingsButton.png");
+    TextureHolder::load(TextureID::MenuCreditsButton,
+                        BASE_PATH + "MenuCreditsButton.png");
+    TextureHolder::load(TextureID::PopUpMenu, BASE_PATH + "PopUpMenu.png");
+    TextureHolder::load(TextureID::PopUpCloseButton,
+                        BASE_PATH + "PopUpCloseButton.png");
 }
 
 void Application::loadFonts() {
     // std::string BASE_PATH = "asset/font/";
-    // FontHolder::getInstance().load(FontID::Inter, BASE_PATH + "Inter.ttf");
+    // FontHolder::load(FontID::Inter, BASE_PATH + "Inter.ttf");
 }

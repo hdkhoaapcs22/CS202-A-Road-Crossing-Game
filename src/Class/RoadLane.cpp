@@ -1,6 +1,6 @@
 #include "RoadLane.h"
 
-RoadLane::RoadLane(Enemy::EnemyID enemyID, int coordinateYOfLane)
+RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
 : Lane(coordinateYOfLane, Lane::LaneName::RoadLane)
 , hasTrafficLight(false)
 , isRedSignal(false)
@@ -9,14 +9,14 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, int coordinateYOfLane)
     int x = rand() % 2;
     if (x == 0) {
         direct = Direction::Left;
-        int startingX = 0;
+        float startingX = 0;
         while (startingX < Config::WINDOW_WIDTH) {
             createEnemy(enemyID, startingX);
             startingX += enemies.back()->getWidth() + Config::ENEMY_DISTANCE;
         }
     } else {
         direct = Direction::Right;
-        int startingX = Config::WINDOW_WIDTH;
+        float startingX = Config::WINDOW_WIDTH;
         while (startingX > 0) {
             createEnemy(enemyID, startingX);
             startingX -= enemies.back()->getWidth() + Config::ENEMY_DISTANCE;
@@ -80,7 +80,14 @@ RoadLane::~RoadLane() {
     }
 }
 
-void RoadLane::createEnemy(Enemy::EnemyID enemyID, int startingX) {
+bool RoadLane::checkCollision(int leftHitbox, int rightHitbox) {
+    for (Enemy *enemy : enemies)
+        if (enemy->checkCollision(leftHitbox, rightHitbox))
+            return true;
+    return false;
+}
+
+void RoadLane::createEnemy(Enemy::EnemyID enemyID, float startingX) {
     switch (enemyID) {
         case Enemy::EnemyID::Unstoppable1:
             enemies.push_back(new Unstoppable1(direct, startingX));

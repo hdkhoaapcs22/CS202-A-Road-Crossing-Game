@@ -6,16 +6,20 @@
 
 class Core {
 public:
-    int getScreenSpeed();
+    Core();
+    float getSpeedMultiplier();
     bool detectCollision();
-    bool detectBlockMovement();
+    bool detectBlockMovement(int direction);
     void update(float dt);
-    void moveCharacter(int direction, float dt);
+    void executeMovement(int direction, float dt);
+    bool isLost();
 
 private:
     int score;
+    int virtualScore;
     Map gameMap;
     Character character;
+    void moveCharacter(int direction, float dt);
 };
 
 #endif

@@ -3,19 +3,26 @@
 
 #include <deque>
 #include "Lane.h"
+#include "../Config.h"
 
 class Map {
 public:
-    static const int numberOfLanes = 10;
+    Map();
+    ~Map();
     static const int laneWidth = 14;
-    void update(float dt);
+    void update(float dt, float speedMultiplier, Lane *characterLanePtr);
     Lane *getNextLane(Lane *curLanePtr);
     Lane *getPreviousLane(Lane *curLanePtr);
+    Lane *getFirstLane();
+    Lane *getFirstLaneOfCharacter();
 
 private:
     std::deque<Lane *> lanes;
-    void moveLanes(float dt);
+    void moveLanes(float dt, float speedMultiplier, Lane *characterLanePtr);
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
+    void insertRoadLane(int numberOfSameLane);
+    void insertSafeLane(int numberOfSameLane);
+    // void insertRiverLane();
 };
 
 #endif

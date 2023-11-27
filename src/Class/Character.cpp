@@ -7,15 +7,17 @@ Character::Character()
 , lanePtr(nullptr) {
 }
 
-void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr,
-                                          int direction, float dt) {
+void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction,
+                                          float dt) {
     switch (direction) {
         case MOVE_UP: {
-            lanePtr = nextLanePtr;
+            if (nextLanePtr != nullptr)
+                lanePtr = nextLanePtr;
             break;
         }
         case MOVE_DOWN: {
-            lanePtr = prevLanePtr;
+            if (prevLanePtr != nullptr)
+                lanePtr = prevLanePtr;
             break;
         }
         case MOVE_LEFT: {
@@ -41,4 +43,8 @@ void Character::assignLane(Lane* firstLane) {
 
 Lane* Character::getLanePtr() {
     return lanePtr;
+}
+
+int Character::getCoordinateX() const {
+    return coordinateXOfCharacter;
 }

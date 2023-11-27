@@ -22,16 +22,17 @@ public:
         Unstoppable4,
         Unstoppable5,
     };
-    Enemy(Direction direct, int coordinateXOfEnemy);
+    Enemy(Direction direct, float coordinateXOfEnemy);
     void moveEnemy(float dt);
     virtual int getSpeed() const = 0;
     virtual int getWidth() const = 0;
     virtual EnemyID getEnemyID() const = 0;
-    int getCoordinateXOfEnemy();
+    float getCoordinateXOfEnemy();
+    bool checkCollision(int leftHitbox, int rightHitbox);
 
 private:
     Direction direct;
-    int coordinateX;
+    float coordinateX;
 };
 
 #endif

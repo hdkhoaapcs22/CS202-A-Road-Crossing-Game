@@ -72,7 +72,7 @@ void Map::moveLanes(float dt, float speedMultiplier, Lane* characterLanePtr) {
 
     float speed = Config::BASE_SPEED
                 + std::max(0.0f, Config::CAMERA_OFFSET - characterLanePtr->getCoordinateYOfLane())
-                      * Config::ACCELERED_SPEED;
+                      * Config::ACCERELATED_SPEED;
 
     for (Lane* lane : lanes) lane->move(speed * dt * speedMultiplier);
 }

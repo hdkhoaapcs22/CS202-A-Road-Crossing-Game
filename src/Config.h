@@ -17,7 +17,7 @@ public:
     static constexpr int NUMBER_OF_LANES = 12;
     static constexpr int SIZE_OF_A_LANE = 78;
     static constexpr int BASE_SPEED = 25;
-    static constexpr float ACCELERED_SPEED = 1.5;
+    static constexpr float ACCERELATED_SPEED = 1;
     static constexpr int CAMERA_OFFSET = 484;
 
 private:

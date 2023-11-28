@@ -75,7 +75,8 @@ void RoadLane::update(float dt) {
 }
 
 void RoadLane::draw() {
-    DrawRectangle(0, getCoordinateYOfLane(), Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE, GRAY);
+    float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
+    DrawRectangle(0, coordinateYOfLane, Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE, GRAY);
 }
 
 RoadLane::~RoadLane() {

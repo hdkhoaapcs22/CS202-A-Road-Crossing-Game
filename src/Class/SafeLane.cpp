@@ -27,10 +27,11 @@ void SafeLane::update(float dt) {
 }
 
 void SafeLane::draw() {
-    mTexture->setPosition({0, getCoordinateYOfLane()});
+    float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
+    mTexture->setPosition({0, coordinateYOfLane});
     mTexture->draw();
     for (Obstacle* ptr : obstacles) {
-        ptr->draw(getCoordinateYOfLane());
+        ptr->draw(coordinateYOfLane);
     }
 }
 

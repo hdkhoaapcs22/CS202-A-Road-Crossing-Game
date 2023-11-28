@@ -23,13 +23,14 @@ public:
     void updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr,
                                    int direction, float dt);
     Lane* getLanePtr();
-    int getCoordinateX() const;
+    float getCoordinateX() const;
 
     void update(float dt);
     void draw();
 
 private:
-    int coordinateXOfCharacter;
+    Vector2 deltaPosition;
+    float coordinateXOfCharacter;
     Lane* lanePtr;
     float movementCD;
     Animation mIdleAnimation;

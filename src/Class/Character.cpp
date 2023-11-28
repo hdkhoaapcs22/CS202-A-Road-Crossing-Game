@@ -17,6 +17,7 @@ void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, 
                                           float dt) {
     if (movementCD > 0)
         return;
+    Vector2 initialPosition = {coordinateXOfCharacter, lanePtr->getCoordinateYOfLane()};
     switch (direction) {
         case MOVE_UP: {
             if (nextLanePtr != nullptr)
@@ -43,6 +44,8 @@ void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, 
         default:
             break;
     }
+    deltaPosition = {coordinateXOfCharacter - initialPosition.x,
+                     lanePtr->getCoordinateYOfLane() - initialPosition.y};
     movementCD = Config::TIME_MOVEMENT;
 }
 
@@ -54,23 +57,26 @@ Lane* Character::getLanePtr() {
     return lanePtr;
 }
 
-int Character::getCoordinateX() const {
+float Character::getCoordinateX() const {
     return coordinateXOfCharacter;
 }
 
 void Character::update(float dt) {
     movementCD -= dt;
+    if (movementCD < 0)
+        movementCD = 0;
+    float coordinateXOfCharacterInCell = Config::WIDTH_OF_EACH_CELL / 2
+                                       + (coordinateXOfCharacter - Config::WIDTH_OF_CHARACTER / 2)
+                                             / Config::WIDTH_OF_EACH_CELL
+                                             * Config::WIDTH_OF_EACH_CELL;
     mIdleAnimation.update(dt);
 }
 
 void Character::draw() {
-    float coordinateYOfCharacter = lanePtr->getCoordinateYOfLane() - HEIGHT_OF_CHARACTER_SPRITE * 2 / 3;
-    float coordinateXOfCharacterInCell = Config::WIDTH_OF_EACH_CELL / 2
-                                       + (coordinateXOfCharacter - Config::WIDTH_OF_CHARACTER / 2)
-                                             / Config::WIDTH_OF_EACH_CELL
-                                             * Config::WIDTH_OF_EACH_CELL
-                                       - WIDTH_OF_CHARACTER_SPRITE / 2;
+    Vector2 displayedPosition = {coordinateXOfCharacter - WIDTH_OF_CHARACTER_SPRITE / 2
+                                     - deltaPosition.x * movementCD / Config::TIME_MOVEMENT,
+                                 lanePtr->getCoordinateYOfLane() - HEIGHT_OF_CHARACTER_SPRITE * 2 / 3
+                                     - deltaPosition.y * movementCD / Config::TIME_MOVEMENT};
 
-    mIdleAnimation.draw({coordinateXOfCharacterInCell, coordinateYOfCharacter},
-                        {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
+    mIdleAnimation.draw(displayedPosition, {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
 }

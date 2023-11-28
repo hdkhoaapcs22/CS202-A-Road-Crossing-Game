@@ -3,8 +3,9 @@
 #include <iostream>
 
 Character::Character()
-: coordinateXOfCharacter(FIRST_POSITION_OF_CHARACTER)
+: coordinateXOfCharacter(Config::FIRST_POSITION_OF_CHARACTER)
 , lanePtr(nullptr) {
+    std::cout << "Character constructor" << std::endl;
 }
 
 void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction,
@@ -21,14 +22,14 @@ void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, 
             break;
         }
         case MOVE_LEFT: {
-            if (coordinateXOfCharacter > (WIDTH_OF_EACH_CELL / 2)) {
-                coordinateXOfCharacter -= WIDTH_OF_EACH_CELL;
+            if (coordinateXOfCharacter > (Config::WIDTH_OF_EACH_CELL / 2)) {
+                coordinateXOfCharacter -= Config::WIDTH_OF_EACH_CELL;
             }
             break;
         }
         case MOVE_RIGHT: {
-            if (coordinateXOfCharacter < LAST_POSITION_OF_CHARACTER) {
-                coordinateXOfCharacter += WIDTH_OF_EACH_CELL;
+            if (coordinateXOfCharacter < Config::LAST_POSITION_OF_CHARACTER) {
+                coordinateXOfCharacter += Config::WIDTH_OF_EACH_CELL;
             }
             break;
         }
@@ -47,4 +48,16 @@ Lane* Character::getLanePtr() {
 
 int Character::getCoordinateX() const {
     return coordinateXOfCharacter;
+}
+
+void Character::update(float dt) {
+}
+
+void Character::draw() {
+    int coordinateYOfCharacter = lanePtr->getCoordinateYOfLane();
+    int coordinateXOfCharacterInCell =
+        (coordinateXOfCharacter - Config::WIDTH_OF_CHARACTER / 2) / Config::WIDTH_OF_EACH_CELL;
+
+    DrawRectangle(coordinateXOfCharacterInCell * Config::WIDTH_OF_EACH_CELL, coordinateYOfCharacter,
+                  Config::WIDTH_OF_CHARACTER, Config::SIZE_OF_A_LANE, BLUE);
 }

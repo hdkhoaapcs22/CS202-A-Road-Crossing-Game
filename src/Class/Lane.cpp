@@ -24,6 +24,8 @@ Lane::LaneName Lane::getLaneName() {
 }
 
 void Lane::move(float dt, float speedMultipler, int indexLaneOfCharacter) {
-    int mapSpeed = BASE_SPEED + std::max(0, indexLaneOfCharacter - NUMBER_OF_LANES / 2) * SIZE_OF_A_LANE * 10;
+    int mapSpeed = Config::BASE_SPEED
+                 + std::max(0, indexLaneOfCharacter - Config::NUMBER_OF_LANES / 2)
+                       * Config::SIZE_OF_A_LANE * 10;
     coordinateYOfLane += mapSpeed * speedMultipler * dt;
 }

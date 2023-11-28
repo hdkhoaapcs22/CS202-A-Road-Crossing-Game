@@ -4,6 +4,7 @@
 #include "States/HomeState.h"
 #include "States/SettingsState.h"
 #include "States/CreditsState.h"
+#include "States/GameState.h"
 #include "States/StateIdentifiers.h"
 
 #include <iostream>
@@ -23,7 +24,7 @@ Application::Application()
     //     TextureHolder::get(TextureID::IconLogo)));
 
     registerStates();
-    mStateStack.pushState(StateIDs::Home);
+    mStateStack.pushState(StateIDs::Game);
 }
 
 Application::~Application() {
@@ -51,6 +52,7 @@ void Application::registerStates() {
     mStateStack.registerState<HomeState>(StateIDs::Home);
     mStateStack.registerState<SettingsState>(StateIDs::Settings);
     mStateStack.registerState<CreditsState>(StateIDs::Credits);
+    mStateStack.registerState<GameState>(StateIDs::Game);
 }
 
 void Application::loadTextures() {

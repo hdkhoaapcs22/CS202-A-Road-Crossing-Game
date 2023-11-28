@@ -10,7 +10,10 @@ public:
     float getSpeedMultiplier();
     bool detectCollision();
     bool detectBlockMovement(int direction);
+
     void update(float dt);
+    void draw();
+
     void executeMovement(int direction, float dt);
     bool isLost();
 

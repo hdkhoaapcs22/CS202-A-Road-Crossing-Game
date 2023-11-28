@@ -20,6 +20,7 @@ class RoadLane : public Lane {
 public:
     RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane);
     void update(float dt) override;
+    void draw() override;
     ~RoadLane();
     bool checkCollision(int leftHitbox, int rightHitbox);
 private:

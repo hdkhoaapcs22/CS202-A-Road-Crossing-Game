@@ -9,6 +9,7 @@ public:
     SafeLane(float coordinateYOfLane);
     ~SafeLane();
     void update(float dt);
+    void draw();
     bool checkOverlap(int x);
 
 private:

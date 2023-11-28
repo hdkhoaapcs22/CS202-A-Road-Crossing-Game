@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <vector>
 
+#include "../Config.h"
+
 class Obstacle {
 public:
     enum class ObstacleName {
@@ -14,6 +16,7 @@ public:
     ObstacleName randomObstacleName();
     int randomCoordinateXOfObstacles();
     int getCoordinateX() const;
+    void setCoordinateX(int x);
 
 private:
     int coordinateXOfObstacles;

@@ -5,8 +5,9 @@ SafeLane::SafeLane(float coordinateYOfLane)
     int obstaclesNum = rand() % 5;
     for (int i = 0; i < obstaclesNum; ++i) {
         Obstacle* newObstacle = new Obstacle();
-        while (checkOverlap(newObstacle->getCoordinateX()))
-            newObstacle->randomCoordinateXOfObstacles();
+        while (checkOverlap(newObstacle->getCoordinateX())) {
+            newObstacle->setCoordinateX(newObstacle->randomCoordinateXOfObstacles());
+        }
         obstacles.push_back(newObstacle);
     }
 }
@@ -19,6 +20,9 @@ SafeLane::~SafeLane() {
 }
 
 void SafeLane::update(float dt) {
+}
+
+void SafeLane::draw() {
 }
 
 bool SafeLane::checkOverlap(int x) {

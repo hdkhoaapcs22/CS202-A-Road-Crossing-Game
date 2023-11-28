@@ -15,10 +15,14 @@ Obstacle::ObstacleName Obstacle::randomObstacleName() {
 }
 
 int Obstacle::randomCoordinateXOfObstacles() {
-    int randomCoordinateXOfObstacles = rand() % Lane::CELL_IN_LANE;
+    int randomCoordinateXOfObstacles = rand() % Config::CELL_IN_LANE;
     return randomCoordinateXOfObstacles;
 }
 
 int Obstacle::getCoordinateX() const {
     return coordinateXOfObstacles;
+}
+
+void Obstacle::setCoordinateX(int x) {
+    coordinateXOfObstacles = x;
 }

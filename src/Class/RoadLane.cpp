@@ -74,6 +74,9 @@ void RoadLane::update(float dt) {
     }
 }
 
+void RoadLane::draw() {
+}
+
 RoadLane::~RoadLane() {
     for (Enemy *enemy : enemies) {
         delete enemy;

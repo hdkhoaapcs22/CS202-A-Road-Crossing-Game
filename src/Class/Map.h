@@ -5,12 +5,16 @@
 #include "Lane.h"
 #include "../Config.h"
 
+#include "raylib.h"
 class Map {
 public:
     Map();
     ~Map();
     static const int laneWidth = 14;
+
     void update(float dt, float speedMultiplier, Lane *characterLanePtr);
+    void draw();
+
     Lane *getNextLane(Lane *curLanePtr);
     Lane *getPreviousLane(Lane *curLanePtr);
     Lane *getFirstLane();

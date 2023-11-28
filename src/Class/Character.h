@@ -25,6 +25,7 @@ public:
 private:
     int coordinateXOfCharacter;
     Lane* lanePtr;
+    float movementCD;
 };
 
 #endif

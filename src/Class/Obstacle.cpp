@@ -26,3 +26,8 @@ int Obstacle::getCoordinateX() const {
 void Obstacle::setCoordinateX(int x) {
     coordinateXOfObstacles = x;
 }
+
+void Obstacle::draw(int coordinateYOfLane) {
+    DrawRectangle(coordinateXOfObstacles * Config::WIDTH_OF_EACH_CELL, coordinateYOfLane,
+                  Config::WIDTH_OF_EACH_CELL, Config::WIDTH_OF_EACH_CELL, BLUE);
+}

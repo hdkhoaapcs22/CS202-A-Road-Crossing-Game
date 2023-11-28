@@ -14,7 +14,6 @@ public:
     void update(float dt);
     void draw();
 
-    void executeMovement(int direction, float dt);
     bool isLost();
 
 private:
@@ -22,7 +21,11 @@ private:
     int virtualScore;
     Map gameMap;
     Character character;
+
+private:
     void moveCharacter(int direction, float dt);
+    void executeMovement(int direction, float dt);
+    void getInputs(float dt);
 };
 
 #endif

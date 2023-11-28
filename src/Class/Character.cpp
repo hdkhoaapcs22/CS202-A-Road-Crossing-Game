@@ -5,11 +5,13 @@
 Character::Character()
 : coordinateXOfCharacter(Config::FIRST_POSITION_OF_CHARACTER)
 , lanePtr(nullptr) {
+    movementCD = 0;
     std::cout << "Character constructor" << std::endl;
 }
 
 void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction,
                                           float dt) {
+    if (movementCD > 0) return;
     switch (direction) {
         case MOVE_UP: {
             if (nextLanePtr != nullptr)
@@ -36,6 +38,7 @@ void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, 
         default:
             break;
     }
+    movementCD = Config::TIME_MOVEMENT;
 }
 
 void Character::assignLane(Lane* firstLane) {
@@ -51,6 +54,7 @@ int Character::getCoordinateX() const {
 }
 
 void Character::update(float dt) {
+    movementCD -= dt;
 }
 
 void Character::draw() {

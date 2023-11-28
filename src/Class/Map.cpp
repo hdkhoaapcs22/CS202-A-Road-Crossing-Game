@@ -24,7 +24,7 @@ Map::Map() {
                 insertSafeLane(numberOfSameLane);
                 break;
             default:
-                //insertRiverLane(numberOfSameLane);
+                // insertRiverLane(numberOfSameLane);
                 break;
         }
         std::cout << lanes.size() << std::endl;
@@ -32,13 +32,13 @@ Map::Map() {
     std::cout << "Map constructor" << std::endl;
 }
 
-void Map::update(float dt, float speedMultiplier, Lane *characterLanePtr) {
+void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
     moveLanes(dt, speedMultiplier, characterLanePtr);
-    for (Lane* lane : lanes) lane->update(dt);
-    if (lanes.front()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE) {
+    while (lanes.front()->getCoordinateYOfLane()
+           >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE) {
         delete lanes.front();
         lanes.pop_front();
-        if (lanes.size() == Config::NUMBER_OF_LANES) {
+        while (lanes.size() < Config::NUMBER_OF_LANES) {
             int numberOfSameLane = rand() % 4 + 1;
             Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
             switch (laneName) {
@@ -49,11 +49,12 @@ void Map::update(float dt, float speedMultiplier, Lane *characterLanePtr) {
                     insertSafeLane(numberOfSameLane);
                     break;
                 default:
-                    //insertRiverLane(numberOfSameLane);
+                    // insertRiverLane(numberOfSameLane);
                     break;
             }
         }
     }
+    for (Lane* lane : lanes) lane->update(dt);
 }
 
 void Map::draw() {
@@ -68,11 +69,17 @@ Map::~Map() {
     }
 }
 
-void Map::moveLanes(float dt, float speedMultiplier, Lane *characterLanePtr) {
+void Map::moveLanes(float dt, float speedMultiplier, Lane* characterLanePtr) {
     int index = 0;
     for (std::deque<Lane*>::iterator it = lanes.begin(); it != lanes.end(); ++it, ++index)
-        if (*it == characterLanePtr) break;
-    for (Lane* lane : lanes) lane->move(dt, speedMultiplier, index);
+        if (*it == characterLanePtr)
+            break;
+
+    float speed = Config::BASE_SPEED
+                + std::max(0.0f, Config::CAMERA_OFFSET - characterLanePtr->getCoordinateYOfLane())
+                      * Config::ACCELERED_SPEED;
+
+    for (Lane* lane : lanes) lane->move(speed * dt * speedMultiplier);
 }
 
 Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
@@ -106,10 +113,8 @@ void Map::insertRoadLane(int numberOfSameLane) {
 
 void Map::insertSafeLane(int numberOfSameLane) {
     std::cout << "insertSafeLane " << numberOfSameLane << std::endl;
-    for (int i = 0; i < numberOfSameLane; ++i)
-        std::cout << "insertSafeLane" << std::endl;
-        lanes.push_back(
-            new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
+    for (int i = 0; i < numberOfSameLane; ++i) std::cout << "insertSafeLane" << std::endl;
+    lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {

@@ -4,6 +4,8 @@
 #include "Lane.h"
 #include "Obstacle.h"
 
+#include "../gui/GUIComponents/GUITexture.h"
+
 class SafeLane : public Lane {
 public:
     SafeLane(float coordinateYOfLane);
@@ -14,6 +16,8 @@ public:
 
 private:
     std::vector<Obstacle*> obstacles;
+
+    GUITexture::Ptr mTexture;
 };
 
 #endif

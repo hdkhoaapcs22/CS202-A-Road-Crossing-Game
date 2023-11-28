@@ -4,6 +4,8 @@
 #include <iostream>
 #include "../Config.h"
 
+#include "raylib.h"
+
 class Lane {
 public:
     enum class LaneName {
@@ -24,7 +26,7 @@ public:
 
     LaneName getLaneName();
 
-    void move(float dt, float speedMultipler, int indexLaneOfCharacter);
+    void move(float deltaY);
 
 private:
     float coordinateYOfLane;

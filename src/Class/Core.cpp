@@ -7,6 +7,7 @@ Core::Core() {
     score = 0;
     virtualScore = 0;
     character.assignLane(gameMap.getFirstLaneOfCharacter());
+    std::cout << "First y: " << gameMap.getFirstLaneOfCharacter()->getCoordinateYOfLane() << std::endl;
     std::cout << "Core constructor" << std::endl;
 }
 
@@ -59,16 +60,9 @@ bool Core::detectBlockMovement(int direction) {
 }
 
 void Core::update(float dt) {
+    getInputs(dt);
     gameMap.update(dt, getSpeedMultiplier(), character.getLanePtr());
-
-    if (IsKeyPressed(KEY_W))
-        executeMovement(Character::MOVE_UP, dt);
-    else if (IsKeyPressed(KEY_S))
-        executeMovement(Character::MOVE_DOWN, dt);
-    else if (IsKeyPressed(KEY_A))
-        executeMovement(Character::MOVE_LEFT, dt);
-    else if (IsKeyPressed(KEY_D))
-        executeMovement(Character::MOVE_RIGHT, dt);
+    character.update(dt);
 }
 
 void Core::draw() {
@@ -93,6 +87,17 @@ void Core::executeMovement(int direction, float dt) {
         default:
             break;
     }
+}
+
+void Core::getInputs(float dt) {
+    if (IsKeyReleased(KEY_W))
+        executeMovement(Character::MOVE_UP, dt);
+    else if (IsKeyReleased(KEY_S))
+        executeMovement(Character::MOVE_DOWN, dt);
+    else if (IsKeyReleased(KEY_A))
+        executeMovement(Character::MOVE_LEFT, dt);
+    else if (IsKeyReleased(KEY_D))
+        executeMovement(Character::MOVE_RIGHT, dt);
 }
 
 bool Core::isLost() {

@@ -10,6 +10,7 @@ enum class TextureID {
     MenuCreditsButton,
     PopUpMenu,
     PopUpCloseButton,
+    SafeLane,
 };
 
 enum class FontID {

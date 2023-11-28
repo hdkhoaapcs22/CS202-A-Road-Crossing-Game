@@ -70,6 +70,7 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::PopUpMenu, BASE_PATH + "PopUpMenu.png");
     TextureHolder::load(TextureID::PopUpCloseButton,
                         BASE_PATH + "PopUpCloseButton.png");
+    TextureHolder::load(TextureID::SafeLane, BASE_PATH + "SafeLane.png");
 }
 
 void Application::loadFonts() {

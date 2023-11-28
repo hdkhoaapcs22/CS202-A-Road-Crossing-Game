@@ -5,15 +5,12 @@
 // #include "RiverLane.h"
 
 Map::Map() {
-    std::cout << "Map constructor" << std::endl;
     int numberOfSameLane = rand() % 2 + 3;
     lanes.push_back(new SafeLane(Config::WINDOW_HEIGHT));
     insertSafeLane(numberOfSameLane - 1);
     numberOfSameLane = rand() % 4 + 1;
     insertRoadLane(numberOfSameLane);
-    std::cout << "Map constructor" << std::endl;
     while (lanes.size() <= Config::NUMBER_OF_LANES) {
-        std::cout << lanes.size() << std::endl;
         numberOfSameLane = rand() % 4 + 1;
         Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
         switch (laneName) {
@@ -27,9 +24,7 @@ Map::Map() {
                 // insertRiverLane(numberOfSameLane);
                 break;
         }
-        std::cout << lanes.size() << std::endl;
     }
-    std::cout << "Map constructor" << std::endl;
 }
 
 void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
@@ -102,9 +97,7 @@ Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
 }
 
 void Map::insertRoadLane(int numberOfSameLane) {
-    std::cout << "insertRoadLane " << numberOfSameLane << std::endl;
     for (int i = 0; i < numberOfSameLane; ++i) {
-        std::cout << "insertRoadLane" << std::endl;
         Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
         lanes.push_back(
             new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
@@ -112,9 +105,9 @@ void Map::insertRoadLane(int numberOfSameLane) {
 }
 
 void Map::insertSafeLane(int numberOfSameLane) {
-    std::cout << "insertSafeLane " << numberOfSameLane << std::endl;
-    for (int i = 0; i < numberOfSameLane; ++i) std::cout << "insertSafeLane" << std::endl;
-    lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
+    for (int i = 0; i < numberOfSameLane; ++i)
+        lanes.push_back(
+            new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {

@@ -3,12 +3,9 @@
 #include "RoadLane.h"
 
 Core::Core() {
-    std::cout << "Core constructor" << std::endl;
     score = 0;
     virtualScore = 0;
     character.assignLane(gameMap.getFirstLaneOfCharacter());
-    std::cout << "First y: " << gameMap.getFirstLaneOfCharacter()->getCoordinateYOfLane() << std::endl;
-    std::cout << "Core constructor" << std::endl;
 }
 
 float Core::getSpeedMultiplier() {

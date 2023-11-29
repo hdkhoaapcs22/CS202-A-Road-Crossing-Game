@@ -31,7 +31,7 @@ private:
 
     GameState gameState{GameState::WaitingToStart};
 
-    GUITexture scoreFrame;
+    GUITexture::Ptr scoreFrame;
 
 private:
     void moveCharacter(int direction, float dt);

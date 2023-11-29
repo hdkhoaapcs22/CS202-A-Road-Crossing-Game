@@ -28,7 +28,9 @@ Map::Map() {
 }
 
 void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
-    moveLanes(dt, speedMultiplier, characterLanePtr);
+    std::cout << moving << std::endl;
+    if (moving)
+        moveLanes(dt, speedMultiplier, characterLanePtr);
     while (lanes.front()->getCoordinateYOfLane()
            >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE) {
         delete lanes.front();
@@ -124,4 +126,8 @@ Lane* Map::getFirstLane() {
 
 Lane* Map::getFirstLaneOfCharacter() {
     return lanes[2];
+}
+
+void Map::setMoving(bool moving) {
+    this->moving = moving;
 }

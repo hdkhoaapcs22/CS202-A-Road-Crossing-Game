@@ -28,12 +28,15 @@ public:
     void update(float dt);
     void draw();
 
+    void setDead();
 private:
     Vector2 deltaPosition;
     float coordinateXOfCharacter;
     Lane* lanePtr;
     float movementCD;
     Animation mIdleAnimation;
+
+    bool isDead{false};
 };
 
 #endif

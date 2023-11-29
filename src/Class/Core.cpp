@@ -1,11 +1,12 @@
 #include "Core.h"
-#include "SafeLane.h"
 #include "RoadLane.h"
+#include "SafeLane.h"
 
 Core::Core() {
     score = 0;
     virtualScore = 0;
     character.assignLane(gameMap.getFirstLaneOfCharacter());
+    gameMap.setMoving(false);
 }
 
 float Core::getSpeedMultiplier() {
@@ -45,7 +46,7 @@ bool Core::detectBlockMovement(int direction) {
                 return false;
             return static_cast<SafeLane *>(nextLanePtr)->checkOverlap(coordinateXOfCharacterInCell);
         }
-        case Character::MOVE_DOWN:{
+        case Character::MOVE_DOWN: {
             Lane *prevLanePtr = gameMap.getPreviousLane(character.getLanePtr());
             if (prevLanePtr == nullptr || prevLanePtr->getLaneName() != Lane::LaneName::SafeLane)
                 return false;
@@ -60,15 +61,22 @@ void Core::update(float dt) {
     getInputs(dt);
     gameMap.update(dt, getSpeedMultiplier(), character.getLanePtr());
     character.update(dt);
+    if (isLost()) {
+        character.setDead();
+        gameMap.setMoving(false);
+        gameState = GameState::Lost;
+    }
 }
 
 void Core::draw() {
     ClearBackground(BLACK);
     gameMap.draw();
-    character.draw(); 
+    character.draw();
 }
 
 void Core::executeMovement(int direction, float dt) {
+    gameState = GameState::Playing;
+    gameMap.setMoving(true);
     if (detectBlockMovement(direction))
         return;
     moveCharacter(direction, dt);
@@ -87,13 +95,15 @@ void Core::executeMovement(int direction, float dt) {
 }
 
 void Core::getInputs(float dt) {
-    if (IsKeyReleased(KEY_W))
+    if (gameState == GameState::Lost)
+        return;
+    if (IsKeyReleased(KEY_W) || IsKeyReleased(KEY_UP))
         executeMovement(Character::MOVE_UP, dt);
-    else if (IsKeyReleased(KEY_S))
+    else if (IsKeyReleased(KEY_S) || IsKeyReleased(KEY_DOWN))
         executeMovement(Character::MOVE_DOWN, dt);
-    else if (IsKeyReleased(KEY_A))
+    else if (IsKeyReleased(KEY_A) || IsKeyReleased(KEY_LEFT))
         executeMovement(Character::MOVE_LEFT, dt);
-    else if (IsKeyReleased(KEY_D))
+    else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT))
         executeMovement(Character::MOVE_RIGHT, dt);
 }
 

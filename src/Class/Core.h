@@ -6,6 +6,12 @@
 
 class Core {
 public:
+    enum class GameState {
+        WaitingToStart,
+        Playing,
+        Lost
+    };
+public:
     Core();
     float getSpeedMultiplier();
     bool detectCollision();
@@ -21,6 +27,8 @@ private:
     int virtualScore;
     Map gameMap;
     Character character;
+
+    GameState gameState{GameState::WaitingToStart};
 
 private:
     void moveCharacter(int direction, float dt);

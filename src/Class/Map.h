@@ -20,8 +20,13 @@ public:
     Lane *getFirstLane();
     Lane *getFirstLaneOfCharacter();
 
+    void setMoving(bool moving);
+
 private:
     std::deque<Lane *> lanes;
+    bool moving{true};
+
+private:
     void moveLanes(float dt, float speedMultiplier, Lane *characterLanePtr);
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
     void insertRoadLane(int numberOfSameLane);

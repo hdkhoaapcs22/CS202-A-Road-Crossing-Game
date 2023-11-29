@@ -17,6 +17,8 @@ void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, 
                                           float dt) {
     if (movementCD > 0)
         return;
+    if (isDead)
+        return;
     Vector2 initialPosition = {coordinateXOfCharacter, lanePtr->getCoordinateYOfLane()};
     switch (direction) {
         case MOVE_UP: {
@@ -79,4 +81,8 @@ void Character::draw() {
                                      - deltaPosition.y * movementCD / Config::TIME_MOVEMENT};
 
     mIdleAnimation.draw(displayedPosition, {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
+}
+
+void Character::setDead() {
+    isDead = true;
 }

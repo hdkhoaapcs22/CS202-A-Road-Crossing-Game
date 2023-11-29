@@ -34,7 +34,7 @@ void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
            >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE) {
         delete lanes.front();
         lanes.pop_front();
-        while (lanes.size() < Config::NUMBER_OF_LANES) {
+        while (lanes.size() <= Config::NUMBER_OF_LANES) {
             int numberOfSameLane = rand() % 4 + 1;
             Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
             switch (laneName) {

@@ -67,10 +67,6 @@ void Character::update(float dt) {
     movementCD -= dt;
     if (movementCD < 0)
         movementCD = 0;
-    float coordinateXOfCharacterInCell = Config::WIDTH_OF_EACH_CELL / 2
-                                       + (coordinateXOfCharacter - Config::WIDTH_OF_CHARACTER / 2)
-                                             / Config::WIDTH_OF_EACH_CELL
-                                             * Config::WIDTH_OF_EACH_CELL;
     mIdleAnimation.update(dt);
 }
 

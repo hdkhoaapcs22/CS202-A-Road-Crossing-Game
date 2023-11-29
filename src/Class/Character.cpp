@@ -77,7 +77,8 @@ void Character::update(float dt) {
 void Character::draw() {
     Vector2 displayedPosition = {coordinateXOfCharacter - WIDTH_OF_CHARACTER_SPRITE / 2
                                      - deltaPosition.x * movementCD / Config::TIME_MOVEMENT,
-                                 lanePtr->getCoordinateYOfLane() - HEIGHT_OF_CHARACTER_SPRITE * 2 / 3
+                                 lanePtr->getCoordinateYOfLane()
+                                     - HEIGHT_OF_CHARACTER_SPRITE * 2 / 3
                                      - deltaPosition.y * movementCD / Config::TIME_MOVEMENT};
 
     mIdleAnimation.draw(displayedPosition, {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});

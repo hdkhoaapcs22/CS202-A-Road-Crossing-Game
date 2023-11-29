@@ -28,7 +28,6 @@ Map::Map() {
 }
 
 void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
-    std::cout << moving << std::endl;
     if (moving)
         moveLanes(dt, speedMultiplier, characterLanePtr);
     while (lanes.front()->getCoordinateYOfLane()

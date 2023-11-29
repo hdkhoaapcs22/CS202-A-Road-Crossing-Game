@@ -1,6 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "../gui/GUIComponents/GUITexture.h"
 #include "Character.h"
 #include "Map.h"
 
@@ -30,10 +31,14 @@ private:
 
     GameState gameState{GameState::WaitingToStart};
 
+    GUITexture scoreFrame;
+
 private:
     void moveCharacter(int direction, float dt);
     void executeMovement(int direction, float dt);
     void getInputs(float dt);
+    
+    void drawScore();
 };
 
 #endif

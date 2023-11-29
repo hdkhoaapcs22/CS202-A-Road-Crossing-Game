@@ -7,6 +7,9 @@ Core::Core() {
     virtualScore = 0;
     character.assignLane(gameMap.getFirstLaneOfCharacter());
     gameMap.setMoving(false);
+
+    scoreFrame.setTexture(TextureHolder::get(TextureID::Score));
+    scoreFrame.setPosition({15, 14});
 }
 
 float Core::getSpeedMultiplier() {
@@ -72,6 +75,7 @@ void Core::draw() {
     ClearBackground(BLACK);
     gameMap.draw();
     character.draw();
+    drawScore();
 }
 
 void Core::executeMovement(int direction, float dt) {
@@ -105,6 +109,13 @@ void Core::getInputs(float dt) {
         executeMovement(Character::MOVE_LEFT, dt);
     else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT))
         executeMovement(Character::MOVE_RIGHT, dt);
+}
+
+void Core::drawScore() {
+    scoreFrame.draw();
+    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(),
+               {130, 25}, 48, 0,
+               WHITE);
 }
 
 bool Core::isLost() {

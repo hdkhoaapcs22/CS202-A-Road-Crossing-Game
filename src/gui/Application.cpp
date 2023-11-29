@@ -71,9 +71,10 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::PopUpCloseButton,
                         BASE_PATH + "PopUpCloseButton.png");
     TextureHolder::load(TextureID::SafeLane, BASE_PATH + "SafeLane.png");
+    TextureHolder::load(TextureID::Score, BASE_PATH + "Score.png");
 }
 
 void Application::loadFonts() {
-    // std::string BASE_PATH = "asset/font/";
-    // FontHolder::load(FontID::Inter, BASE_PATH + "Inter.ttf");
+    std::string BASE_PATH = "asset/font/";
+    FontHolder::load(FontID::Acme, BASE_PATH + "Acme.ttf");
 }

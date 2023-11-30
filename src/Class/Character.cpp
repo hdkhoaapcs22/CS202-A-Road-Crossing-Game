@@ -4,7 +4,8 @@
 
 Character::Character()
 : coordinateXOfCharacter(Config::FIRST_POSITION_OF_CHARACTER)
-, lanePtr(nullptr) {
+, lanePtr(nullptr)
+, deltaPosition({0, 0}) {
     movementCD = 0;
     mIdleAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieIdleAnim));
     mIdleAnimation.setRepeating(true);

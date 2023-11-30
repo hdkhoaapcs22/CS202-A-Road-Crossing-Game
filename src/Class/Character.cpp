@@ -11,6 +11,12 @@ Character::Character()
     mIdleAnimation.setDuration(2);
     mIdleAnimation.setSpriteSheetGridSize({6, 5});
     mIdleAnimation.setNumFrames(30);
+
+    mDeadAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieDeadAnim));
+    mDeadAnimation.setRepeating(false);
+    mDeadAnimation.setDuration(2);
+    mDeadAnimation.setSpriteSheetGridSize({6, 5});
+    mDeadAnimation.setNumFrames(30);
 }
 
 void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction,
@@ -67,7 +73,10 @@ void Character::update(float dt) {
     movementCD -= dt;
     if (movementCD < 0)
         movementCD = 0;
-    mIdleAnimation.update(dt);
+    if (isDead)
+        mDeadAnimation.update(dt);
+    else
+        mIdleAnimation.update(dt);
 }
 
 void Character::draw() {
@@ -77,7 +86,12 @@ void Character::draw() {
                                      - HEIGHT_OF_CHARACTER_SPRITE * 2 / 3
                                      - deltaPosition.y * movementCD / Config::TIME_MOVEMENT};
 
-    mIdleAnimation.draw(displayedPosition, {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
+    if (isDead)
+        mDeadAnimation.draw(displayedPosition,
+                            {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
+    else
+        mIdleAnimation.draw(displayedPosition,
+                            {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
 }
 
 void Character::setDead() {

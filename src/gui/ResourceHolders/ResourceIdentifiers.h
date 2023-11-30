@@ -4,6 +4,7 @@
 enum class TextureID {
     None,
     ZombieIdleAnim,
+    ZombieDeadAnim,
     MenuBackground,
     MenuPlayButton,
     MenuSettingsButton,

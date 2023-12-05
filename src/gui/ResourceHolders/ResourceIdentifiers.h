@@ -10,10 +10,13 @@ enum class TextureID {
     MenuCreditsButton,
     PopUpMenu,
     PopUpCloseButton,
+    SafeLane,
+    Score
 };
 
 enum class FontID {
     None,
+    Acme,
 };
 
 #endif // RESOURCEHOLDERS_RESOURCEIDENTIFIERS_H

@@ -2,11 +2,16 @@
 
 SafeLane::SafeLane(float coordinateYOfLane)
 : Lane(coordinateYOfLane, Lane::LaneName::SafeLane) {
+    mTexture = std::make_shared<GUITexture>();
+    mTexture->setTexture(TextureHolder::get(TextureID::SafeLane));
+    mTexture->setSize({Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE});
+
     int obstaclesNum = rand() % 5;
     for (int i = 0; i < obstaclesNum; ++i) {
         Obstacle* newObstacle = new Obstacle();
-        while (checkOverlap(newObstacle->getCoordinateX()))
-            newObstacle->randomCoordinateXOfObstacles();
+        while (checkOverlap(newObstacle->getCoordinateX())) {
+            newObstacle->setCoordinateX(newObstacle->randomCoordinateXOfObstacles());
+        }
         obstacles.push_back(newObstacle);
     }
 }
@@ -19,6 +24,15 @@ SafeLane::~SafeLane() {
 }
 
 void SafeLane::update(float dt) {
+}
+
+void SafeLane::draw() {
+    float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
+    mTexture->setPosition({0, coordinateYOfLane});
+    mTexture->draw();
+    for (Obstacle* ptr : obstacles) {
+        ptr->draw(coordinateYOfLane);
+    }
 }
 
 bool SafeLane::checkOverlap(int x) {

@@ -9,7 +9,15 @@ float Enemy::getCoordinateXOfEnemy() {
 }
 
 bool Enemy::checkCollision(int leftHitbox, int rightHitbox) {
-    return coordinateX + this->getWidth() / 2 > leftHitbox && coordinateX - this->getWidth() / 2 < rightHitbox;
+    return coordinateX + this->getWidth() / 2 > leftHitbox
+        && coordinateX - this->getWidth() / 2 < rightHitbox;
+}
+
+void Enemy::draw(float coordinateYOfLane) {
+    float coordinateXOfEnemy = coordinateX - this->getWidth() / 2;
+    float coordinateYOfEnemy = coordinateYOfLane;
+    DrawRectangle(coordinateXOfEnemy, coordinateYOfEnemy, this->getWidth(), Config::SIZE_OF_A_LANE,
+                  RED);
 }
 
 Enemy::Enemy(Direction direct, float coordinateXOfEnemy)

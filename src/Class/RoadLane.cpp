@@ -9,14 +9,14 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
     int x = rand() % 2;
     if (x == 0) {
         direct = Direction::Left;
-        float startingX = 0;
+        float startingX = 0 + rand() % (Config::ENEMY_DISTANCE);
         while (startingX < Config::WINDOW_WIDTH) {
             createEnemy(enemyID, startingX);
             startingX += enemies.back()->getWidth() + Config::ENEMY_DISTANCE;
         }
     } else {
         direct = Direction::Right;
-        float startingX = Config::WINDOW_WIDTH;
+        float startingX = Config::WINDOW_WIDTH - rand() % (Config::ENEMY_DISTANCE);
         while (startingX > 0) {
             createEnemy(enemyID, startingX);
             startingX -= enemies.back()->getWidth() + Config::ENEMY_DISTANCE;
@@ -29,16 +29,20 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
 void RoadLane::manageTraffic(float dt) {
     if (!hasTrafficLight || !isRedSignal) {
         int tmp = enemies.size();
-        for (int i = tmp - 1; i >= 0; --i) {
+        for (int i = 0; i < tmp; ++i) {
             enemies[i]->moveEnemy(dt);
-            if (i == tmp - 1) {
-                manageEnemies(enemies[tmp - 1]);
-                if (direct == Direction::Left) {
-                    createEnemy(enemyID, 0);
-                } else {
-                    createEnemy(enemyID, Config::WINDOW_WIDTH);
-                }
-            }
+        }
+    }
+    manageEnemies(enemies[0]);
+    if (direct == Direction::Right) {
+        if (enemies.back()->getCoordinateXOfEnemy()
+            > enemies.back()->getWidth() + Config::ENEMY_DISTANCE) {
+            createEnemy(enemyID, 0);
+        }
+    } else {
+        if (enemies.back()->getCoordinateXOfEnemy()
+            < Config::WINDOW_WIDTH - enemies.back()->getWidth() - Config::ENEMY_DISTANCE) {
+            createEnemy(enemyID, Config::WINDOW_WIDTH);
         }
     }
 }
@@ -46,8 +50,8 @@ void RoadLane::manageTraffic(float dt) {
 void RoadLane::manageEnemies(Enemy *enemy) {
     if (enemy->getCoordinateXOfEnemy() > Config::WINDOW_WIDTH
         || enemy->getCoordinateXOfEnemy() < 0) {
-        delete enemies.back();
-        enemies.pop_back();
+        delete enemies.front();
+        enemies.pop_front();
     }
 }
 
@@ -71,6 +75,15 @@ void RoadLane::update(float dt) {
     if (breakTimer >= BREAK_TIME) {
         breakTimer = 0;
         isRedSignal = !isRedSignal;
+    }
+}
+
+void RoadLane::draw() {
+    float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
+    DrawRectangle(0, coordinateYOfLane, Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE, GRAY);
+
+    for (Enemy *enemy : enemies) {
+        enemy->draw(coordinateYOfLane);
     }
 }
 

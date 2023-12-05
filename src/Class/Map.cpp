@@ -10,7 +10,7 @@ Map::Map() {
     insertSafeLane(numberOfSameLane - 1);
     numberOfSameLane = rand() % 4 + 1;
     insertRoadLane(numberOfSameLane);
-    while (lanes.size() <= Lane::NUMBER_OF_LANES) {
+    while (lanes.size() <= Config::NUMBER_OF_LANES) {
         numberOfSameLane = rand() % 4 + 1;
         Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
         switch (laneName) {
@@ -21,19 +21,20 @@ Map::Map() {
                 insertSafeLane(numberOfSameLane);
                 break;
             default:
-                //insertRiverLane(numberOfSameLane);
+                // insertRiverLane(numberOfSameLane);
                 break;
         }
     }
 }
 
-void Map::update(float dt, float speedMultiplier, Lane *characterLanePtr) {
-    moveLanes(dt, speedMultiplier, characterLanePtr);
-    for (Lane* lane : lanes) lane->update(dt);
-    if (lanes.front()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT + Lane::SIZE_OF_A_LANE) {
+void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
+    if (moving)
+        moveLanes(dt, speedMultiplier, characterLanePtr);
+    while (lanes.front()->getCoordinateYOfLane()
+           >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE) {
         delete lanes.front();
         lanes.pop_front();
-        if (lanes.size() == Lane::NUMBER_OF_LANES) {
+        while (lanes.size() <= Config::NUMBER_OF_LANES) {
             int numberOfSameLane = rand() % 4 + 1;
             Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
             switch (laneName) {
@@ -44,11 +45,17 @@ void Map::update(float dt, float speedMultiplier, Lane *characterLanePtr) {
                     insertSafeLane(numberOfSameLane);
                     break;
                 default:
-                    //insertRiverLane(numberOfSameLane);
+                    // insertRiverLane(numberOfSameLane);
                     break;
             }
         }
     }
+    for (Lane* lane : lanes) lane->update(dt);
+}
+
+void Map::draw() {
+    ClearBackground(BLACK);
+    for (Lane* lane : lanes) lane->draw();
 }
 
 Map::~Map() {
@@ -58,11 +65,17 @@ Map::~Map() {
     }
 }
 
-void Map::moveLanes(float dt, float speedMultiplier, Lane *characterLanePtr) {
+void Map::moveLanes(float dt, float speedMultiplier, Lane* characterLanePtr) {
     int index = 0;
     for (std::deque<Lane*>::iterator it = lanes.begin(); it != lanes.end(); ++it, ++index)
-        if (*it == characterLanePtr) break;
-    for (Lane* lane : lanes) lane->move(dt, speedMultiplier, index);
+        if (*it == characterLanePtr)
+            break;
+
+    float speed = Config::BASE_SPEED
+                + std::max(0.0f, Config::CAMERA_OFFSET - characterLanePtr->getCoordinateYOfLane())
+                      * Config::ACCERELATED_SPEED;
+
+    for (Lane* lane : lanes) lane->move(speed * dt * speedMultiplier);
 }
 
 Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
@@ -79,7 +92,7 @@ Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
         return (it == lanes.begin()) ? nullptr : *(--it);
 
     if (direction == "UP")
-        return (i >= Lane::NUMBER_OF_LANES - 1) ? nullptr : *(++it);
+        return (i >= Config::NUMBER_OF_LANES - 1) ? nullptr : *(++it);
 
     return nullptr;
 }
@@ -87,13 +100,15 @@ Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
 void Map::insertRoadLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i) {
         Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
-        lanes.push_back(new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() - Lane::SIZE_OF_A_LANE));
+        lanes.push_back(
+            new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
     }
 }
 
 void Map::insertSafeLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i)
-        lanes.push_back(new SafeLane(lanes.back()->getCoordinateYOfLane() - Lane::SIZE_OF_A_LANE));
+        lanes.push_back(
+            new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {
@@ -110,4 +125,8 @@ Lane* Map::getFirstLane() {
 
 Lane* Map::getFirstLaneOfCharacter() {
     return lanes[2];
+}
+
+void Map::setMoving(bool moving) {
+    this->moving = moving;
 }

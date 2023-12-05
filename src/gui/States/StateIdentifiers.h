@@ -6,6 +6,7 @@ enum class StateIDs {
     Home,
     Settings,
     Credits,
+    Game,
 };
 
 #endif // STATES_STATEIDENTIFIERS_H

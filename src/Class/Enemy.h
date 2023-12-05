@@ -3,6 +3,10 @@
 
 #include <cstdlib>
 
+#include "raylib.h"
+
+#include "../Config.h"
+
 enum class Direction : int {
     Left = -1,
     Right = 1
@@ -29,6 +33,8 @@ public:
     virtual EnemyID getEnemyID() const = 0;
     float getCoordinateXOfEnemy();
     bool checkCollision(int leftHitbox, int rightHitbox);
+
+    void draw(float coordinateYOfLane);
 
 private:
     Direction direct;

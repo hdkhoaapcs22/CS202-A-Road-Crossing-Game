@@ -35,6 +35,7 @@ private:
     Lane* lanePtr;
     float movementCD;
     Animation mIdleAnimation;
+    Animation mDeadAnimation;
 
     bool isDead{false};
 };

@@ -8,7 +8,7 @@
 
 class SafeLane : public Lane {
 public:
-    SafeLane(float coordinateYOfLane);
+    SafeLane(float coordinateYOfLane, bool hasObstacle = true);
     ~SafeLane();
     void update(float dt);
     void draw();

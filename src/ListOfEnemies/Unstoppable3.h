@@ -12,7 +12,7 @@ public:
     }
 
     int getSpeed() const {
-        return 10;
+        return 100;
     }
 
     int getWidth() const {

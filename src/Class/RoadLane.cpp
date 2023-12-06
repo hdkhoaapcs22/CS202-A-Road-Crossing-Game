@@ -17,7 +17,7 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
     createEnemy(enemyID, 0);
     int enemySpeed = enemies.back()->getSpeed();
     int enemyWidth = enemies.back()->getWidth();
-    enemies.pop_back();
+    deleteEnemiesBack();
 
     spawnTime = (float)(enemyWidth + Config::ENEMY_DISTANCE) / enemySpeed;
     checkHasTrafficLight();
@@ -40,7 +40,7 @@ void RoadLane::manageTraffic(float dt) {
             // Create a temporary enemy to get the speed in case of the queue is empty
             createEnemy(enemyID, 0);
             int enemySpeed = enemies.back()->getSpeed();
-            enemies.pop_back();
+            deleteEnemiesBack();
 
             if (!hasTrafficLight || !isRedSignal) // Only spawn when the signal is green
                 if (direct == Direction::Right) {
@@ -151,4 +151,9 @@ void RoadLane::createEnemy(Enemy::EnemyID enemyID, float startingX) {
         default:
             break;
     }
+}
+
+void RoadLane::deleteEnemiesBack() {
+    delete enemies.back();
+    enemies.pop_back();
 }

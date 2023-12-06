@@ -36,6 +36,7 @@ private:
 
 private:
     void createEnemy(Enemy::EnemyID enemyID, float startingX);
+    void deleteEnemiesBack();
     void checkHasTrafficLight();
     void manageTraffic(float dt);
     void manageEnemies(Enemy *enemy);

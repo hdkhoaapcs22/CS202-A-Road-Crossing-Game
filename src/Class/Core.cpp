@@ -3,15 +3,12 @@
 #include "SafeLane.h"
 
 Core::Core() {
+    initializeGUI();
+
     score = 0;
     virtualScore = 0;
     character.assignLane(gameMap.getFirstLaneOfCharacter());
     gameMap.setMoving(false);
-
-    scoreFrame = std::make_shared<GUITexture>();
-
-    scoreFrame->setTexture(TextureHolder::get(TextureID::Score));
-    scoreFrame->setPosition({15, 14});
 }
 
 float Core::getSpeedMultiplier() {
@@ -118,6 +115,13 @@ void Core::drawScore() {
     DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(),
                {130, 25}, 48, 0,
                WHITE);
+}
+
+void Core::initializeGUI() {
+    scoreFrame = std::make_shared<GUITexture>();
+
+    scoreFrame->setTexture(TextureHolder::get(TextureID::Score));
+    scoreFrame->setPosition({15, 14});
 }
 
 bool Core::isLost() {

@@ -40,6 +40,8 @@ private:
     void checkHasTrafficLight();
     void manageTraffic(float dt);
     void manageEnemies(Enemy *enemy);
+
+    void initializeGUI();
 };
 
 #endif

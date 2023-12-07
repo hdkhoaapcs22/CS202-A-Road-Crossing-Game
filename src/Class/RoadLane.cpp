@@ -7,6 +7,8 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
 , breakTimer(0)
 , spawnTimer(0)
 , enemyID(enemyID) {
+    initializeGUI();
+
     int x = rand() % 2;
     if (x == 0) {
         direct = Direction::Left;
@@ -58,6 +60,9 @@ void RoadLane::manageEnemies(Enemy *enemy) {
         delete enemies.front();
         enemies.pop_front();
     }
+}
+
+void RoadLane::initializeGUI() {
 }
 
 void RoadLane::checkHasTrafficLight() {

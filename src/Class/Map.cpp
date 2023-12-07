@@ -5,6 +5,8 @@
 // #include "RiverLane.h"
 
 Map::Map() {
+    initializeGUI();
+
     int numberOfSameLane = rand() % 2 + 3;
     lanes.push_back(new SafeLane(Config::WINDOW_HEIGHT, false));
     for (int i = 0; i < numberOfSameLane - 1; ++i)
@@ -111,6 +113,9 @@ void Map::insertSafeLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i)
         lanes.push_back(
             new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
+}
+
+void Map::initializeGUI() {
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {

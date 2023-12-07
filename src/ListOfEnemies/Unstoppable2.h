@@ -16,5 +16,8 @@ public:
     int getWidth() const {
         return 100;
     }
+
+private:
+    void initializeGUI();
 };
 #endif

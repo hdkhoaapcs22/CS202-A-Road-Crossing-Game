@@ -39,6 +39,8 @@ private:
     void getInputs(float dt);
     
     void drawScore();
+
+    void initializeGUI();
 };
 
 #endif

@@ -6,18 +6,8 @@ Character::Character()
 : coordinateXOfCharacter(Config::FIRST_POSITION_OF_CHARACTER)
 , lanePtr(nullptr)
 , deltaPosition({0, 0}) {
+    initializeGUI();
     movementCD = 0;
-    mIdleAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieIdleAnim));
-    mIdleAnimation.setRepeating(true);
-    mIdleAnimation.setDuration(2);
-    mIdleAnimation.setSpriteSheetGridSize({6, 5});
-    mIdleAnimation.setNumFrames(30);
-
-    mDeadAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieDeadAnim));
-    mDeadAnimation.setRepeating(false);
-    mDeadAnimation.setDuration(2);
-    mDeadAnimation.setSpriteSheetGridSize({6, 5});
-    mDeadAnimation.setNumFrames(30);
 }
 
 void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction,
@@ -97,4 +87,18 @@ void Character::draw() {
 
 void Character::setDead() {
     isDead = true;
+}
+
+void Character::initializeGUI() {
+    mIdleAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieIdleAnim));
+    mIdleAnimation.setRepeating(true);
+    mIdleAnimation.setDuration(2);
+    mIdleAnimation.setSpriteSheetGridSize({6, 5});
+    mIdleAnimation.setNumFrames(30);
+
+    mDeadAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieDeadAnim));
+    mDeadAnimation.setRepeating(false);
+    mDeadAnimation.setDuration(2);
+    mDeadAnimation.setSpriteSheetGridSize({6, 5});
+    mDeadAnimation.setNumFrames(30);
 }

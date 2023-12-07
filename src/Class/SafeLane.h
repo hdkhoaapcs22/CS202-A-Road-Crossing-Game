@@ -18,6 +18,9 @@ private:
     std::vector<Obstacle*> obstacles;
 
     GUITexture::Ptr mTexture;
+
+private:
+    void initializeGUI();
 };
 
 #endif

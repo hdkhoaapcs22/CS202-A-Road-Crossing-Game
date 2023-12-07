@@ -29,6 +29,8 @@ public:
     void draw();
 
     void setDead();
+
+    void initializeGUI();
 private:
     Vector2 deltaPosition;
     float coordinateXOfCharacter;

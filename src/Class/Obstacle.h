@@ -25,6 +25,9 @@ public:
 private:
     int coordinateXOfObstacles;
     ObstacleName obstacleName;
+
+private:
+    void initializeGUI();
 };
 
 #endif

@@ -5,44 +5,51 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
 , hasTrafficLight(false)
 , isRedSignal(false)
 , breakTimer(0)
+, spawnTimer(0)
 , enemyID(enemyID) {
+    initializeGUI();
+
     int x = rand() % 2;
     if (x == 0) {
         direct = Direction::Left;
-        float startingX = 0 + rand() % (Config::ENEMY_DISTANCE);
-        while (startingX < Config::WINDOW_WIDTH) {
-            createEnemy(enemyID, startingX);
-            startingX += enemies.back()->getWidth() + Config::ENEMY_DISTANCE;
-        }
     } else {
         direct = Direction::Right;
-        float startingX = Config::WINDOW_WIDTH - rand() % (Config::ENEMY_DISTANCE);
-        while (startingX > 0) {
-            createEnemy(enemyID, startingX);
-            startingX -= enemies.back()->getWidth() + Config::ENEMY_DISTANCE;
-        }
     }
+    // Create temporary enemy
+    createEnemy(enemyID, 0);
+    int enemySpeed = enemies.back()->getSpeed();
+    int enemyWidth = enemies.back()->getWidth();
+    deleteEnemiesBack();
 
+    spawnTime = (float)(enemyWidth + Config::ENEMY_DISTANCE) / enemySpeed;
     checkHasTrafficLight();
+
+    update(100 + rand() % 100); // advance forward to populate the lane
 }
 
 void RoadLane::manageTraffic(float dt) {
-    if (!hasTrafficLight || !isRedSignal) {
-        int tmp = enemies.size();
-        for (int i = 0; i < tmp; ++i) {
-            enemies[i]->moveEnemy(dt);
-        }
+    int tmp = enemies.size();
+    for (int i = 0; i < tmp; ++i) {
+        enemies[i]->moveEnemy(dt);
     }
-    manageEnemies(enemies[0]);
-    if (direct == Direction::Right) {
-        if (enemies.back()->getCoordinateXOfEnemy()
-            > enemies.back()->getWidth() + Config::ENEMY_DISTANCE) {
+
+    if (!enemies.empty())
+        manageEnemies(enemies[0]);
+    spawnTimer += dt;
+    if (spawnTimer >= spawnTime) {
+        while (spawnTimer >= spawnTime) {
+            spawnTimer -= spawnTime;
+            // Create a temporary enemy to get the speed in case of the queue is empty
             createEnemy(enemyID, 0);
-        }
-    } else {
-        if (enemies.back()->getCoordinateXOfEnemy()
-            < Config::WINDOW_WIDTH - enemies.back()->getWidth() - Config::ENEMY_DISTANCE) {
-            createEnemy(enemyID, Config::WINDOW_WIDTH);
+            int enemySpeed = enemies.back()->getSpeed();
+            deleteEnemiesBack();
+
+            if (!hasTrafficLight || !isRedSignal) // Only spawn when the signal is green
+                if (direct == Direction::Right) {
+                    createEnemy(enemyID, 0 + spawnTimer * enemySpeed);
+                } else {
+                    createEnemy(enemyID, Config::WINDOW_WIDTH - spawnTimer * enemySpeed);
+                }
         }
     }
 }
@@ -53,6 +60,9 @@ void RoadLane::manageEnemies(Enemy *enemy) {
         delete enemies.front();
         enemies.pop_front();
     }
+}
+
+void RoadLane::initializeGUI() {
 }
 
 void RoadLane::checkHasTrafficLight() {
@@ -72,8 +82,8 @@ void RoadLane::checkHasTrafficLight() {
 void RoadLane::update(float dt) {
     manageTraffic(dt);
     breakTimer += dt;
-    if (breakTimer >= BREAK_TIME) {
-        breakTimer = 0;
+    while (breakTimer >= BREAK_TIME) {
+        breakTimer -= BREAK_TIME;
         isRedSignal = !isRedSignal;
     }
 }
@@ -84,6 +94,17 @@ void RoadLane::draw() {
 
     for (Enemy *enemy : enemies) {
         enemy->draw(coordinateYOfLane);
+    }
+
+    if (hasTrafficLight) {
+        if (direct == Direction::Right) {
+            if (isRedSignal)
+                DrawRectangle(0, coordinateYOfLane, 50, Config::SIZE_OF_A_LANE, BLACK);
+        } else {
+            if (isRedSignal)
+                DrawRectangle(Config::WINDOW_WIDTH - 50, coordinateYOfLane, 50,
+                              Config::SIZE_OF_A_LANE, BLACK);
+        }
     }
 }
 
@@ -135,4 +156,9 @@ void RoadLane::createEnemy(Enemy::EnemyID enemyID, float startingX) {
         default:
             break;
     }
+}
+
+void RoadLane::deleteEnemiesBack() {
+    delete enemies.back();
+    enemies.pop_back();
 }

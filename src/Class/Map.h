@@ -32,6 +32,7 @@ private:
     void insertRoadLane(int numberOfSameLane);
     void insertSafeLane(int numberOfSameLane);
     // void insertRiverLane();
+    void initializeGUI();
 };
 
 #endif

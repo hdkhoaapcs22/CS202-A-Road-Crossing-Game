@@ -2,4 +2,8 @@
 
 Stoppable2::Stoppable2(Direction direct, int coordinateXOfEnemy)
 : Enemy(direct, coordinateXOfEnemy) {
+    initializeGUI();
+}
+
+void Stoppable2::initializeGUI() {
 }

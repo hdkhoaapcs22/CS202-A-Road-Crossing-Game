@@ -59,6 +59,8 @@ void Application::loadTextures() {
     std::string BASE_PATH = "asset/texture/";
     TextureHolder::load(TextureID::ZombieIdleAnim,
                         BASE_PATH + "ZombieIdleAnim.png");
+    TextureHolder::load(TextureID::ZombieDeadAnim,
+                        BASE_PATH + "ZombieDeadAnim.png");
     TextureHolder::load(TextureID::MenuBackground,
                         BASE_PATH + "MenuBackground.png");
     TextureHolder::load(TextureID::MenuPlayButton,

@@ -29,12 +29,15 @@ public:
     void draw();
 
     void setDead();
+
+    void initializeGUI();
 private:
     Vector2 deltaPosition;
     float coordinateXOfCharacter;
     Lane* lanePtr;
     float movementCD;
     Animation mIdleAnimation;
+    Animation mDeadAnimation;
 
     bool isDead{false};
 };

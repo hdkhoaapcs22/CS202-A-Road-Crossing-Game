@@ -24,19 +24,24 @@ public:
     ~RoadLane();
     bool checkCollision(int leftHitbox, int rightHitbox);
 private:
-    static const int BREAK_TIME = 3;
+    static constexpr float BREAK_TIME = 5;
     bool hasTrafficLight;
     bool isRedSignal;
-    int breakTimer;
+    float breakTimer;
+    float spawnTimer;
+    float spawnTime;
     Direction direct;
     Enemy::EnemyID enemyID;
     std::deque<Enemy *> enemies;
 
 private:
     void createEnemy(Enemy::EnemyID enemyID, float startingX);
+    void deleteEnemiesBack();
     void checkHasTrafficLight();
     void manageTraffic(float dt);
     void manageEnemies(Enemy *enemy);
+
+    void initializeGUI();
 };
 
 #endif

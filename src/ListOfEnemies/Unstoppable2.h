@@ -10,11 +10,14 @@ public:
     }
 
     int getSpeed() const {
-        return 10;
+        return 100;
     }
 
     int getWidth() const {
         return 100;
     }
+
+private:
+    void initializeGUI();
 };
 #endif

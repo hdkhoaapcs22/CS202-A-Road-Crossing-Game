@@ -31,3 +31,6 @@ void Obstacle::draw(int coordinateYOfLane) {
     DrawRectangle(coordinateXOfObstacles * Config::WIDTH_OF_EACH_CELL, coordinateYOfLane,
                   Config::WIDTH_OF_EACH_CELL, Config::WIDTH_OF_EACH_CELL, BLUE);
 }
+
+void Obstacle::initializeGUI() {
+}

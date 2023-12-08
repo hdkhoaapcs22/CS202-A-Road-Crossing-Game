@@ -16,6 +16,8 @@
 #include "../ListOfEnemies/Unstoppable5.h"
 #include "Lane.h"
 
+#include "../gui/GUIComponents/GUITexture.h"
+
 class RoadLane : public Lane {
 public:
     RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane);
@@ -33,6 +35,8 @@ private:
     Direction direct;
     Enemy::EnemyID enemyID;
     std::deque<Enemy *> enemies;
+
+    GUITexture::Ptr mTexture;
 
 private:
     void createEnemy(Enemy::EnemyID enemyID, float startingX);

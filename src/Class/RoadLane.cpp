@@ -63,6 +63,9 @@ void RoadLane::manageEnemies(Enemy *enemy) {
 }
 
 void RoadLane::initializeGUI() {
+    mTexture = std::make_shared<GUITexture>();
+    mTexture->setTexture(TextureHolder::get(TextureID::RoadLane));
+    mTexture->setSize({Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE});
 }
 
 void RoadLane::checkHasTrafficLight() {
@@ -90,7 +93,8 @@ void RoadLane::update(float dt) {
 
 void RoadLane::draw() {
     float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
-    DrawRectangle(0, coordinateYOfLane, Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE, GRAY);
+    mTexture->setPosition({0, coordinateYOfLane});
+    mTexture->draw();
 
     for (Enemy *enemy : enemies) {
         enemy->draw(coordinateYOfLane);

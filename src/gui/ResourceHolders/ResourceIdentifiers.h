@@ -12,6 +12,7 @@ enum class TextureID {
     PopUpMenu,
     PopUpCloseButton,
     SafeLane,
+    RoadLane,
     Score
 };
 

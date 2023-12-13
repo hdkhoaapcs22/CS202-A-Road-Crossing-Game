@@ -25,6 +25,10 @@ void StateStack::pushState(StateIDs stateID) {
     mPendingList.push_back(PendingChange(Action::Push, stateID));
 }
 
+void StateStack::pushParameterizedState(StateIDs stateID, BaseParameter *parameter) {
+    mPendingList.push_back(PendingChange(Action::PushParameterized, stateID, parameter));
+}
+
 void StateStack::popState() {
     mPendingList.push_back(PendingChange(Action::Pop));
 }
@@ -43,7 +47,10 @@ void StateStack::applyPendingChange() {
             case Action::Push:
                 mStack.push_back(createState(change.stateID));
                 break;
-
+            case Action::PushParameterized:
+                mStack.push_back(createState(change.stateID));
+                mStack.back()->setParameter(change.parameter);
+                break;
             case Action::Pop:
                 mStack.pop_back();
                 break;
@@ -63,7 +70,8 @@ State::Ptr StateStack::createState(StateIDs stateID) {
     return found->second();
 }
 
-StateStack::PendingChange::PendingChange(Action action, StateIDs stateID)
+StateStack::PendingChange::PendingChange(Action action, StateIDs stateID, BaseParameter *parameter)
 : action(action)
-, stateID(stateID) {
+, stateID(stateID)
+, parameter(parameter) {
 }

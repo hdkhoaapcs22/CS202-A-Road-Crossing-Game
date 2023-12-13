@@ -1,6 +1,7 @@
 #ifndef STATES_STATE_H
 #define STATES_STATE_H
 
+#include "../BaseParameter.h"
 #include "../ColorPalettes/AppColorPalette.h"
 #include "../ResourceHolders/TextureHolder.h"
 #include "StateIdentifiers.h"
@@ -21,9 +22,11 @@ public:
 
     virtual bool update(float dt) = 0;
     virtual void draw() = 0;
+    virtual void setParameter(BaseParameter *parameter);
 
 protected:
     void requestStackPush(StateIDs stateID);
+    void requestStackPush(StateIDs stateID, BaseParameter *parameter);
     void requestStackPop();
     void requestStackClear();
 

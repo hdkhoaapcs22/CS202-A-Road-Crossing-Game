@@ -100,6 +100,12 @@ void Core::executeMovement(int direction, float dt) {
 void Core::getInputs(float dt) {
     if (gameState == GameState::Lost)
         return;
+    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP) || IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)
+        || IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+        character.prepareMovement(true);
+    } else {
+        character.prepareMovement(false);
+    }
     if (IsKeyReleased(KEY_W) || IsKeyReleased(KEY_UP))
         executeMovement(Character::MOVE_UP, dt);
     else if (IsKeyReleased(KEY_S) || IsKeyReleased(KEY_DOWN))
@@ -112,8 +118,7 @@ void Core::getInputs(float dt) {
 
 void Core::drawScore() {
     scoreFrame->draw();
-    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(),
-               {130, 25}, 48, 0,
+    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(), {130, 25}, 48, 0,
                WHITE);
 }
 

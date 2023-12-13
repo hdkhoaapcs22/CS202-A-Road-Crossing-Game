@@ -25,6 +25,8 @@ public:
     Lane* getLanePtr();
     float getCoordinateX() const;
 
+    void prepareMovement(bool isPreparing);
+
     void update(float dt);
     void draw();
 
@@ -40,6 +42,7 @@ private:
     Animation mDeadAnimation;
 
     bool isDead{false};
+    bool isPreparingMovement{false};
 };
 
 #endif

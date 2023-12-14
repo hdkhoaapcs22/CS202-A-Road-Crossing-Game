@@ -111,7 +111,7 @@ void Character::initializeGUI() {
 
     mDeadAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieDeadAnim));
     mDeadAnimation.setRepeating(false);
-    mDeadAnimation.setDuration(2);
+    mDeadAnimation.setDuration(DEAD_ANIMATION_TIME);
     mDeadAnimation.setSpriteSheetGridSize({6, 5});
     mDeadAnimation.setNumFrames(30);
 }

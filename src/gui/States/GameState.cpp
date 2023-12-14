@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include <thread>
 
 GameState::GameState(StateStack& stack, Context context)
 : State(stack, context) {
@@ -18,7 +19,12 @@ bool GameState::update(float dt) {
     // }
     if (!isLost && mCore.isLost()) {
         isLost = true;
-        requestStackPush(StateIDs::GameOver, std::make_unique<ScoreData>(mCore.getScore()));
+        std::thread t([this]() {
+            std::this_thread::sleep_for(
+                std::chrono::milliseconds(int(Character::DEAD_ANIMATION_TIME * 1000)));
+            requestStackPush(StateIDs::GameOver, std::make_unique<ScoreData>(mCore.getScore()));
+        });
+        t.detach();
     }
     return true;
 }

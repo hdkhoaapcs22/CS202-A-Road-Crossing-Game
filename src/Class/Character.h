@@ -17,6 +17,8 @@ public:
     static const int WIDTH_OF_CHARACTER_SPRITE = 100;
     static const int HEIGHT_OF_CHARACTER_SPRITE = 150;
 
+    static constexpr float DEAD_ANIMATION_TIME = 2.0f;
+
 public:
     Character();
     void assignLane(Lane* firstLane);

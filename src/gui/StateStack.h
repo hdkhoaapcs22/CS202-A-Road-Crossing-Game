@@ -20,7 +20,7 @@ public:
     void draw();
 
     void pushState(StateIDs stateID);
-    void pushParameterizedState(StateIDs stateID, BaseParameter *parameter);
+    void pushParameterizedState(StateIDs stateID, BaseParameter::Ptr parameter);
     void popState();
     void clearStates();
 
@@ -36,11 +36,11 @@ private:
 
     struct PendingChange {
         explicit PendingChange(Action action,
-                               StateIDs stateID = StateIDs::None, BaseParameter *parameter = nullptr);
+                               StateIDs stateID = StateIDs::None, BaseParameter::Ptr parameter = nullptr);
 
         Action action;
         StateIDs stateID;
-        BaseParameter *parameter;
+        BaseParameter::Ptr parameter;
     };
 
 private:

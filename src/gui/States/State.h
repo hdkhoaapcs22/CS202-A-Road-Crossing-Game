@@ -22,11 +22,11 @@ public:
 
     virtual bool update(float dt) = 0;
     virtual void draw() = 0;
-    virtual void setParameter(BaseParameter *parameter);
+    virtual void setParameter(BaseParameter::Ptr parameter);
 
 protected:
     void requestStackPush(StateIDs stateID);
-    void requestStackPush(StateIDs stateID, BaseParameter *parameter);
+    void requestStackPush(StateIDs stateID, BaseParameter::Ptr parameter);
     void requestStackPop();
     void requestStackClear();
 

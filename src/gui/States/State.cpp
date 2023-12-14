@@ -9,15 +9,15 @@ State::State(StateStack &stack, Context context)
 State::~State() {
 }
 
-void State::setParameter(BaseParameter* parameter) {
+void State::setParameter(BaseParameter::Ptr parameter) {
 }
 
 void State::requestStackPush(StateIDs stateID) {
     mStack->pushState(stateID);
 }
 
-void State::requestStackPush(StateIDs stateID, BaseParameter* parameter) {
-    mStack->pushParameterizedState(stateID, parameter);
+void State::requestStackPush(StateIDs stateID, BaseParameter::Ptr parameter) {
+    mStack->pushParameterizedState(stateID, std::move(parameter));
 }
 
 void State::requestStackPop() {

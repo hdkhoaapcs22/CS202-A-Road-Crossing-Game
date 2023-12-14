@@ -15,7 +15,7 @@ bool HomeState::update(float dt) {
     for (auto &button : mButtons) {
         button->update(dt);
     }
-    return true;
+    return false;
 }
 
 void HomeState::draw() {
@@ -32,6 +32,7 @@ void HomeState::initButtons() {
     playButton->setSize({199, 68});
     playButton->setColor(BLANK);
     playButton->setCallback([this]() {
+        requestStackPop();
         requestStackPush(StateIDs::Game);
     });
     mButtons.push_back(std::move(playButton));

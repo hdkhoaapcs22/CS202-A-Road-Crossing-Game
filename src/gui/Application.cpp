@@ -73,6 +73,7 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::GameOver, BASE_PATH + "GameOver.png");
     TextureHolder::load(TextureID::HomeButton, BASE_PATH + "HomeButton.png");
     TextureHolder::load(TextureID::RetryButton, BASE_PATH + "RetryButton.png");
+    TextureHolder::load(TextureID::Obstacle, BASE_PATH + "Obstacle.png");
 }
 
 void Application::loadFonts() {

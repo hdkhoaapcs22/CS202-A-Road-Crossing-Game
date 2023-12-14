@@ -9,7 +9,6 @@ GUITexture::~GUITexture() {
 
 void GUITexture::update(float dt) {
 }
-
 void GUITexture::draw() {
     Rectangle destRect;
     if (mRect.width == 0 && mRect.height == 0) {

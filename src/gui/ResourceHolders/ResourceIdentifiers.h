@@ -17,6 +17,7 @@ enum class TextureID {
     GameOver,
     HomeButton,
     RetryButton,
+    Obstacle,
 };
 
 enum class FontID {

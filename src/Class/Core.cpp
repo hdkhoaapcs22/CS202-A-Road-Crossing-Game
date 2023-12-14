@@ -72,8 +72,9 @@ void Core::update(float dt) {
 
 void Core::draw() {
     ClearBackground(BLACK);
-    gameMap.draw();
+    gameMap.drawUpper(character.getLanePtr());
     character.draw();
+    gameMap.drawLower(character.getLanePtr());
     drawScore();
 }
 

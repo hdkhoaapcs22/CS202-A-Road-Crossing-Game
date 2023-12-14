@@ -7,6 +7,7 @@
 #include "raylib.h"
 
 #include "../Config.h"
+#include "../gui/GUIComponents/GUITexture.h"
 
 class Obstacle {
 public:
@@ -25,6 +26,8 @@ public:
 private:
     int coordinateXOfObstacles;
     ObstacleName obstacleName;
+
+    GUITexture::Ptr mTexture;
 
 private:
     void initializeGUI();

@@ -4,6 +4,7 @@
 Obstacle::Obstacle()
 : coordinateXOfObstacles(randomCoordinateXOfObstacles())
 , obstacleName(randomObstacleName()) {
+    initializeGUI();
 }
 
 Obstacle::ObstacleName Obstacle::randomObstacleName() {
@@ -28,9 +29,13 @@ void Obstacle::setCoordinateX(int x) {
 }
 
 void Obstacle::draw(int coordinateYOfLane) {
-    DrawRectangle(coordinateXOfObstacles * Config::WIDTH_OF_EACH_CELL, coordinateYOfLane,
-                  Config::WIDTH_OF_EACH_CELL, Config::WIDTH_OF_EACH_CELL, BLUE);
+    mTexture->setPosition({(float)coordinateXOfObstacles * Config::WIDTH_OF_EACH_CELL,
+                           (float)coordinateYOfLane - 24});
+    mTexture->draw();
 }
 
 void Obstacle::initializeGUI() {
+    mTexture = std::make_shared<GUITexture>();
+    mTexture->setTexture(TextureHolder::get(TextureID::Obstacle));
+    mTexture->setSize({0, 0}); // Use default size
 }

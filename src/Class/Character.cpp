@@ -82,7 +82,7 @@ void Character::draw() {
     Vector2 displayedPosition = {coordinateXOfCharacter - WIDTH_OF_CHARACTER_SPRITE / 2
                                      - deltaPosition.x * movementCD / Config::TIME_MOVEMENT,
                                  lanePtr->getCoordinateYOfLane()
-                                     - HEIGHT_OF_CHARACTER_SPRITE * 2 / 3
+                                     - HEIGHT_OF_CHARACTER_SPRITE * 3 / 4
                                      + 4 * jumpHeight * (movementCD / Config::TIME_MOVEMENT) * (movementCD / Config::TIME_MOVEMENT) - 4 * jumpHeight * (movementCD / Config::TIME_MOVEMENT)};
 
     if (isDead)

@@ -10,7 +10,7 @@ Animation::Animation()
 , mSpriteSheetGridSize({0, 0})
 , mFrameGridPosition({0, 0}) {
 }
-
+#include <iostream>
 void Animation::update(float dt) {
     float timePerFrame = mDuration / mNumFrames;
     mElapsedTime += dt;
@@ -92,7 +92,9 @@ bool Animation::isRepeating() const {
 }
 
 void Animation::restart() {
-    mCurrentFrame = 0;
+    mCurrentFrame = 1;
+    mFrameGridPosition = {0, 0};
+    mElapsedTime = 0;
 }
 
 bool Animation::isFinished() const {

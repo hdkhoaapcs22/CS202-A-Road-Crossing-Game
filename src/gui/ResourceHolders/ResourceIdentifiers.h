@@ -18,6 +18,7 @@ enum class TextureID {
     HomeButton,
     RetryButton,
     Obstacle,
+    TrafficLightAnim,
 };
 
 enum class FontID {

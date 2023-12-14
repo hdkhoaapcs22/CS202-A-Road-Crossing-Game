@@ -74,6 +74,7 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::HomeButton, BASE_PATH + "HomeButton.png");
     TextureHolder::load(TextureID::RetryButton, BASE_PATH + "RetryButton.png");
     TextureHolder::load(TextureID::Obstacle, BASE_PATH + "Obstacle.png");
+    TextureHolder::load(TextureID::TrafficLightAnim, BASE_PATH + "TrafficLightAnim.png");
 }
 
 void Application::loadFonts() {

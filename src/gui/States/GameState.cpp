@@ -26,7 +26,7 @@ bool GameState::update(float dt) {
         });
         t.detach();
     }
-    return true;
+    return false;
 }
 
 void GameState::draw() {

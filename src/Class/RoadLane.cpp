@@ -24,7 +24,7 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
     spawnTime = (float)(enemyWidth + Config::ENEMY_DISTANCE) / enemySpeed;
     checkHasTrafficLight();
 
-    update(100 + rand() % 100); // advance forward to populate the lane
+    update(10 + rand() % 10); // advance forward to populate the lane
 }
 
 void RoadLane::manageTraffic(float dt) {
@@ -66,6 +66,17 @@ void RoadLane::initializeGUI() {
     mTexture = std::make_shared<GUITexture>();
     mTexture->setTexture(TextureHolder::get(TextureID::RoadLane));
     mTexture->setSize({Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE});
+
+    // mIdleAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieIdleAnim));
+    // mIdleAnimation.setRepeating(true);
+    // mIdleAnimation.setDuration(2);
+    // mIdleAnimation.setSpriteSheetGridSize({6, 5});
+    // mIdleAnimation.setNumFrames(30);
+    mTrafficLightAnimation.setSpriteSheet(TextureHolder::get(TextureID::TrafficLightAnim));
+    mTrafficLightAnimation.setRepeating(false);
+    mTrafficLightAnimation.setDuration(BREAK_TIME);
+    mTrafficLightAnimation.setSpriteSheetGridSize({7, 7});
+    mTrafficLightAnimation.setNumFrames(45);
 }
 
 void RoadLane::checkHasTrafficLight() {
@@ -85,9 +96,14 @@ void RoadLane::checkHasTrafficLight() {
 void RoadLane::update(float dt) {
     manageTraffic(dt);
     breakTimer += dt;
+    mTrafficLightAnimation.update(dt);
     while (breakTimer >= BREAK_TIME) {
         breakTimer -= BREAK_TIME;
         isRedSignal = !isRedSignal;
+        if (isRedSignal) {
+            mTrafficLightAnimation.restart();
+            mTrafficLightAnimation.update(breakTimer);
+        }
     }
 }
 
@@ -101,13 +117,11 @@ void RoadLane::draw() {
     }
 
     if (hasTrafficLight) {
+        const float yOffset = Config::SIZE_OF_A_LANE - 114;
         if (direct == Direction::Right) {
-            if (isRedSignal)
-                DrawRectangle(0, coordinateYOfLane, 50, Config::SIZE_OF_A_LANE, BLACK);
+            mTrafficLightAnimation.draw({0, coordinateYOfLane + yOffset});
         } else {
-            if (isRedSignal)
-                DrawRectangle(Config::WINDOW_WIDTH - 50, coordinateYOfLane, 50,
-                              Config::SIZE_OF_A_LANE, BLACK);
+            mTrafficLightAnimation.draw({Config::WINDOW_WIDTH - 50, coordinateYOfLane + yOffset});
         }
     }
 }

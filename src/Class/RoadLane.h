@@ -17,6 +17,7 @@
 #include "Lane.h"
 
 #include "../gui/GUIComponents/GUITexture.h"
+#include "../gui/Animation.h"
 
 class RoadLane : public Lane {
 public:
@@ -37,6 +38,7 @@ private:
     std::deque<Enemy *> enemies;
 
     GUITexture::Ptr mTexture;
+    Animation mTrafficLightAnimation;
 
 private:
     void createEnemy(Enemy::EnemyID enemyID, float startingX);

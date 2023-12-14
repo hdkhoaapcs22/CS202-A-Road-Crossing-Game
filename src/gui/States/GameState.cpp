@@ -16,9 +16,21 @@ bool GameState::update(float dt) {
     //     requestStackPop();
     //     requestStackPush(StateIDs::Game);
     // }
+    if (!isLost && mCore.isLost()) {
+        isLost = true;
+        requestStackPush(StateIDs::GameOver, std::make_unique<ScoreData>(mCore.getScore()));
+    }
     return true;
 }
 
 void GameState::draw() {
     mCore.draw();
+}
+
+GameState::ScoreData::ScoreData(int score)
+: score(score) {
+}
+
+int GameState::ScoreData::getScore() const {
+    return score;
 }

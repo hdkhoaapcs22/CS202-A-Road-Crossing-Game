@@ -23,6 +23,8 @@ public:
 
     bool isLost();
 
+    int getScore() const;
+
 private:
     int score;
     int virtualScore;

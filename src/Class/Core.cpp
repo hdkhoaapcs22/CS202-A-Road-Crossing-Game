@@ -137,6 +137,10 @@ bool Core::isLost() {
     return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT;
 }
 
+int Core::getScore() const {
+    return score;
+}
+
 void Core::moveCharacter(int direction, float dt) {
     Lane *nextLanePtr = gameMap.getNextLane(character.getLanePtr());
     Lane *prevLanePtr = gameMap.getPreviousLane(character.getLanePtr());

@@ -13,7 +13,10 @@ enum class TextureID {
     PopUpCloseButton,
     SafeLane,
     RoadLane,
-    Score
+    Score,
+    GameOver,
+    HomeButton,
+    RetryButton,
 };
 
 enum class FontID {

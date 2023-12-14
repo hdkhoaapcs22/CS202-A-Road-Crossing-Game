@@ -32,7 +32,7 @@ void HomeState::initButtons() {
     playButton->setSize({199, 68});
     playButton->setColor(BLANK);
     playButton->setCallback([this]() {
-        std::cout << "Play button pressed" << std::endl;
+        requestStackPush(StateIDs::Game);
     });
     mButtons.push_back(std::move(playButton));
 

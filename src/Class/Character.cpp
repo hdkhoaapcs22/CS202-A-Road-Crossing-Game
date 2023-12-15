@@ -64,6 +64,11 @@ void Character::prepareMovement(bool isPreparing) {
     isPreparingMovement = isPreparing;
 }
 
+void Character::setHorizontalFlipped(bool isFlipped) {
+    mIdleAnimation.setHorizontalFlipped(isFlipped);
+    mDeadAnimation.setHorizontalFlipped(isFlipped);
+}
+
 void Character::update(float dt) {
     movementCD -= dt;
     if (movementCD < 0)

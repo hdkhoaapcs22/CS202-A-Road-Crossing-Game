@@ -44,6 +44,13 @@ void Animation::draw(Vector2 position, Vector2 size) {
     Rectangle sourceRect = {mFrameGridPosition.x * frameSize.x, mFrameGridPosition.y * frameSize.y,
                             frameSize.x, frameSize.y};
 
+    if (isHorizontalFlipped) {
+        sourceRect.width *= -1;
+    }
+    if (isVerticalFlipped) {
+        sourceRect.height *= -1;
+    }
+
     Rectangle destRect = {position.x, position.y, size.x, size.y};
 
     DrawTextureNPatch(mSpriteSheet, NPatchInfo({sourceRect, 0, 0, 0, 0, NPATCH_NINE_PATCH}),
@@ -99,4 +106,12 @@ void Animation::restart() {
 
 bool Animation::isFinished() const {
     return mCurrentFrame >= mNumFrames;
+}
+
+void Animation::setHorizontalFlipped(bool flag) {
+    isHorizontalFlipped = flag;
+}
+
+void Animation::setVerticalFlipped(bool flag) {
+    isVerticalFlipped = flag;
 }

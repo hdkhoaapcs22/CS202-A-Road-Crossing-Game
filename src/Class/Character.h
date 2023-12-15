@@ -28,6 +28,7 @@ public:
     float getCoordinateX() const;
 
     void prepareMovement(bool isPreparing);
+    void setHorizontalFlipped(bool isFlipped);
 
     void update(float dt);
     void draw();

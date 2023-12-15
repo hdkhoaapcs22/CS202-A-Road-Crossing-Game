@@ -111,10 +111,13 @@ void Core::getInputs(float dt) {
         executeMovement(Character::MOVE_UP, dt);
     else if (IsKeyReleased(KEY_S) || IsKeyReleased(KEY_DOWN))
         executeMovement(Character::MOVE_DOWN, dt);
-    else if (IsKeyReleased(KEY_A) || IsKeyReleased(KEY_LEFT))
+    else if (IsKeyReleased(KEY_A) || IsKeyReleased(KEY_LEFT)) {
+        character.setHorizontalFlipped(false);
         executeMovement(Character::MOVE_LEFT, dt);
-    else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT))
+    } else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT)) {
+        character.setHorizontalFlipped(true);
         executeMovement(Character::MOVE_RIGHT, dt);
+    }
 }
 
 void Core::drawScore() {

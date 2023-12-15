@@ -10,9 +10,9 @@ Obstacle::Obstacle()
 Obstacle::ObstacleName Obstacle::randomObstacleName() {
     int randomName = rand() % 2;
     if (randomName == 0) {
-        return ObstacleName::Rock;
+        return ObstacleName::Type1;
     }
-    return ObstacleName::Tree;
+    return ObstacleName::Type2;
 }
 
 int Obstacle::randomCoordinateXOfObstacles() {
@@ -29,13 +29,22 @@ void Obstacle::setCoordinateX(int x) {
 }
 
 void Obstacle::draw(int coordinateYOfLane) {
-    mTexture->setPosition({(float)coordinateXOfObstacles * Config::WIDTH_OF_EACH_CELL,
-                           (float)coordinateYOfLane - 24});
+    if (obstacleName == ObstacleName::Type1) {
+        mTexture->setPosition({(float)coordinateXOfObstacles * Config::WIDTH_OF_EACH_CELL,
+                               (float)coordinateYOfLane - 26});
+    } else {
+        mTexture->setPosition({(float)coordinateXOfObstacles * Config::WIDTH_OF_EACH_CELL,
+                               (float)coordinateYOfLane - 50});
+    }
     mTexture->draw();
 }
 
 void Obstacle::initializeGUI() {
     mTexture = std::make_shared<GUITexture>();
-    mTexture->setTexture(TextureHolder::get(TextureID::Obstacle));
+    if (obstacleName == ObstacleName::Type1) {
+        mTexture->setTexture(TextureHolder::get(TextureID::ObstacleType1));
+    } else {
+        mTexture->setTexture(TextureHolder::get(TextureID::ObstacleType2));
+    }
     mTexture->setSize({0, 0}); // Use default size
 }

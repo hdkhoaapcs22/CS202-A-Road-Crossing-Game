@@ -12,8 +12,8 @@
 class Obstacle {
 public:
     enum class ObstacleName {
-        Rock,
-        Tree
+        Type1,
+        Type2
     };
     Obstacle();
     ObstacleName randomObstacleName();

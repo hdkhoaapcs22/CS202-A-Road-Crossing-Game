@@ -17,7 +17,8 @@ enum class TextureID {
     GameOver,
     HomeButton,
     RetryButton,
-    Obstacle,
+    ObstacleType1,
+    ObstacleType2,
     TrafficLightAnim,
 };
 

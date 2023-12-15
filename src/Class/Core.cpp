@@ -138,7 +138,7 @@ bool Core::isLost() {
         return true;
     if (character.getLanePtr() != gameMap.getFirstLane())
         return false;
-    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT;
+    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE / 2;
 }
 
 int Core::getScore() const {

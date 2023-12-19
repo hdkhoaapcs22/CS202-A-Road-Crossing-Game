@@ -18,8 +18,14 @@ public:
 
     void setTexture(Texture2D texture);
 
+    void setHorizontalFlipped(bool flipped);
+    void setVerticalFlipped(bool flipped);
+
 private:
     Texture2D mTexture;
+
+    bool isHorizontalFlipped{false};
+    bool isVerticalFlipped{false};
 };
 
 #endif // SRC_GUI_GUICOMPONENTS_GUITEXTURE_H

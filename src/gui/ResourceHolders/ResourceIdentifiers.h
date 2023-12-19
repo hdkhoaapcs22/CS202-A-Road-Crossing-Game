@@ -20,6 +20,16 @@ enum class TextureID {
     ObstacleType1,
     ObstacleType2,
     TrafficLightAnim,
+    Stoppable1,
+    Stoppable2,
+    Stoppable3,
+    Stoppable4,
+    Stoppable5,
+    Unstoppable1,
+    Unstoppable2,
+    Unstoppable3,
+    Unstoppable4,
+    Unstoppable5,
 };
 
 enum class FontID {

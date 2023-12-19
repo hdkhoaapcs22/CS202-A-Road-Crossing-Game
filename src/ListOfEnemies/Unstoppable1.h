@@ -7,19 +7,20 @@ class Unstoppable1 : public Enemy {
 public:
     Unstoppable1(Direction direct, int coordinateXOfEnemy);
 
+    TextureID getTextureID() const {
+        return TextureID::Unstoppable1;
+    }
+
     EnemyID getEnemyID() const {
         return EnemyID::Unstoppable1;
     }
 
     int getSpeed() const {
-        return 100;
+        return 150;
     }
 
     int getWidth() const {
-        return 100;
+        return 93;
     }
-
-private:
-    void initializeGUI();
 };
 #endif

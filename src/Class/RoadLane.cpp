@@ -112,10 +112,6 @@ void RoadLane::draw() {
     mTexture->setPosition({0, coordinateYOfLane});
     mTexture->draw();
 
-    for (Enemy *enemy : enemies) {
-        enemy->draw(coordinateYOfLane);
-    }
-
     if (hasTrafficLight) {
         const float yOffset = Config::SIZE_OF_A_LANE - 114;
         if (direct == Direction::Right) {
@@ -123,6 +119,10 @@ void RoadLane::draw() {
         } else {
             mTrafficLightAnimation.draw({Config::WINDOW_WIDTH - 50, coordinateYOfLane + yOffset});
         }
+    }
+
+    for (Enemy *enemy : enemies) {
+        enemy->draw(coordinateYOfLane);
     }
 }
 
@@ -145,16 +145,16 @@ void RoadLane::createEnemy(Enemy::EnemyID enemyID, float startingX) {
             enemies.push_back(new Unstoppable1(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable2:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable2(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable3:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable3(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable4:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable4(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable5:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable5(direct, startingX));
             break;
         case Enemy::EnemyID::Stoppable1:
             enemies.push_back(new Stoppable1(direct, startingX));

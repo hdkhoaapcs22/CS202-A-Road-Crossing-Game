@@ -17,10 +17,24 @@ void GUITexture::draw() {
         destRect = mRect;
     }
     Rectangle srcRect = {0, 0, (float)mTexture.width, (float)mTexture.height};
+    if (isHorizontalFlipped) {
+        srcRect.width *= -1;
+    }
+    if (isVerticalFlipped) {
+        srcRect.height *= -1;
+    }
 
     DrawTexturePro(mTexture, srcRect, destRect, {0, 0}, 0, WHITE);
 }
 
 void GUITexture::setTexture(Texture2D texture) {
     mTexture = texture;
+}
+
+void GUITexture::setHorizontalFlipped(bool flipped) {
+    isHorizontalFlipped = flipped;
+}
+
+void GUITexture::setVerticalFlipped(bool flipped) {
+    isVerticalFlipped = flipped;
 }

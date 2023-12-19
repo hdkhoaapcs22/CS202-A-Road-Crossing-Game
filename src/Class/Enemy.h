@@ -2,10 +2,12 @@
 #define ENEMY_H
 
 #include <cstdlib>
+#include <iostream>
 
 #include "raylib.h"
 
 #include "../Config.h"
+#include "../gui/GUIComponents/GUITexture.h"
 
 enum class Direction : int {
     Left = -1,
@@ -31,14 +33,21 @@ public:
     virtual int getSpeed() const = 0;
     virtual int getWidth() const = 0;
     virtual EnemyID getEnemyID() const = 0;
+    virtual TextureID getTextureID() const = 0;
+
     float getCoordinateXOfEnemy();
     bool checkCollision(int leftHitbox, int rightHitbox);
 
     void draw(float coordinateYOfLane);
 
+protected:
+    void initializeGUI();
+
 private:
     Direction direct;
     float coordinateX;
+    
+    GUITexture::Ptr mTexture;
 };
 
 #endif

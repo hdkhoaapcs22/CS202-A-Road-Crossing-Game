@@ -76,6 +76,16 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::ObstacleType1, BASE_PATH + "ObstacleType1.png");
     TextureHolder::load(TextureID::ObstacleType2, BASE_PATH + "ObstacleType2.png");
     TextureHolder::load(TextureID::TrafficLightAnim, BASE_PATH + "TrafficLightAnim.png");
+    TextureHolder::load(TextureID::Stoppable1, BASE_PATH + "Stoppable1.png");
+    TextureHolder::load(TextureID::Stoppable2, BASE_PATH + "Stoppable2.png");
+    TextureHolder::load(TextureID::Stoppable3, BASE_PATH + "Stoppable3.png");
+    TextureHolder::load(TextureID::Stoppable4, BASE_PATH + "Stoppable4.png");
+    TextureHolder::load(TextureID::Stoppable5, BASE_PATH + "Stoppable5.png");
+    TextureHolder::load(TextureID::Unstoppable1, BASE_PATH + "Unstoppable1.png");
+    TextureHolder::load(TextureID::Unstoppable2, BASE_PATH + "Unstoppable2.png");
+    TextureHolder::load(TextureID::Unstoppable3, BASE_PATH + "Unstoppable3.png");
+    TextureHolder::load(TextureID::Unstoppable4, BASE_PATH + "Unstoppable4.png");
+    TextureHolder::load(TextureID::Unstoppable5, BASE_PATH + "Unstoppable5.png");
 }
 
 void Application::loadFonts() {

@@ -4,6 +4,3 @@ Unstoppable1::Unstoppable1(Direction direct, int coordinateXOfEnemy)
 : Enemy(direct, coordinateXOfEnemy) {
     initializeGUI();
 }
-
-void Unstoppable1::initializeGUI() {
-}

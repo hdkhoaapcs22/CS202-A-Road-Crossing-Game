@@ -1,4 +1,5 @@
 #include "HomeState.h"
+#include "../ResourceHolders/MusicPlayer.h"
 
 HomeState::HomeState(StateStack &stack, Context context)
 : State(stack, context) {
@@ -6,6 +7,8 @@ HomeState::HomeState(StateStack &stack, Context context)
     mBackground->setTexture(TextureHolder::get(TextureID::MenuBackground));
 
     initButtons();
+
+    getContext().music->play(MusicID::MenuTheme);
 }
 
 HomeState::~HomeState() {

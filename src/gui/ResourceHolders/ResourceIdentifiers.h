@@ -37,4 +37,10 @@ enum class FontID {
     Acme,
 };
 
+enum class MusicID {
+    None,
+    MenuTheme,
+    GameTheme,
+};
+
 #endif // RESOURCEHOLDERS_RESOURCEIDENTIFIERS_H

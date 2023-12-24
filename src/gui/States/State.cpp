@@ -27,3 +27,11 @@ void State::requestStackPop() {
 void State::requestStackClear() {
     mStack->clearStates();
 }
+
+State::Context State::getContext() const {
+    return mContext;
+}
+
+State::Context::Context(MusicPlayer &music)
+: music(&music) {
+}

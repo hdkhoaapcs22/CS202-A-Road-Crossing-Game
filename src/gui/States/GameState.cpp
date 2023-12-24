@@ -1,8 +1,11 @@
 #include "GameState.h"
+#include "../ResourceHolders/MusicPlayer.h"
+
 #include <thread>
 
 GameState::GameState(StateStack& stack, Context context)
 : State(stack, context) {
+    getContext().music->play(MusicID::GameTheme);
 }
 
 GameState::~GameState() {

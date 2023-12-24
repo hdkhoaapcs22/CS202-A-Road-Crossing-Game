@@ -2,21 +2,22 @@
 #include "../Config.h"
 #include "ResourceHolders/ResourceIdentifiers.h"
 #include "States/CreditsState.h"
+#include "States/GameOverState.h"
 #include "States/GameState.h"
 #include "States/HomeState.h"
-#include "States/GameOverState.h"
 #include "States/SettingsState.h"
 #include "States/StateIdentifiers.h"
 
 #include <iostream>
 
 Application::Application()
-: mStateStack(State::Context()) {
+: mStateStack(State::Context(mMusic)) {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     SetConfigFlags(FLAG_WINDOW_ALWAYS_RUN);
 
     InitWindow(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT, "RoadCrossing");
     SetTargetFPS(Config::FPS);
+    InitAudioDevice();
 
     loadTextures();
     loadFonts();
@@ -25,10 +26,11 @@ Application::Application()
     //     TextureHolder::get(TextureID::IconLogo)));
 
     registerStates();
-    mStateStack.pushState(StateIDs::Game);
+    mStateStack.pushState(StateIDs::Home);
 }
 
 Application::~Application() {
+    CloseAudioDevice();
     CloseWindow();
 }
 

@@ -17,13 +17,13 @@ void Enemy::draw(float coordinateYOfLane) {
     float coordinateXOfEnemy = coordinateX - this->getWidth() / 2;
     float coordinateYOfEnemy = coordinateYOfLane;
 
-    // DrawRectangle(coordinateXOfEnemy, coordinateYOfEnemy, this->getWidth(), Config::SIZE_OF_A_LANE,
-    //               RED);
-
     mTexture->setPosition({coordinateXOfEnemy - TextureHolder::get(this->getTextureID()).width / 2
                                + this->getWidth() / 2,
                            coordinateYOfEnemy});
     mTexture->draw();
+
+    // DrawRectangle(coordinateXOfEnemy, coordinateYOfEnemy, this->getWidth(), Config::SIZE_OF_A_LANE,
+    //               ColorAlpha(RED, 0.5));
 }
 
 void Enemy::initializeGUI() {

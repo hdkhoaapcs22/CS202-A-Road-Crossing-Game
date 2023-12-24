@@ -9,12 +9,17 @@
 #include <memory>
 
 class StateStack;
+class MusicPlayer;
 
 class State {
 public:
     typedef std::unique_ptr<State> Ptr;
 
-    struct Context {};
+    struct Context {
+        Context(MusicPlayer& music);
+
+        MusicPlayer* music;
+    };
 
 public:
     State(StateStack &stack, Context context);
@@ -29,6 +34,8 @@ protected:
     void requestStackPush(StateIDs stateID, BaseParameter::Ptr parameter);
     void requestStackPop();
     void requestStackClear();
+
+    Context getContext() const;
 
 private:
     StateStack *mStack;

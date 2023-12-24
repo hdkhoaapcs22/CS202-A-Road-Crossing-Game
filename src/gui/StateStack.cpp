@@ -1,4 +1,5 @@
 #include "StateStack.h"
+#include "ResourceHolders/MusicPlayer.h"
 
 #include <cassert>
 
@@ -7,6 +8,7 @@ StateStack::StateStack(State::Context context)
 }
 
 void StateStack::update(float dt) {
+    mContext.music->update();
     for (auto it = mStack.rbegin(); it != mStack.rend(); it++) {
         if ((*it)->update(dt) == false) {
             break;

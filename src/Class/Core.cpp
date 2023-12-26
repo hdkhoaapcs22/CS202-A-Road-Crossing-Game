@@ -23,7 +23,19 @@ bool Core::detectCollision() {
         return false;
     int leftHitbox = character.getCoordinateX() - Config::WIDTH_OF_CHARACTER / 2;
     int rightHitbox = character.getCoordinateX() + Config::WIDTH_OF_CHARACTER / 2;
-    return static_cast<RoadLane *>(lanePtr)->checkCollision(leftHitbox, rightHitbox);
+    bool isCollided = static_cast<RoadLane *>(lanePtr)->checkCollision(leftHitbox, rightHitbox);
+    if (isCollided) {
+        std::ifstream fin("src/Data/HighScore.txt");
+        int highScore;
+        fin >> highScore;
+        fin.close();
+        if (score > highScore) {
+            std::ofstream fout("src/Data/HighScore.txt");
+            fout << score;
+            fout.close();
+        }
+    }
+    return isCollided;
 }
 
 bool Core::detectBlockMovement(int direction) {
@@ -112,8 +124,7 @@ void Core::getInputs(float dt) {
 
 void Core::drawScore() {
     scoreFrame->draw();
-    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(),
-               {130, 25}, 48, 0,
+    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(), {130, 25}, 48, 0,
                WHITE);
 }
 

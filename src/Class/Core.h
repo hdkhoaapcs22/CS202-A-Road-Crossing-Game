@@ -1,6 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include <fstream>
 #include "../gui/GUIComponents/GUITexture.h"
 #include "Character.h"
 #include "Map.h"
@@ -12,6 +13,7 @@ public:
         Playing,
         Lost
     };
+
 public:
     Core();
     float getSpeedMultiplier();
@@ -37,7 +39,7 @@ private:
     void moveCharacter(int direction, float dt);
     void executeMovement(int direction, float dt);
     void getInputs(float dt);
-    
+
     void drawScore();
 
     void initializeGUI();

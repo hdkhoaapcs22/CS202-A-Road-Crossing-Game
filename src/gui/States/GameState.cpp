@@ -6,6 +6,7 @@
 GameState::GameState(StateStack& stack, Context context)
 : State(stack, context) {
     getContext().music->play(MusicID::GameTheme);
+    initButtons();
 }
 
 GameState::~GameState() {
@@ -13,13 +14,14 @@ GameState::~GameState() {
 
 bool GameState::update(float dt) {
     mCore.update(dt);
-    // if (IsKeyPressed(KEY_P)) {
-    //     requestStackPush(StateIDs::Settings);
-    // }
-    // if (IsKeyPressed(KEY_R)) {
-    //     requestStackPop();
-    //     requestStackPush(StateIDs::Game);
-    // }
+    if (!isLost) {
+        for (auto& button : mButtons) {
+            button->update(dt);
+        }
+        if (IsKeyPressed(KEY_TAB)) {
+            requestStackPush(StateIDs::Pause);
+        }
+    }
     if (!isLost && mCore.isLost()) {
         isLost = true;
         std::thread t([this]() {
@@ -34,6 +36,20 @@ bool GameState::update(float dt) {
 
 void GameState::draw() {
     mCore.draw();
+    for (auto& button : mButtons) {
+        button->draw();
+    }
+}
+
+void GameState::initButtons() {
+    Button::Ptr pauseButton = std::make_shared<Button>();
+    pauseButton->setTexture(TextureHolder::get(TextureID::PauseButton));
+    pauseButton->setRect({944, 0, 80, 80});
+    pauseButton->setColor(BLANK);
+    pauseButton->setCallback([this]() {
+        requestStackPush(StateIDs::Pause);
+    });
+    mButtons.push_back(std::move(pauseButton));
 }
 
 GameState::ScoreData::ScoreData(int score)

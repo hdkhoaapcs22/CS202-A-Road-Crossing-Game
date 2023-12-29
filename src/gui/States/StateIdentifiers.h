@@ -7,7 +7,9 @@ enum class StateIDs {
     Settings,
     Credits,
     Game,
-    GameOver
+    GameOver,
+    Pause,
+    Countdown,
 };
 
 #endif // STATES_STATEIDENTIFIERS_H

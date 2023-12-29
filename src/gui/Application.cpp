@@ -6,6 +6,8 @@
 #include "States/GameState.h"
 #include "States/HomeState.h"
 #include "States/SettingsState.h"
+#include "States/PauseState.h"
+#include "States/CountdownState.h"
 #include "States/StateIdentifiers.h"
 
 #include <iostream>
@@ -57,6 +59,8 @@ void Application::registerStates() {
     mStateStack.registerState<CreditsState>(StateIDs::Credits);
     mStateStack.registerState<GameState>(StateIDs::Game);
     mStateStack.registerState<GameOverState>(StateIDs::GameOver);
+    mStateStack.registerState<PauseState>(StateIDs::Pause);
+    mStateStack.registerState<CountdownState>(StateIDs::Countdown);
 }
 
 void Application::loadTextures() {
@@ -75,6 +79,8 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::GameOver, BASE_PATH + "GameOver.png");
     TextureHolder::load(TextureID::HomeButton, BASE_PATH + "HomeButton.png");
     TextureHolder::load(TextureID::RetryButton, BASE_PATH + "RetryButton.png");
+    TextureHolder::load(TextureID::ResumeButton, BASE_PATH + "ResumeButton.png");
+    TextureHolder::load(TextureID::PauseButton, BASE_PATH + "PauseButton.png");
     TextureHolder::load(TextureID::ObstacleType1, BASE_PATH + "ObstacleType1.png");
     TextureHolder::load(TextureID::ObstacleType2, BASE_PATH + "ObstacleType2.png");
     TextureHolder::load(TextureID::TrafficLightAnim, BASE_PATH + "TrafficLightAnim.png");
@@ -91,6 +97,7 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::SettingsTexture, BASE_PATH + "SettingsTexture.png");
     TextureHolder::load(TextureID::LeftButton, BASE_PATH + "LeftButton.png");
     TextureHolder::load(TextureID::RightButton, BASE_PATH + "RightButton.png");
+    TextureHolder::load(TextureID::SmallPopUpMenu, BASE_PATH + "SmallPopUpMenu.png");
 }
 
 void Application::loadFonts() {

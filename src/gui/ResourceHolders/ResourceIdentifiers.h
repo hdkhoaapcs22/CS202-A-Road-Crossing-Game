@@ -17,6 +17,8 @@ enum class TextureID {
     GameOver,
     HomeButton,
     RetryButton,
+    ResumeButton,
+    PauseButton,
     ObstacleType1,
     ObstacleType2,
     TrafficLightAnim,
@@ -33,6 +35,7 @@ enum class TextureID {
     SettingsTexture,
     LeftButton,
     RightButton,
+    SmallPopUpMenu,
 };
 
 enum class FontID {

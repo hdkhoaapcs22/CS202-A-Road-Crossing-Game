@@ -30,6 +30,10 @@ public:
 private:
     Core mCore;
     bool isLost{false};
+    std::vector<Button::Ptr> mButtons;
+
+private:
+    void initButtons();
 };
 
 #endif // SRC_GUI_STATES_GAMESTATE_H

@@ -88,6 +88,9 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::Unstoppable3, BASE_PATH + "Unstoppable3.png");
     TextureHolder::load(TextureID::Unstoppable4, BASE_PATH + "Unstoppable4.png");
     TextureHolder::load(TextureID::Unstoppable5, BASE_PATH + "Unstoppable5.png");
+    TextureHolder::load(TextureID::SettingsTexture, BASE_PATH + "SettingsTexture.png");
+    TextureHolder::load(TextureID::LeftButton, BASE_PATH + "LeftButton.png");
+    TextureHolder::load(TextureID::RightButton, BASE_PATH + "RightButton.png");
 }
 
 void Application::loadFonts() {

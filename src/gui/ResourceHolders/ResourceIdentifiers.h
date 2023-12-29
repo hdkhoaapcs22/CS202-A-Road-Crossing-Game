@@ -30,6 +30,9 @@ enum class TextureID {
     Unstoppable3,
     Unstoppable4,
     Unstoppable5,
+    SettingsTexture,
+    LeftButton,
+    RightButton,
 };
 
 enum class FontID {

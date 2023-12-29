@@ -1,7 +1,7 @@
 #include "MusicPlayer.h"
 
 MusicPlayer::MusicPlayer()
-: mVolume(1.f) {
+: mVolume(100) {
     std::string BASE_PATH = "asset/audio/";
     mFilenames[MusicID::MenuTheme] = BASE_PATH + "ThemeMenu.mp3";
     mFilenames[MusicID::GameTheme] = BASE_PATH + "ThemeGame.mp3";
@@ -13,7 +13,7 @@ void MusicPlayer::play(MusicID theme) {
     mMusic = LoadMusicStream(filename.c_str());
     mMusic.looping = true;
 
-    SetMusicVolume(mMusic, mVolume);
+    SetMusicVolume(mMusic, mVolume / 100.f);
     PlayMusicStream(mMusic);
 }
 
@@ -25,11 +25,11 @@ void MusicPlayer::stop() {
     StopMusicStream(mMusic);
 }
 
-void MusicPlayer::setVolume(float volume) {
+void MusicPlayer::setVolume(int volume) {
     mVolume = volume;
-    SetMusicVolume(mMusic, mVolume);
+    SetMusicVolume(mMusic, mVolume / 100.f);
 }
 
-float MusicPlayer::getVolume() const {
+int MusicPlayer::getVolume() const {
     return mVolume;
 }

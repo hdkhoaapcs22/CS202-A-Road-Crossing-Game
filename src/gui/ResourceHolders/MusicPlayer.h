@@ -16,12 +16,12 @@ public:
     void update();
     void stop();
 
-    void setVolume(float volume);
-    float getVolume() const;
+    void setVolume(int volume);
+    int getVolume() const;
 private:
     std::map<MusicID, std::string> mFilenames;
     Music mMusic;
-    float mVolume;
+    int mVolume;
 };
 
 #endif // SRC_GUI_RESOURCEHOLDERS_MUSICPLAYER_H

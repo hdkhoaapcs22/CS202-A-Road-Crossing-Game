@@ -10,6 +10,9 @@ GUITexture::~GUITexture() {
 void GUITexture::update(float dt) {
 }
 void GUITexture::draw() {
+    if (isHidden) {
+        return;
+    }
     Rectangle destRect;
     if (mRect.width == 0 && mRect.height == 0) {
         destRect = {mRect.x, mRect.y, (float)mTexture.width, (float)mTexture.height};
@@ -37,4 +40,8 @@ void GUITexture::setHorizontalFlipped(bool flipped) {
 
 void GUITexture::setVerticalFlipped(bool flipped) {
     isVerticalFlipped = flipped;
+}
+
+void GUITexture::setHidden(bool hidden) {
+    isHidden = hidden;
 }

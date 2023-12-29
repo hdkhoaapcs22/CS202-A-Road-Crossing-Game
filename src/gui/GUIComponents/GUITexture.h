@@ -20,12 +20,15 @@ public:
 
     void setHorizontalFlipped(bool flipped);
     void setVerticalFlipped(bool flipped);
+    void setHidden(bool hidden);
 
 private:
     Texture2D mTexture;
 
     bool isHorizontalFlipped{false};
     bool isVerticalFlipped{false};
+
+    bool isHidden{false};
 };
 
 #endif // SRC_GUI_GUICOMPONENTS_GUITEXTURE_H

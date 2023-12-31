@@ -20,8 +20,10 @@ void FireLane::update(float dt) {
     while (fireTimer >= fireDuration | fireTimer >= fireTime) {
         if (isFire)
             fireTimer -= fireDuration;
-        else
+        else {
             fireTimer -= fireTime;
+            fireTime = randomFireTime();
+        }
         isFire = !isFire;
     }
 }

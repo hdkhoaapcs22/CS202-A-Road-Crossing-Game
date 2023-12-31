@@ -17,7 +17,7 @@ void FireLane::update(float dt) {
     float coordinateYOfLane = getCoordinateYOfLane();
 
     fireTimer += dt;
-    while (fireTimer >= fireDuration | fireTimer >= fireTime) {
+    while ((fireTimer >= fireDuration && isFire) || (fireTimer >= fireTime && !isFire)) {
         if (isFire)
             fireTimer -= fireDuration;
         else {

@@ -15,15 +15,14 @@ FireLane::~FireLane() {
 
 void FireLane::update(float dt) {
     float coordinateYOfLane = getCoordinateYOfLane();
-    if (coordinateYOfLane >= 0) {
-        fireTimer += dt;
-        while (fireTimer >= fireDuration | fireTimer >= fireTime) {
-            if (isFire)
-                fireTimer -= fireDuration;
-            else
-                fireTimer -= fireTime;
-            isFire = !isFire;
-        }
+
+    fireTimer += dt;
+    while (fireTimer >= fireDuration | fireTimer >= fireTime) {
+        if (isFire)
+            fireTimer -= fireDuration;
+        else
+            fireTimer -= fireTime;
+        isFire = !isFire;
     }
 }
 

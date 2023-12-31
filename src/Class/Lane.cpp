@@ -2,18 +2,21 @@
 
 Lane::Lane()
 : coordinateYOfLane(0)
-, saveID("")
-, laneName(){};
-
-Lane::Lane(float coordinateYOfLane)
-: coordinateYOfLane(coordinateYOfLane)
-, saveID("")
 , laneName(){};
 
 Lane::Lane(float coordinateYOfLane, LaneName laneName)
 : coordinateYOfLane(coordinateYOfLane)
-, saveID("")
-, laneName(laneName){};
+, laneName(laneName) {
+}
+
+Lane::Lane(LaneName laneName, std::ifstream& input)
+: laneName(laneName) {
+    input >> coordinateYOfLane;
+}
+
+void Lane::saveCoordinates(std::ofstream& output) {
+    output << coordinateYOfLane << std::endl;
+}
 
 float Lane::getCoordinateYOfLane() const {
     return coordinateYOfLane;

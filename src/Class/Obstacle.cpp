@@ -6,6 +6,17 @@ Obstacle::Obstacle()
 , obstacleName(randomObstacleName()) {
 }
 
+Obstacle::Obstacle(std::ifstream& input) {
+    input >> coordinateXOfObstacles;
+    int obstacleNameInt;
+    input >> obstacleNameInt;
+    obstacleName = static_cast<ObstacleName>(obstacleNameInt);
+}
+
+void Obstacle::save(std::ofstream& output) {
+    output << coordinateXOfObstacles << " " << static_cast<int>(obstacleName);
+}
+
 Obstacle::ObstacleName Obstacle::randomObstacleName() {
     int randomName = rand() % 2;
     if (randomName == 0) {

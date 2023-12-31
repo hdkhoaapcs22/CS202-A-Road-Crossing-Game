@@ -6,6 +6,7 @@
 class Stoppable5 : public Enemy {
 public:
     Stoppable5(Direction direct, int coordinateXOfEnemy);
+    Stoppable5(std::ifstream& input);
 
     EnemyID getEnemyID() const {
         return EnemyID::Stoppable5;

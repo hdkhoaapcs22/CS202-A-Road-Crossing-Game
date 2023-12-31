@@ -1,7 +1,7 @@
 #ifndef LANE_H
 #define LANE_H
 
-#include <iostream>
+#include <fstream>
 #include "../Config.h"
 
 #include "raylib.h"
@@ -11,13 +11,15 @@ public:
     enum class LaneName {
         RoadLane,
         SafeLane,
-        RiverLane
+        FireLane
     };
 
     Lane();
-    Lane(float coordinateYOfLane);
     Lane(float coordinateYOfLane, LaneName laneName);
-
+    Lane(LaneName laneName, std::ifstream &input);
+    virtual ~Lane() = default;
+    void saveCoordinates(std::ofstream &output);
+    virtual void save(std::ofstream &output) = 0;
 
     virtual void update(float dt) = 0;
     virtual void draw() = 0;
@@ -30,7 +32,6 @@ public:
 
 private:
     float coordinateYOfLane;
-    std::string saveID;
     LaneName laneName;
 };
 

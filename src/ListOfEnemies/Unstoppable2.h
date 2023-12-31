@@ -2,9 +2,12 @@
 #define UNSTOPPABLE2_H
 
 #include "../Class/Enemy.h"
-class Unstoppable2 : public Enemy{
+
+class Unstoppable2 : public Enemy {
 public:
     Unstoppable2(Direction direct, int coordinateXOfEnemy);
+    Unstoppable2(std::ifstream& input);
+
     EnemyID getEnemyID() const {
         return EnemyID::Unstoppable2;
     }

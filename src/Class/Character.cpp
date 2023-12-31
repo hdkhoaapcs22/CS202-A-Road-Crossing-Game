@@ -10,6 +10,20 @@ Character::Character()
     movementCD = 0;
 }
 
+Character::Character(std::ifstream& input)
+: lanePtr(nullptr) {
+    initializeGUI();
+    float x, y;
+    input >> x >> y;
+    deltaPosition = {x, y};
+    input >> coordinateXOfCharacter >> movementCD;
+}
+
+void Character::save(std::ofstream& output) {
+    output << deltaPosition.x << " " << deltaPosition.y << " " << coordinateXOfCharacter << " "
+           << movementCD << std::endl;
+}
+
 void Character::updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction,
                                           float dt) {
     if (movementCD > 0)

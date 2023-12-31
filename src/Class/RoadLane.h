@@ -2,7 +2,7 @@
 #define ROAD_LANE_H
 
 #include <deque>
-
+#include <fstream>
 #include "../Config.h"
 #include "../ListOfEnemies/Stoppable1.h"
 #include "../ListOfEnemies/Stoppable2.h"
@@ -19,10 +19,13 @@
 class RoadLane : public Lane {
 public:
     RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane);
+    RoadLane(std::ifstream &input);
+    void save(std::ofstream &output) override;
     void update(float dt) override;
     void draw() override;
     ~RoadLane();
     bool checkCollision(int leftHitbox, int rightHitbox);
+
 private:
     static constexpr float BREAK_TIME = 5;
     bool hasTrafficLight;

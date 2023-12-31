@@ -1,4 +1,5 @@
 #include "HomeState.h"
+#include <iostream>
 
 HomeState::HomeState(StateStack &stack, Context context)
 : State(stack, context) {
@@ -37,8 +38,7 @@ void HomeState::initButtons() {
     mButtons.push_back(std::move(playButton));
 
     Button::Ptr settingsButton = std::make_shared<Button>();
-    settingsButton->setTexture(
-        TextureHolder::get(TextureID::MenuSettingsButton));
+    settingsButton->setTexture(TextureHolder::get(TextureID::MenuSettingsButton));
     settingsButton->setSize({199, 68});
     settingsButton->setColor(BLANK);
     settingsButton->setCallback([this]() {
@@ -63,5 +63,4 @@ void HomeState::initButtons() {
         button->setPosition({buttonX, buttonY});
         buttonY += button->getSize().y + buttonGap;
     }
-
 }

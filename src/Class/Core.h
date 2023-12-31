@@ -1,6 +1,7 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include <fstream>
 #include "../gui/GUIComponents/GUITexture.h"
 #include "Character.h"
 #include "Map.h"
@@ -12,8 +13,10 @@ public:
         Playing,
         Lost
     };
+
 public:
     Core();
+    Core(std::ifstream& input);
     float getSpeedMultiplier();
     bool detectCollision();
     bool detectBlockMovement(int direction);
@@ -22,6 +25,7 @@ public:
     void draw();
 
     bool isLost();
+    void save(std::ofstream& output);
 
 private:
     int score;
@@ -37,7 +41,7 @@ private:
     void moveCharacter(int direction, float dt);
     void executeMovement(int direction, float dt);
     void getInputs(float dt);
-    
+
     void drawScore();
 
     void initializeGUI();

@@ -24,3 +24,13 @@ Enemy::Enemy(Direction direct, float coordinateXOfEnemy)
 : direct(direct)
 , coordinateX(coordinateXOfEnemy) {
 }
+
+Enemy::Enemy(std::ifstream& input) {
+    int directValue;
+    input >> directValue >> coordinateX;
+    direct = static_cast<Direction>(directValue);
+}
+
+void Enemy::save(std::ofstream& output) {
+    output << static_cast<int>(direct) << " " << coordinateX;
+}

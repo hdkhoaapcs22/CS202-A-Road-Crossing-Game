@@ -27,6 +27,65 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
     update(100 + rand() % 100); // advance forward to populate the lane
 }
 
+RoadLane::RoadLane(std::ifstream &input)
+: Lane(Lane::LaneName::RoadLane, input) {
+    initializeGUI();
+    int directValue, enemyIDValue, numOfEnemies;
+    input >> hasTrafficLight >> isRedSignal >> breakTimer >> spawnTimer >> spawnTime >> directValue
+        >> enemyIDValue >> numOfEnemies;
+    direct = static_cast<Direction>(directValue);
+    enemyID = static_cast<Enemy::EnemyID>(enemyIDValue);
+    enemies.resize(numOfEnemies);
+    for (Enemy *&enemy : enemies) switch (enemyID) {
+            case Enemy::EnemyID::Unstoppable1:
+                enemy = new Unstoppable1(input);
+                break;
+            case Enemy::EnemyID::Unstoppable2:
+                enemy = new Unstoppable2(input);
+                break;
+            case Enemy::EnemyID::Unstoppable3:
+                enemy = new Unstoppable3(input);
+                break;
+            case Enemy::EnemyID::Unstoppable4:
+                enemy = new Unstoppable4(input);
+                break;
+            case Enemy::EnemyID::Unstoppable5:
+                enemy = new Unstoppable5(input);
+                break;
+            case Enemy::EnemyID::Stoppable1:
+                enemy = new Stoppable1(input);
+                break;
+            case Enemy::EnemyID::Stoppable2:
+                enemy = new Stoppable2(input);
+                break;
+            case Enemy::EnemyID::Stoppable3:
+                enemy = new Stoppable3(input);
+                break;
+            case Enemy::EnemyID::Stoppable4:
+                enemy = new Stoppable4(input);
+                break;
+            case Enemy::EnemyID::Stoppable5:
+                enemy = new Stoppable5(input);
+                break;
+            default:
+                break;
+        }
+}
+
+void RoadLane::save(std::ofstream &output) {
+    Lane::saveCoordinates(output);
+    output << hasTrafficLight << " " << isRedSignal << " " << breakTimer << " " << spawnTimer << " "
+           << spawnTime << " " << static_cast<int>(direct) << " " << static_cast<int>(enemyID)
+           << " " << enemies.size() << std::endl;
+    for (std::deque<Enemy *>::iterator it = enemies.begin(), last = --enemies.end();
+         it != enemies.end(); ++it) {
+        (*it)->save(output);
+        if (it != last)
+            output << " ";
+    }
+    output << std::endl;
+}
+
 void RoadLane::manageTraffic(float dt) {
     int tmp = enemies.size();
     for (int i = 0; i < tmp; ++i) {
@@ -127,16 +186,16 @@ void RoadLane::createEnemy(Enemy::EnemyID enemyID, float startingX) {
             enemies.push_back(new Unstoppable1(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable2:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable2(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable3:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable3(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable4:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable4(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable5:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable5(direct, startingX));
             break;
         case Enemy::EnemyID::Stoppable1:
             enemies.push_back(new Stoppable1(direct, startingX));

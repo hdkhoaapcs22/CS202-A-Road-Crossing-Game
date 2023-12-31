@@ -2,13 +2,17 @@
 #define MAP_H
 
 #include <deque>
-#include "Lane.h"
+#include <fstream>
 #include "../Config.h"
+#include "Lane.h"
 
 #include "raylib.h"
+
 class Map {
 public:
     Map();
+    Map(std::ifstream &input);
+    void save(std::ofstream &output);
     ~Map();
     static const int laneWidth = 14;
 
@@ -18,7 +22,8 @@ public:
     Lane *getNextLane(Lane *curLanePtr);
     Lane *getPreviousLane(Lane *curLanePtr);
     Lane *getFirstLane();
-    Lane *getFirstLaneOfCharacter();
+    Lane *getLaneK(int k);
+    int getLaneID(Lane *lanePtr);
 
     void setMoving(bool moving);
 
@@ -31,7 +36,6 @@ private:
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
     void insertRoadLane(int numberOfSameLane);
     void insertSafeLane(int numberOfSameLane);
-    // void insertRiverLane();
     void initializeGUI();
 };
 

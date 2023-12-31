@@ -2,6 +2,7 @@
 #define OBSTACLE_H
 
 #include <cstdlib>
+#include <fstream>
 #include <vector>
 
 #include "raylib.h"
@@ -15,6 +16,8 @@ public:
         Tree
     };
     Obstacle();
+    Obstacle(std::ifstream& input);
+    void save(std::ofstream& output);
     ObstacleName randomObstacleName();
     int randomCoordinateXOfObstacles();
     int getCoordinateX() const;

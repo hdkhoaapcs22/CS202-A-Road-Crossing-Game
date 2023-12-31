@@ -2,7 +2,7 @@
 #include "RoadLane.h"
 #include "SafeLane.h"
 
-// #include "RiverLane.h"
+// #include "FireLane.h"
 
 Map::Map() {
     initializeGUI();
@@ -24,11 +24,48 @@ Map::Map() {
             case Lane::LaneName::SafeLane:
                 insertSafeLane(numberOfSameLane);
                 break;
+            case Lane::LaneName::FireLane:
+                // insertFireLane(numberOfSameLane);
+                break;
             default:
-                // insertRiverLane(numberOfSameLane);
                 break;
         }
     }
+}
+
+Map::Map(std::ifstream& input) {
+    initializeGUI();
+    int size;
+    input >> size;
+    lanes.resize(size);
+    for (Lane*& lane : lanes) {
+        int laneInt;
+        input >> laneInt;
+        Lane::LaneName laneName = static_cast<Lane::LaneName>(laneInt);
+        switch (laneName) {
+            case Lane::LaneName::RoadLane:
+                lane = new RoadLane(input);
+                break;
+            case Lane::LaneName::SafeLane:
+                lane = new SafeLane(input);
+                break;
+            case Lane::LaneName::FireLane:
+                // lane = new FireLane(input);
+                break;
+            default:
+                break;
+        }
+    }
+    input >> moving;
+}
+
+void Map::save(std::ofstream& output) {
+    output << lanes.size() << std::endl;
+    for (Lane* lane : lanes) {
+        output << static_cast<int>(lane->getLaneName()) << std::endl;
+        lane->save(output);
+    }
+    output << moving << std::endl;
 }
 
 void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
@@ -48,8 +85,10 @@ void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
                 case Lane::LaneName::SafeLane:
                     insertSafeLane(numberOfSameLane);
                     break;
+                case Lane::LaneName::FireLane:
+                    // insertFireLane(numberOfSameLane);
+                    break;
                 default:
-                    // insertRiverLane(numberOfSameLane);
                     break;
             }
         }
@@ -130,8 +169,16 @@ Lane* Map::getFirstLane() {
     return lanes.front();
 }
 
-Lane* Map::getFirstLaneOfCharacter() {
-    return lanes[2];
+Lane* Map::getLaneK(int k) {
+    return lanes[k];
+}
+
+int Map::getLaneID(Lane* lanePtr) {
+    int index = 0;
+    for (std::deque<Lane*>::iterator it = lanes.begin(); it != lanes.end(); ++it, ++index)
+        if (*it == lanePtr)
+            return index;
+    return -1;
 }
 
 void Map::setMoving(bool moving) {

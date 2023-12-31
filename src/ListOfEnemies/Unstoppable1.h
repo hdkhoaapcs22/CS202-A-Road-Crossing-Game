@@ -6,6 +6,7 @@
 class Unstoppable1 : public Enemy {
 public:
     Unstoppable1(Direction direct, int coordinateXOfEnemy);
+    Unstoppable1(std::ifstream& input);
 
     EnemyID getEnemyID() const {
         return EnemyID::Unstoppable1;

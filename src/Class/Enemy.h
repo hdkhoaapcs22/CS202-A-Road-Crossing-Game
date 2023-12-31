@@ -2,10 +2,9 @@
 #define ENEMY_H
 
 #include <cstdlib>
-
-#include "raylib.h"
-
+#include <fstream>
 #include "../Config.h"
+#include "raylib.h"
 
 enum class Direction : int {
     Left = -1,
@@ -27,6 +26,8 @@ public:
         Unstoppable5,
     };
     Enemy(Direction direct, float coordinateXOfEnemy);
+    Enemy(std::ifstream& input);
+    void save(std::ofstream& output);
     void moveEnemy(float dt);
     virtual int getSpeed() const = 0;
     virtual int getWidth() const = 0;

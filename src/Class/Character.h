@@ -1,12 +1,14 @@
 #ifndef Character_H
 #define Character_H
 
-#include "Lane.h"
+#include <fstream>
 #include "../Config.h"
 #include "../gui/Animation.h"
 #include "../gui/ResourceHolders/TextureHolder.h"
+#include "Lane.h"
 
 #include "raylib.h"
+
 class Character {
 public:
     static const int MOVE_UP = 1;
@@ -19,9 +21,10 @@ public:
 
 public:
     Character();
+    Character(std::ifstream& input);
+    void save(std::ofstream& output);
     void assignLane(Lane* firstLane);
-    void updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr,
-                                   int direction, float dt);
+    void updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction, float dt);
     Lane* getLanePtr();
     float getCoordinateX() const;
 
@@ -31,6 +34,7 @@ public:
     void setDead();
 
     void initializeGUI();
+
 private:
     Vector2 deltaPosition;
     float coordinateXOfCharacter;

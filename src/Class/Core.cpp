@@ -7,8 +7,22 @@ Core::Core() {
 
     score = 0;
     virtualScore = 0;
-    character.assignLane(gameMap.getFirstLaneOfCharacter());
+    character.assignLane(gameMap.getLaneK(2));
     gameMap.setMoving(false);
+}
+
+Core::Core(std::ifstream &input) {
+    initializeGUI();
+
+    score = 0;
+    virtualScore = 0;
+    gameMap = Map(input);
+    character = Character(input);
+    int laneID, gameStateID;
+    input >> laneID;
+    character.assignLane(gameMap.getLaneK(laneID));
+    input >> gameStateID;
+    gameState = static_cast<GameState>(gameStateID);
 }
 
 float Core::getSpeedMultiplier() {
@@ -112,8 +126,7 @@ void Core::getInputs(float dt) {
 
 void Core::drawScore() {
     scoreFrame->draw();
-    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(),
-               {130, 25}, 48, 0,
+    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(), {130, 25}, 48, 0,
                WHITE);
 }
 
@@ -130,6 +143,13 @@ bool Core::isLost() {
     if (character.getLanePtr() != gameMap.getFirstLane())
         return false;
     return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT;
+}
+
+void Core::save(std::ofstream &output) {
+    gameMap.save(output);
+    character.save(output);
+    output << gameMap.getLaneID(character.getLanePtr()) << " " << static_cast<int>(gameState)
+           << std::endl;
 }
 
 void Core::moveCharacter(int direction, float dt) {

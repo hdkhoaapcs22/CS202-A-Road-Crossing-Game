@@ -32,6 +32,7 @@ public:
     virtual int getWidth() const = 0;
     virtual EnemyID getEnemyID() const = 0;
     float getCoordinateXOfEnemy();
+    void setCoordinateXOfEnemy(float coordinateX);
     bool checkCollision(int leftHitbox, int rightHitbox);
 
     void draw(float coordinateYOfLane);
@@ -39,6 +40,8 @@ public:
 private:
     Direction direct;
     float coordinateX;
+
+protected:
 };
 
 #endif

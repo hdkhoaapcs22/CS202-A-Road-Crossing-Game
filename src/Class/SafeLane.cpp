@@ -30,8 +30,6 @@ void SafeLane::save(std::ofstream& output) {
     output << obstacles.size() << std::endl;
     for (int i = 0; i < obstacles.size(); ++i) {
         obstacles[i]->save(output);
-        if (i != obstacles.size() - 1)
-            output << " ";
     }
     output << std::endl;
 }

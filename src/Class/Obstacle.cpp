@@ -8,6 +8,8 @@ Obstacle::Obstacle()
 }
 
 Obstacle::Obstacle(std::ifstream& input) {
+    initializeGUI();
+
     input >> coordinateXOfObstacles;
     int obstacleNameInt;
     input >> obstacleNameInt;
@@ -15,7 +17,7 @@ Obstacle::Obstacle(std::ifstream& input) {
 }
 
 void Obstacle::save(std::ofstream& output) {
-    output << coordinateXOfObstacles << " " << static_cast<int>(obstacleName);
+    output << coordinateXOfObstacles << " " << static_cast<int>(obstacleName) << " ";
 }
 
 Obstacle::ObstacleName Obstacle::randomObstacleName() {

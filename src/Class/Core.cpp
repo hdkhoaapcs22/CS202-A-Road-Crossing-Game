@@ -11,18 +11,20 @@ Core::Core() {
     gameMap.setMoving(false);
 }
 
-Core::Core(std::ifstream &input) {
+Core::Core(std::ifstream &input) : gameMap(input), character(input) {
     initializeGUI();
 
     score = 0;
     virtualScore = 0;
-    gameMap = Map(input);
-    character = Character(input);
+    input >> score >> virtualScore;
     int laneID, gameStateID;
     input >> laneID;
     character.assignLane(gameMap.getLaneK(laneID));
     input >> gameStateID;
     gameState = static_cast<GameState>(gameStateID);
+}
+
+Core::~Core() {
 }
 
 float Core::getSpeedMultiplier() {
@@ -162,6 +164,7 @@ int Core::getScore() const {
 void Core::save(std::ofstream &output) {
     gameMap.save(output);
     character.save(output);
+    output << score << " " << virtualScore << " ";
     output << gameMap.getLaneID(character.getLanePtr()) << " " << static_cast<int>(gameState)
            << std::endl;
 }

@@ -17,6 +17,7 @@ Character::Character(std::ifstream& input)
     input >> x >> y;
     deltaPosition = {x, y};
     input >> coordinateXOfCharacter >> movementCD;
+
 }
 
 void Character::save(std::ofstream& output) {

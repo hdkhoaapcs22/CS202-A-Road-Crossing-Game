@@ -1,5 +1,6 @@
 #include "HomeState.h"
 #include "../ResourceHolders/MusicPlayer.h"
+#include "GameState.h"
 
 HomeState::HomeState(StateStack &stack, Context context)
 : State(stack, context) {
@@ -39,6 +40,16 @@ void HomeState::initButtons() {
         requestStackPush(StateIDs::Game);
     });
     mButtons.push_back(std::move(playButton));
+
+    Button::Ptr resumeButton = std::make_shared<Button>();
+    resumeButton->setTexture(TextureHolder::get(TextureID::MenuPlayButton));
+    resumeButton->setSize({199, 68});
+    resumeButton->setColor(BLANK);
+    resumeButton->setCallback([this]() {
+        requestStackPop();
+        requestStackPush(StateIDs::Game, std::make_unique<GameState::GameInit>(true));
+    });
+    mButtons.push_back(std::move(resumeButton));
 
     Button::Ptr settingsButton = std::make_shared<Button>();
     settingsButton->setTexture(TextureHolder::get(TextureID::MenuSettingsButton));

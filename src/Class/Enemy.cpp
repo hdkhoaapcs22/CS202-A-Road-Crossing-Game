@@ -46,5 +46,5 @@ Enemy::Enemy(std::ifstream& input) {
 }
 
 void Enemy::save(std::ofstream& output) {
-    output << static_cast<int>(direct) << " " << coordinateX;
+    output << static_cast<int>(direct) << " " << coordinateX << "\n";
 }

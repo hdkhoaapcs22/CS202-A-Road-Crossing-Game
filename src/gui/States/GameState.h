@@ -11,14 +11,16 @@
 
 class GameState : public State {
 public:
-    class ScoreData : public BaseParameter {
+    class GameInit : public BaseParameter {
     public:
-        ScoreData(int score);
-        int getScore() const;
-
+        GameInit(bool resume);
+        bool isResume() const;
     private:
-        int score;
+        bool resume;
     };
+
+public:
+    static const std::string PATH_TO_SAVE_FILE;;
 
 public:
     GameState(StateStack &stack, Context context);
@@ -27,8 +29,13 @@ public:
     bool update(float dt);
     void draw();
 
+    void loadGame();
+    static bool isResumable();
+
+    void setParameter(BaseParameter::Ptr parameter) override;
+
 private:
-    Core mCore;
+    Core::Ptr mCore;
     bool isLost{false};
     std::vector<Button::Ptr> mButtons;
 

@@ -1,5 +1,4 @@
 #include "GameOverState.h"
-#include "GameState.h"
 
 GameOverState::GameOverState(StateStack& stack, Context context)
 : State(stack, context) {
@@ -32,7 +31,7 @@ void GameOverState::draw() {
 }
 
 void GameOverState::setParameter(BaseParameter::Ptr parameter) {
-    auto scoreParameter = static_cast<GameState::ScoreData*>(parameter.get());
+    auto scoreParameter = static_cast<ScoreData*>(parameter.get());
     score = scoreParameter->getScore();
     highScore = 0;
 }
@@ -59,4 +58,12 @@ void GameOverState::initButtons() {
         requestStackPush(StateIDs::Game);
     });
     mButtons.push_back(std::move(retryButton));
+}
+
+GameOverState::ScoreData::ScoreData(int score)
+: score(score) {
+}
+
+int GameOverState::ScoreData::getScore() const {
+    return score;
 }

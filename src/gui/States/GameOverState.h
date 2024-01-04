@@ -10,6 +10,16 @@
 
 class GameOverState : public State {
 public:
+    class ScoreData : public BaseParameter {
+    public:
+        ScoreData(int score);
+        int getScore() const;
+
+    private:
+        int score;
+    };
+
+public:
     GameOverState(StateStack &stack, Context context);
     ~GameOverState();
 

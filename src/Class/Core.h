@@ -8,6 +8,8 @@
 
 class Core {
 public:
+    typedef std::unique_ptr<Core> Ptr;
+
     enum class GameState {
         WaitingToStart,
         Playing,
@@ -17,6 +19,7 @@ public:
 public:
     Core();
     Core(std::ifstream& input);
+    ~Core();
     float getSpeedMultiplier();
     bool detectCollision();
     bool detectBlockMovement(int direction);

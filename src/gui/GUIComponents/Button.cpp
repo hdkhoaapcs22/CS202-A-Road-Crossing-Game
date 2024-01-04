@@ -64,7 +64,11 @@ void Button::draw() {
         Rectangle sourceRect = {0, 0, (float)mTexture.width, (float)mTexture.height};
         Rectangle destRect = mRect;
 
-        DrawTexturePro(mTexture, sourceRect, destRect, {0, 0}, 0, colorFilter(WHITE));
+        if (mIsActivated) {
+            DrawTexturePro(mTexture, sourceRect, destRect, {0, 0}, 0, colorFilter(WHITE));
+        } else {
+            DrawTexturePro(mTexture, sourceRect, destRect, {0, 0}, 0, GRAY);
+        }
     }
 
     if (mTextSize == 0) {

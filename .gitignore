@@ -2,3 +2,6 @@
 [Bb]uild/
 *.exe
 CSG
+
+save/*
+!save/placeholder.txt

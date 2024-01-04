@@ -18,11 +18,20 @@ public:
     void draw();
 
 private:
+    enum class MenuState {
+        Main,
+        Resume
+    };
+
+private:
     void initButtons();
 
 private:
     GUITexture::Ptr mBackground;
-    std::vector<Button::Ptr> mButtons;
+    std::vector<Button::Ptr> mMainButtons;
+    std::vector<Button::Ptr> mResumeButtons;
+
+    MenuState mMenuState{MenuState::Main};
 };
 
 #endif // STATES_HOMESTATE_H

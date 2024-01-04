@@ -36,6 +36,9 @@ enum class TextureID {
     LeftButton,
     RightButton,
     SmallPopUpMenu,
+    MenuNewGameButton,
+    MenuContinueButton,
+    MenuGoBackButton,
 };
 
 enum class FontID {

@@ -98,6 +98,9 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::LeftButton, BASE_PATH + "LeftButton.png");
     TextureHolder::load(TextureID::RightButton, BASE_PATH + "RightButton.png");
     TextureHolder::load(TextureID::SmallPopUpMenu, BASE_PATH + "SmallPopUpMenu.png");
+    TextureHolder::load(TextureID::MenuNewGameButton, BASE_PATH + "MenuNewGameButton.png");
+    TextureHolder::load(TextureID::MenuContinueButton, BASE_PATH + "MenuContinueButton.png");
+    TextureHolder::load(TextureID::MenuGoBackButton, BASE_PATH + "MenuGoBackButton.png");
 }
 
 void Application::loadFonts() {

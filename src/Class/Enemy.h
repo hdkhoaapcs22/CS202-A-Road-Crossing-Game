@@ -39,6 +39,7 @@ public:
     virtual TextureID getTextureID() const = 0;
 
     float getCoordinateXOfEnemy();
+    void setCoordinateXOfEnemy(float coordinateX);
     bool checkCollision(int leftHitbox, int rightHitbox);
 
     void draw(float coordinateYOfLane);

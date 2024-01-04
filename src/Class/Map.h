@@ -2,10 +2,11 @@
 #define MAP_H
 
 #include <deque>
-#include "Lane.h"
 #include "../Config.h"
+#include "Lane.h"
 
 #include "raylib.h"
+
 class Map {
 public:
     Map();
@@ -31,7 +32,7 @@ private:
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
     void insertRoadLane(int numberOfSameLane);
     void insertSafeLane(int numberOfSameLane);
-    // void insertRiverLane();
+    void insertFireLane(int numberOfSameLane);
     void initializeGUI();
 };
 

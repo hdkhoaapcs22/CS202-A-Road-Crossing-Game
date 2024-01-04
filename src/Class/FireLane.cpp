@@ -10,6 +10,14 @@ FireLane::FireLane(float coordinateYOfLane)
 , fireDuration(Config::TIME_FIRE) {
 }
 
+FireLane::FireLane(std::ifstream& input)
+: Lane(input) {
+    input >> isFire;
+    input >> fireTime;
+    input >> fireTimer;
+    input >> fireDuration;
+}
+
 FireLane::~FireLane() {
 }
 
@@ -29,6 +37,14 @@ void FireLane::update(float dt) {
 }
 
 void FireLane::draw() {
+}
+
+void FireLane::save(std::ofstream& output) {
+    Lane::save(output);
+    output << isFire << std::endl;
+    output << fireTime << std::endl;
+    output << fireTimer << std::endl;
+    output << fireDuration << std::endl;
 }
 
 float FireLane::randomFireTime() {

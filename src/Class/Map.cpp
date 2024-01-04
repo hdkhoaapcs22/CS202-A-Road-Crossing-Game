@@ -1,7 +1,7 @@
 #include "Map.h"
 #include "RoadLane.h"
 #include "SafeLane.h"
-
+#include "FireLane.h"
 // #include "RiverLane.h"
 
 Map::Map() {
@@ -16,7 +16,7 @@ Map::Map() {
     insertRoadLane(numberOfSameLane);
     while (lanes.size() <= Config::NUMBER_OF_LANES) {
         numberOfSameLane = rand() % 4 + 1;
-        Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
+        Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 4);
         switch (laneName) {
             case Lane::LaneName::RoadLane:
                 insertRoadLane(numberOfSameLane);
@@ -24,8 +24,8 @@ Map::Map() {
             case Lane::LaneName::SafeLane:
                 insertSafeLane(numberOfSameLane);
                 break;
-            default:
-                // insertRiverLane(numberOfSameLane);
+            case Lane::LaneName::FireLane:
+                insertFireLane(numberOfSameLane);
                 break;
         }
     }
@@ -48,8 +48,8 @@ void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
                 case Lane::LaneName::SafeLane:
                     insertSafeLane(numberOfSameLane);
                     break;
-                default:
-                    // insertRiverLane(numberOfSameLane);
+                case Lane::LaneName::FireLane:
+                    insertFireLane(numberOfSameLane);
                     break;
             }
         }
@@ -113,6 +113,12 @@ void Map::insertSafeLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i)
         lanes.push_back(
             new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
+}
+
+void Map::insertFireLane(int numberOfSameLane) {
+    for (int i = 0; i < numberOfSameLane; ++i)
+        lanes.push_back(
+            new FireLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
 }
 
 void Map::initializeGUI() {

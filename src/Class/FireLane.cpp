@@ -13,10 +13,16 @@ FireLane::FireLane(float coordinateYOfLane)
     update(10 + rand() % 10); // advance forward
 }
 
-FireLane::~FireLane() {
+FireLane::FireLane(std::ifstream& input)
+: Lane(Lane::LaneName::FireLane, input) {
+    initializeGUI();
+    input >> isFire;
+    input >> fireTime;
+    input >> fireTimer;
+    input >> fireDuration;
 }
 
-void FireLane::save(std::ofstream& output) {
+FireLane::~FireLane() {
 }
 
 void FireLane::update(float dt) {
@@ -69,6 +75,14 @@ void FireLane::initializeGUI() {
         mAnimations[i].setSpriteSheetGridSize({2, 2});
         mAnimations[i].setNumFrames(4);
     }
+}
+
+void FireLane::save(std::ofstream& output) {
+    Lane::saveCoordinates(output);
+    output << isFire << std::endl;
+    output << fireTime << std::endl;
+    output << fireTimer << std::endl;
+    output << fireDuration << std::endl;
 }
 
 float FireLane::randomFireTime() {

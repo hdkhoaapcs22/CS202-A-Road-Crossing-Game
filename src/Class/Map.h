@@ -37,6 +37,7 @@ private:
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);
     void insertRoadLane(int numberOfSameLane);
     void insertSafeLane(int numberOfSameLane);
+    void insertFireLane(int numberOfSameLane);
     void initializeGUI();
 };
 

@@ -1,6 +1,7 @@
 #ifndef FIRELANE_H
 #define FIRELANE_H
 
+#include <fstream>
 #include "Lane.h"
 
 #include "../gui/GUIComponents/GUITexture.h"
@@ -11,6 +12,7 @@ public:
     static constexpr float CHARGE_TIME = 2.0;
 public:
     FireLane(float coordinateYOfLane);
+    FireLane(std::ifstream& input);
     ~FireLane();
     void save(std::ofstream& output) override;
 

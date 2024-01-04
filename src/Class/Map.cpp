@@ -3,8 +3,6 @@
 #include "SafeLane.h"
 #include "FireLane.h"
 
-// #include "FireLane.h"
-
 Map::Map() {
     initializeGUI();
 
@@ -26,9 +24,7 @@ Map::Map() {
                 insertSafeLane(numberOfSameLane);
                 break;
             case Lane::LaneName::FireLane:
-                // insertFireLane(numberOfSameLane);
-                break;
-            default:
+                insertFireLane(numberOfSameLane / 2);
                 break;
         }
     }
@@ -51,7 +47,7 @@ Map::Map(std::ifstream& input) {
                 lane = new SafeLane(input);
                 break;
             case Lane::LaneName::FireLane:
-                // lane = new FireLane(input);
+                lane = new FireLane(input);
                 break;
             default:
                 break;
@@ -87,9 +83,7 @@ void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
                     insertSafeLane(numberOfSameLane);
                     break;
                 case Lane::LaneName::FireLane:
-                    // insertFireLane(numberOfSameLane);
-                    break;
-                default:
+                    insertFireLane(numberOfSameLane);
                     break;
             }
         }
@@ -169,6 +163,12 @@ void Map::insertSafeLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i)
         lanes.push_back(
             new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
+}
+
+void Map::insertFireLane(int numberOfSameLane) {
+    for (int i = 0; i < numberOfSameLane; ++i)
+        lanes.push_back(
+            new FireLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
 }
 
 void Map::initializeGUI() {

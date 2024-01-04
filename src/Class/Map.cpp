@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "RoadLane.h"
 #include "SafeLane.h"
+#include "FireLane.h"
 
 // #include "FireLane.h"
 

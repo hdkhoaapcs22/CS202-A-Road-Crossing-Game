@@ -8,9 +8,13 @@ FireLane::FireLane(float coordinateYOfLane)
 , fireTime(randomFireTime())
 , fireTimer(0)
 , fireDuration(Config::TIME_FIRE) {
+    initializeGUI();
 }
 
 FireLane::~FireLane() {
+}
+
+void FireLane::save(std::ofstream& output) {
 }
 
 void FireLane::update(float dt) {
@@ -26,9 +30,37 @@ void FireLane::update(float dt) {
         }
         isFire = !isFire;
     }
+
+    if (!isFire && fireTime - fireTimer < CHARGE_TIME)
+        mObject.update(dt);
+    else if (isFire)
+        for (int i = 0; i < 4; i++)
+            mAnimations[i].update(dt);
 }
 
 void FireLane::draw() {
+    mObject.draw({0, getCoordinateYOfLane() - 156}, {78, 156});
+    if (isFire) {
+        for (int i = 0; i < 4; i++)
+            mAnimations[i].draw({385.f * i, getCoordinateYOfLane() - 48});
+    }
+}
+
+void FireLane::initializeGUI() {
+    mObject.setSpriteSheet(TextureHolder::get(TextureID::FireObjectAnim));
+    mObject.setRepeating(false);
+    mObject.setDuration(CHARGE_TIME);
+    mObject.setSpriteSheetGridSize({7, 7});
+    mObject.setNumFrames(47);
+
+    for (int i = 0; i < 4; i++) {
+        mAnimations.push_back(Animation());
+        mAnimations[i].setSpriteSheet(TextureHolder::get(TextureID::FirePatternAnim));
+        mAnimations[i].setRepeating(true);
+        mAnimations[i].setDuration(0.2);
+        mAnimations[i].setSpriteSheetGridSize({2, 2});
+        mAnimations[i].setNumFrames(4);
+    }
 }
 
 float FireLane::randomFireTime() {

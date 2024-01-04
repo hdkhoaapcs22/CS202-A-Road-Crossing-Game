@@ -39,6 +39,8 @@ enum class TextureID {
     MenuNewGameButton,
     MenuContinueButton,
     MenuGoBackButton,
+    FireObjectAnim,
+    FirePatternAnim,
 };
 
 enum class FontID {

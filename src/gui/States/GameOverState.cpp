@@ -1,4 +1,5 @@
 #include "GameOverState.h"
+#include <fstream>
 
 GameOverState::GameOverState(StateStack& stack, Context context)
 : State(stack, context) {
@@ -28,12 +29,28 @@ void GameOverState::draw() {
         button->draw();
     }
     DrawTextEx(FontHolder::get(FontID::Acme, 95), std::to_string(score).c_str(), {514, 256}, 95, 0, WHITE);
+    DrawTextEx(FontHolder::get(FontID::Acme, 42), std::to_string(highScore).c_str(), {571, 361}, 42, 0, WHITE);
 }
 
 void GameOverState::setParameter(BaseParameter::Ptr parameter) {
     auto scoreParameter = static_cast<ScoreData*>(parameter.get());
     score = scoreParameter->getScore();
-    highScore = 0;
+
+    std::ifstream fin("save/local.txt");
+    if (!fin.is_open()) {
+        std::ofstream fout("save/local.txt");
+        fout << 0;
+        fout.close();
+        fin.open("save/local.txt");
+    }
+    fin >> highScore;
+    fin.close();
+    if (score > highScore) {
+        std::ofstream fout("save/local.txt");
+        fout << score;
+        highScore = score;
+        fout.close();
+    }
 }
 
 void GameOverState::initButtons() {

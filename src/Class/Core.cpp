@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "RoadLane.h"
 #include "SafeLane.h"
+#include "FireLane.h"
 
 Core::Core() {
     initializeGUI();
@@ -35,11 +36,14 @@ float Core::getSpeedMultiplier() {
 
 bool Core::detectCollision() {
     Lane *lanePtr = character.getLanePtr();
-    if (lanePtr->getLaneName() != Lane::LaneName::RoadLane)
-        return false;
-    int leftHitbox = character.getCoordinateX() - Config::WIDTH_OF_CHARACTER / 2;
-    int rightHitbox = character.getCoordinateX() + Config::WIDTH_OF_CHARACTER / 2;
-    return static_cast<RoadLane *>(lanePtr)->checkCollision(leftHitbox, rightHitbox);
+    if (lanePtr->getLaneName() == Lane::LaneName::RoadLane) {
+        int leftHitbox = character.getCoordinateX() - Config::WIDTH_OF_CHARACTER / 2;
+        int rightHitbox = character.getCoordinateX() + Config::WIDTH_OF_CHARACTER / 2;
+        return static_cast<RoadLane *>(lanePtr)->checkCollision(leftHitbox, rightHitbox);
+    } else if (lanePtr->getLaneName() == Lane::LaneName::FireLane) {
+        return static_cast<FireLane *>(lanePtr)->isOnFire();
+    }
+    return false;
 }
 
 bool Core::detectBlockMovement(int direction) {

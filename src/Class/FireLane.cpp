@@ -9,6 +9,8 @@ FireLane::FireLane(float coordinateYOfLane)
 , fireTimer(0)
 , fireDuration(Config::TIME_FIRE) {
     initializeGUI();
+
+    update(10 + rand() % 10); // advance forward
 }
 
 FireLane::~FireLane() {
@@ -33,9 +35,11 @@ void FireLane::update(float dt) {
 
     if (!isFire && fireTime - fireTimer < CHARGE_TIME)
         mObject.update(dt);
-    else if (isFire)
+    else if (isFire) {
+        mObject.restart();
         for (int i = 0; i < 4; i++)
             mAnimations[i].update(dt);
+    }
 }
 
 void FireLane::draw() {
@@ -44,6 +48,10 @@ void FireLane::draw() {
         for (int i = 0; i < 4; i++)
             mAnimations[i].draw({385.f * i, getCoordinateYOfLane() - 48});
     }
+}
+
+bool FireLane::isOnFire() const {
+    return isFire;
 }
 
 void FireLane::initializeGUI() {

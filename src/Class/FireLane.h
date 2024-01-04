@@ -17,6 +17,8 @@ public:
     void update(float dt);
     void draw();
 
+    bool isOnFire() const;
+
 private:
     bool isFire;
     float fireTime;

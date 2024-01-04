@@ -29,6 +29,8 @@ private:
     Animation mObject;
     std::vector<Animation> mAnimations;
 
+    GUITexture::Ptr mTexture;
+
 private:
     void initializeGUI();
     float randomFireTime();

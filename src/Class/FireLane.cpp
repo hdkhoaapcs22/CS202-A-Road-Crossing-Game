@@ -49,6 +49,9 @@ void FireLane::update(float dt) {
 }
 
 void FireLane::draw() {
+    float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
+    mTexture->setPosition({0, coordinateYOfLane});
+    mTexture->draw();
     mObject.draw({0, getCoordinateYOfLane() - 156}, {78, 156});
     if (isFire) {
         for (int i = 0; i < 4; i++)
@@ -61,6 +64,10 @@ bool FireLane::isOnFire() const {
 }
 
 void FireLane::initializeGUI() {
+    mTexture = std::make_shared<GUITexture>();
+    mTexture->setTexture(TextureHolder::get(TextureID::RoadLane));
+    mTexture->setSize({Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE});
+
     mObject.setSpriteSheet(TextureHolder::get(TextureID::FireObjectAnim));
     mObject.setRepeating(false);
     mObject.setDuration(CHARGE_TIME);

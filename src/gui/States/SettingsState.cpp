@@ -1,9 +1,13 @@
 #include "SettingsState.h"
+#include "../ResourceHolders/MusicPlayer.h"
 
 SettingsState::SettingsState(StateStack& stack, Context context)
 : State(stack, context) {
     mBackground = std::make_shared<GUITexture>(Rectangle{0, 0, 1024, 640});
     mBackground->setTexture(TextureHolder::get(TextureID::PopUpMenu));
+
+    mContent = std::make_shared<GUITexture>(Rectangle{387, 225, 248, 249});
+    mContent->setTexture(TextureHolder::get(TextureID::SettingsTexture));
 
     initButtons();
 }
@@ -21,9 +25,14 @@ bool SettingsState::update(float dt) {
 void SettingsState::draw() {
     ClearBackground(AppColor::BACKGROUND_1);
     mBackground->draw();
+    mContent->draw();
     for (auto& button : mButtons) {
         button->draw();
     }
+    int volume = getContext().music->getVolume() / 10;
+    Vector2 volumeTextBound = MeasureTextEx(FontHolder::get(FontID::Acme, 90), std::to_string(volume).c_str(), 90, 0);
+    DrawTextEx(FontHolder::get(FontID::Acme, 100), std::to_string(volume).c_str(),
+               {Config::WINDOW_WIDTH / 2 - volumeTextBound.x / 2, 237}, 100, 0, WHITE);
 }
 
 void SettingsState::initButtons() {
@@ -36,4 +45,22 @@ void SettingsState::initButtons() {
         requestStackPop();
     });
     mButtons.push_back(std::move(closeButton));
+
+    Button::Ptr musicIncreaseButton = std::make_shared<Button>();
+    musicIncreaseButton->setTexture(TextureHolder::get(TextureID::RightButton));
+    musicIncreaseButton->setRect(Rectangle{661, 249, 47, 72});
+    musicIncreaseButton->setColor(BLANK);
+    musicIncreaseButton->setCallback([this]() {
+        getContext().music->setVolume(std::min(getContext().music->getVolume() + 10, 100));
+    });
+    mButtons.push_back(std::move(musicIncreaseButton));
+
+    Button::Ptr musicDecreaseButton = std::make_shared<Button>();
+    musicDecreaseButton->setTexture(TextureHolder::get(TextureID::LeftButton));
+    musicDecreaseButton->setRect(Rectangle{316, 249, 47, 72});
+    musicDecreaseButton->setColor(BLANK);
+    musicDecreaseButton->setCallback([this]() {
+        getContext().music->setVolume(std::max(getContext().music->getVolume() - 10, 0));
+    });
+    mButtons.push_back(std::move(musicDecreaseButton));
 }

@@ -7,7 +7,7 @@ public:
     static constexpr float WINDOW_WIDTH = 1024;
     static constexpr float WINDOW_HEIGHT = 640;
     static constexpr int FPS = 60;
-    static constexpr int ENEMY_DISTANCE = 250;
+    static constexpr int ENEMY_DISTANCE = 350;
     static constexpr int WIDTH_OF_EACH_CELL = 78;
     static constexpr int FIRST_POSITION_OF_CHARACTER = 507;
     static constexpr int LAST_POSITION_OF_CHARACTER = 975;

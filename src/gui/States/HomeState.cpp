@@ -1,5 +1,5 @@
 #include "HomeState.h"
-#include <iostream>
+#include "../ResourceHolders/MusicPlayer.h"
 
 HomeState::HomeState(StateStack &stack, Context context)
 : State(stack, context) {
@@ -7,6 +7,8 @@ HomeState::HomeState(StateStack &stack, Context context)
     mBackground->setTexture(TextureHolder::get(TextureID::MenuBackground));
 
     initButtons();
+
+    getContext().music->play(MusicID::MenuTheme);
 }
 
 HomeState::~HomeState() {
@@ -16,7 +18,7 @@ bool HomeState::update(float dt) {
     for (auto &button : mButtons) {
         button->update(dt);
     }
-    return true;
+    return false;
 }
 
 void HomeState::draw() {
@@ -33,7 +35,8 @@ void HomeState::initButtons() {
     playButton->setSize({199, 68});
     playButton->setColor(BLANK);
     playButton->setCallback([this]() {
-        std::cout << "Play button pressed" << std::endl;
+        requestStackPop();
+        requestStackPush(StateIDs::Game);
     });
     mButtons.push_back(std::move(playButton));
 

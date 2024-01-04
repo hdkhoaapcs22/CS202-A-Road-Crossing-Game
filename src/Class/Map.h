@@ -17,7 +17,8 @@ public:
     static const int laneWidth = 14;
 
     void update(float dt, float speedMultiplier, Lane *characterLanePtr);
-    void draw();
+    void drawUpper(Lane* characterLanePtr);
+    void drawLower(Lane* characterLanePtr);
 
     Lane *getNextLane(Lane *curLanePtr);
     Lane *getPreviousLane(Lane *curLanePtr);

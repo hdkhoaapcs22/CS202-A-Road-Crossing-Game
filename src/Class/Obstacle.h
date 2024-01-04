@@ -8,12 +8,13 @@
 #include "raylib.h"
 
 #include "../Config.h"
+#include "../gui/GUIComponents/GUITexture.h"
 
 class Obstacle {
 public:
     enum class ObstacleName {
-        Rock,
-        Tree
+        Type1,
+        Type2
     };
     Obstacle();
     Obstacle(std::ifstream& input);
@@ -28,6 +29,8 @@ public:
 private:
     int coordinateXOfObstacles;
     ObstacleName obstacleName;
+
+    GUITexture::Ptr mTexture;
 
 private:
     void initializeGUI();

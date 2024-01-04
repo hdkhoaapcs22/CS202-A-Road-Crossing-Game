@@ -3,6 +3,7 @@
 
 #include "States/State.h"
 #include "States/StateIdentifiers.h"
+#include "BaseParameter.h"
 
 #include <functional>
 #include <map>
@@ -19,6 +20,7 @@ public:
     void draw();
 
     void pushState(StateIDs stateID);
+    void pushParameterizedState(StateIDs stateID, BaseParameter::Ptr parameter);
     void popState();
     void clearStates();
 
@@ -27,16 +29,18 @@ public:
 private:
     enum class Action {
         Push,
+        PushParameterized,
         Pop,
         Clear
     };
 
     struct PendingChange {
         explicit PendingChange(Action action,
-                               StateIDs stateID = StateIDs::None);
+                               StateIDs stateID = StateIDs::None, BaseParameter::Ptr parameter = nullptr);
 
         Action action;
         StateIDs stateID;
+        BaseParameter::Ptr parameter;
     };
 
 private:

@@ -1,6 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "ResourceHolders/MusicPlayer.h"
 #include "ResourceHolders/FontHolder.h"
 #include "ResourceHolders/TextureHolder.h"
 #include "StateStack.h"
@@ -23,6 +24,8 @@ private:
 
 private:
     StateStack mStateStack;
+
+    MusicPlayer mMusic;
 };
 
 #endif // APPLICATION_H

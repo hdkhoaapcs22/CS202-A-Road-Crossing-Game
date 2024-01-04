@@ -9,6 +9,3 @@ Unstoppable4::Unstoppable4(std::ifstream& input)
 : Enemy(input) {
     initializeGUI();
 }
-
-void Unstoppable4::initializeGUI() {
-}

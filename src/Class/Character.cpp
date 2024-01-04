@@ -74,10 +74,22 @@ float Character::getCoordinateX() const {
     return coordinateXOfCharacter;
 }
 
+void Character::prepareMovement(bool isPreparing) {
+    isPreparingMovement = isPreparing;
+}
+
+void Character::setHorizontalFlipped(bool isFlipped) {
+    mIdleAnimation.setHorizontalFlipped(isFlipped);
+    mDeadAnimation.setHorizontalFlipped(isFlipped);
+}
+
 void Character::update(float dt) {
     movementCD -= dt;
     if (movementCD < 0)
         movementCD = 0;
+    else {
+        isPreparingMovement = false;
+    }
     if (isDead)
         mDeadAnimation.update(dt);
     else
@@ -85,18 +97,24 @@ void Character::update(float dt) {
 }
 
 void Character::draw() {
+    float jumpHeight = 20;
     Vector2 displayedPosition = {coordinateXOfCharacter - WIDTH_OF_CHARACTER_SPRITE / 2
                                      - deltaPosition.x * movementCD / Config::TIME_MOVEMENT,
                                  lanePtr->getCoordinateYOfLane()
-                                     - HEIGHT_OF_CHARACTER_SPRITE * 2 / 3
-                                     - deltaPosition.y * movementCD / Config::TIME_MOVEMENT};
+                                     - HEIGHT_OF_CHARACTER_SPRITE * 3 / 4
+                                     + 4 * jumpHeight * (movementCD / Config::TIME_MOVEMENT) * (movementCD / Config::TIME_MOVEMENT) - 4 * jumpHeight * (movementCD / Config::TIME_MOVEMENT)};
 
     if (isDead)
         mDeadAnimation.draw(displayedPosition,
                             {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
-    else
-        mIdleAnimation.draw(displayedPosition,
-                            {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE});
+    else {
+        Vector2 sizeOfCharacter = {WIDTH_OF_CHARACTER_SPRITE, HEIGHT_OF_CHARACTER_SPRITE};
+        if (isPreparingMovement) {
+            displayedPosition.y += sizeOfCharacter.y / 4;
+            sizeOfCharacter.y -= sizeOfCharacter.y / 4;
+        }
+        mIdleAnimation.draw(displayedPosition, sizeOfCharacter);
+    }
 }
 
 void Character::setDead() {
@@ -112,7 +130,7 @@ void Character::initializeGUI() {
 
     mDeadAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieDeadAnim));
     mDeadAnimation.setRepeating(false);
-    mDeadAnimation.setDuration(2);
+    mDeadAnimation.setDuration(DEAD_ANIMATION_TIME);
     mDeadAnimation.setSpriteSheetGridSize({6, 5});
     mDeadAnimation.setNumFrames(30);
 }

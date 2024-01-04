@@ -8,19 +8,20 @@ public:
     Unstoppable5(Direction direct, int coordinateXOfEnemy);
     Unstoppable5(std::ifstream& input);
 
+    TextureID getTextureID() const {
+        return TextureID::Unstoppable5;
+    }
+
     EnemyID getEnemyID() const {
         return EnemyID::Unstoppable5;
     }
 
     int getSpeed() const {
-        return 100;
+        return 250;
     }
 
     int getWidth() const {
-        return 100;
+        return 66;
     }
-
-private:
-    void initializeGUI();
 };
 #endif

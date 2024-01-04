@@ -86,8 +86,9 @@ void Core::update(float dt) {
 
 void Core::draw() {
     ClearBackground(BLACK);
-    gameMap.draw();
+    gameMap.drawUpper(character.getLanePtr());
     character.draw();
+    gameMap.drawLower(character.getLanePtr());
     drawScore();
 }
 
@@ -114,14 +115,23 @@ void Core::executeMovement(int direction, float dt) {
 void Core::getInputs(float dt) {
     if (gameState == GameState::Lost)
         return;
+    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP) || IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)
+        || IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+        character.prepareMovement(true);
+    } else {
+        character.prepareMovement(false);
+    }
     if (IsKeyReleased(KEY_W) || IsKeyReleased(KEY_UP))
         executeMovement(Character::MOVE_UP, dt);
     else if (IsKeyReleased(KEY_S) || IsKeyReleased(KEY_DOWN))
         executeMovement(Character::MOVE_DOWN, dt);
-    else if (IsKeyReleased(KEY_A) || IsKeyReleased(KEY_LEFT))
+    else if (IsKeyReleased(KEY_A) || IsKeyReleased(KEY_LEFT)) {
+        character.setHorizontalFlipped(false);
         executeMovement(Character::MOVE_LEFT, dt);
-    else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT))
+    } else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT)) {
+        character.setHorizontalFlipped(true);
         executeMovement(Character::MOVE_RIGHT, dt);
+    }
 }
 
 void Core::drawScore() {
@@ -142,7 +152,11 @@ bool Core::isLost() {
         return true;
     if (character.getLanePtr() != gameMap.getFirstLane())
         return false;
-    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT;
+    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE / 2;
+}
+
+int Core::getScore() const {
+    return score;
 }
 
 void Core::save(std::ofstream &output) {

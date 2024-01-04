@@ -19,6 +19,8 @@ public:
     static const int WIDTH_OF_CHARACTER_SPRITE = 100;
     static const int HEIGHT_OF_CHARACTER_SPRITE = 150;
 
+    static constexpr float DEAD_ANIMATION_TIME = 2.0f;
+
 public:
     Character();
     Character(std::ifstream& input);
@@ -27,6 +29,9 @@ public:
     void updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction, float dt);
     Lane* getLanePtr();
     float getCoordinateX() const;
+
+    void prepareMovement(bool isPreparing);
+    void setHorizontalFlipped(bool isFlipped);
 
     void update(float dt);
     void draw();
@@ -44,6 +49,7 @@ private:
     Animation mDeadAnimation;
 
     bool isDead{false};
+    bool isPreparingMovement{false};
 };
 
 #endif

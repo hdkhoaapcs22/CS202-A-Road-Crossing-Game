@@ -27,6 +27,8 @@ public:
     bool isLost();
     void save(std::ofstream& output);
 
+    int getScore() const;
+
 private:
     int score;
     int virtualScore;

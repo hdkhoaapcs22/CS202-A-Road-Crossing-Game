@@ -9,6 +9,3 @@ Unstoppable5::Unstoppable5(std::ifstream& input)
 : Enemy(input) {
     initializeGUI();
 }
-
-void Unstoppable5::initializeGUI() {
-}

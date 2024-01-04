@@ -10,5 +10,3 @@ Unstoppable2::Unstoppable2(std::ifstream& input)
     initializeGUI();
 }
 
-void Unstoppable2::initializeGUI() {
-}

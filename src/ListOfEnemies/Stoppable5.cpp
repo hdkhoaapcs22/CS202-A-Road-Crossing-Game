@@ -9,6 +9,3 @@ Stoppable5::Stoppable5(std::ifstream& input)
 : Enemy(input) {
     initializeGUI();
 }
-
-void Stoppable5::initializeGUI() {
-}

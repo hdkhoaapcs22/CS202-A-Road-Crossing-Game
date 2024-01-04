@@ -8,19 +8,20 @@ public:
     Stoppable1(Direction direct, int coordinateXOfEnemy);
     Stoppable1(std::ifstream& input);
 
+    TextureID getTextureID() const {
+        return TextureID::Stoppable1;
+    }
+
     EnemyID getEnemyID() const {
         return EnemyID::Stoppable1;
     }
 
     int getSpeed() const {
-        return 200;
+        return 450;
     }
 
     int getWidth() const {
-        return 100;
+        return 226;
     }
-
-private:
-    void initializeGUI();
 };
 #endif

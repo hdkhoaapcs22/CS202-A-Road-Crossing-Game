@@ -96,9 +96,25 @@ void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
     for (Lane* lane : lanes) lane->update(dt);
 }
 
-void Map::draw() {
-    ClearBackground(BLACK);
-    for (Lane* lane : lanes) lane->draw();
+void Map::drawUpper(Lane* characterLanePtr) {
+    for (auto it = lanes.rbegin(); it != lanes.rend(); ++it) {
+        (*it)->draw();
+        if (*it == characterLanePtr)
+            break;
+    }
+}
+
+void Map::drawLower(Lane* characterLanePtr) {
+    auto it = lanes.rbegin();
+    for (; it != lanes.rend(); ++it) {
+        if (*it == characterLanePtr)
+            break;
+    }
+    if (it != lanes.rend())
+        ++it;
+    for (; it != lanes.rend(); ++it) {
+        (*it)->draw();
+    }
 }
 
 Map::~Map() {

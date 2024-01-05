@@ -18,7 +18,9 @@ void MusicPlayer::play(MusicID theme) {
 }
 
 void MusicPlayer::update() {
-    UpdateMusicStream(mMusic);
+    if (IsMusicReady(mMusic)) {
+        UpdateMusicStream(mMusic);
+    }
 }
 
 void MusicPlayer::stop() {

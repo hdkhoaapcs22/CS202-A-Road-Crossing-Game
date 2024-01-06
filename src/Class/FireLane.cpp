@@ -52,7 +52,7 @@ void FireLane::draw() {
     float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
     mTexture->setPosition({0, coordinateYOfLane});
     mTexture->draw();
-    mObject.draw({0, getCoordinateYOfLane() - 156}, {78, 156});
+    mObject.draw({Config::WINDOW_WIDTH / 2 - 50, getCoordinateYOfLane() - 75}, {50, 100});
     if (isFire) {
         for (int i = 0; i < 4; i++)
             mAnimations[i].draw({385.f * i, getCoordinateYOfLane() - 48});

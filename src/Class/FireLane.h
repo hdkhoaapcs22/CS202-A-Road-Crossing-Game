@@ -9,7 +9,7 @@
 
 class FireLane : public Lane {
 public:
-    static constexpr float CHARGE_TIME = 2.0;
+    static constexpr float CHARGE_TIME = 1.5;
 public:
     FireLane(float coordinateYOfLane);
     FireLane(std::ifstream& input);

@@ -24,6 +24,8 @@ Application::Application()
     loadTextures();
     loadFonts();
 
+    SettingsState::loadData(State::Context(mMusic));
+
     // SetWindowIcon(LoadImageFromTexture(
     //     TextureHolder::get(TextureID::IconLogo)));
 
@@ -32,6 +34,9 @@ Application::Application()
 }
 
 Application::~Application() {
+
+    SettingsState::saveData(State::Context(mMusic));
+
     CloseAudioDevice();
     CloseWindow();
 }

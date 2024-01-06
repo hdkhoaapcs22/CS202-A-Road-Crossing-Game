@@ -9,8 +9,15 @@ State::State(StateStack &stack, Context context)
 State::~State() {
 }
 
+void State::setParameter(BaseParameter::Ptr parameter) {
+}
+
 void State::requestStackPush(StateIDs stateID) {
     mStack->pushState(stateID);
+}
+
+void State::requestStackPush(StateIDs stateID, BaseParameter::Ptr parameter) {
+    mStack->pushParameterizedState(stateID, std::move(parameter));
 }
 
 void State::requestStackPop() {
@@ -19,4 +26,12 @@ void State::requestStackPop() {
 
 void State::requestStackClear() {
     mStack->clearStates();
+}
+
+State::Context State::getContext() const {
+    return mContext;
+}
+
+State::Context::Context(MusicPlayer &music)
+: music(&music) {
 }

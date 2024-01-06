@@ -6,6 +6,11 @@
 class Stoppable5 : public Enemy {
 public:
     Stoppable5(Direction direct, int coordinateXOfEnemy);
+    Stoppable5(std::ifstream& input);
+
+    TextureID getTextureID() const {
+        return TextureID::Stoppable5;
+    }
 
     EnemyID getEnemyID() const {
         return EnemyID::Stoppable5;
@@ -16,10 +21,7 @@ public:
     }
 
     int getWidth() const {
-        return 100;
+        return 61;
     }
-
-private:
-    void initializeGUI();
 };
 #endif

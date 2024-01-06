@@ -10,7 +10,7 @@ Animation::Animation()
 , mSpriteSheetGridSize({0, 0})
 , mFrameGridPosition({0, 0}) {
 }
-
+#include <iostream>
 void Animation::update(float dt) {
     float timePerFrame = mDuration / mNumFrames;
     mElapsedTime += dt;
@@ -43,6 +43,13 @@ void Animation::draw(Vector2 position, Vector2 size) {
 
     Rectangle sourceRect = {mFrameGridPosition.x * frameSize.x, mFrameGridPosition.y * frameSize.y,
                             frameSize.x, frameSize.y};
+
+    if (isHorizontalFlipped) {
+        sourceRect.width *= -1;
+    }
+    if (isVerticalFlipped) {
+        sourceRect.height *= -1;
+    }
 
     Rectangle destRect = {position.x, position.y, size.x, size.y};
 
@@ -92,9 +99,19 @@ bool Animation::isRepeating() const {
 }
 
 void Animation::restart() {
-    mCurrentFrame = 0;
+    mCurrentFrame = 1;
+    mFrameGridPosition = {0, 0};
+    mElapsedTime = 0;
 }
 
 bool Animation::isFinished() const {
     return mCurrentFrame >= mNumFrames;
+}
+
+void Animation::setHorizontalFlipped(bool flag) {
+    isHorizontalFlipped = flag;
+}
+
+void Animation::setVerticalFlipped(bool flag) {
+    isVerticalFlipped = flag;
 }

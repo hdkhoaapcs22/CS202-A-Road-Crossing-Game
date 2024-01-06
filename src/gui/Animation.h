@@ -31,6 +31,9 @@ public:
     void restart();
     bool isFinished() const;
 
+    void setHorizontalFlipped(bool flag);
+    void setVerticalFlipped(bool flag);
+
 private:
     Texture2D mSpriteSheet;
     Vector2 mSpriteSheetGridSize;
@@ -40,6 +43,9 @@ private:
     float mDuration;
     float mElapsedTime;
     bool mRepeated;
+
+    bool isHorizontalFlipped{false};
+    bool isVerticalFlipped{false};
 };
 
 #endif // SRC_GUI_ANIMATION_H

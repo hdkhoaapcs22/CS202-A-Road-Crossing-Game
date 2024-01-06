@@ -1,19 +1,25 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include <fstream>
 #include "../gui/GUIComponents/GUITexture.h"
 #include "Character.h"
 #include "Map.h"
 
 class Core {
 public:
+    typedef std::unique_ptr<Core> Ptr;
+
     enum class GameState {
         WaitingToStart,
         Playing,
         Lost
     };
+
 public:
     Core();
+    Core(std::ifstream& input);
+    ~Core();
     float getSpeedMultiplier();
     bool detectCollision();
     bool detectBlockMovement(int direction);
@@ -22,6 +28,9 @@ public:
     void draw();
 
     bool isLost();
+    void save(std::ofstream& output);
+
+    int getScore() const;
 
 private:
     int score;
@@ -37,7 +46,7 @@ private:
     void moveCharacter(int direction, float dt);
     void executeMovement(int direction, float dt);
     void getInputs(float dt);
-    
+
     void drawScore();
 
     void initializeGUI();

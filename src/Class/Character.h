@@ -1,12 +1,14 @@
 #ifndef Character_H
 #define Character_H
 
-#include "Lane.h"
+#include <fstream>
 #include "../Config.h"
 #include "../gui/Animation.h"
 #include "../gui/ResourceHolders/TextureHolder.h"
+#include "Lane.h"
 
 #include "raylib.h"
+
 class Character {
 public:
     static const int MOVE_UP = 1;
@@ -17,13 +19,19 @@ public:
     static const int WIDTH_OF_CHARACTER_SPRITE = 100;
     static const int HEIGHT_OF_CHARACTER_SPRITE = 150;
 
+    static constexpr float DEAD_ANIMATION_TIME = 2.0f;
+
 public:
     Character();
+    Character(std::ifstream& input);
+    void save(std::ofstream& output);
     void assignLane(Lane* firstLane);
-    void updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr,
-                                   int direction, float dt);
+    void updateLocationOfCharacter(Lane* nextLanePtr, Lane* prevLanePtr, int direction, float dt);
     Lane* getLanePtr();
     float getCoordinateX() const;
+
+    void prepareMovement(bool isPreparing);
+    void setHorizontalFlipped(bool isFlipped);
 
     void update(float dt);
     void draw();
@@ -31,6 +39,7 @@ public:
     void setDead();
 
     void initializeGUI();
+
 private:
     Vector2 deltaPosition;
     float coordinateXOfCharacter;
@@ -40,6 +49,7 @@ private:
     Animation mDeadAnimation;
 
     bool isDead{false};
+    bool isPreparingMovement{false};
 };
 
 #endif

@@ -1,14 +1,31 @@
 #include "Core.h"
 #include "RoadLane.h"
 #include "SafeLane.h"
+#include "FireLane.h"
 
 Core::Core() {
     initializeGUI();
 
     score = 0;
     virtualScore = 0;
-    character.assignLane(gameMap.getFirstLaneOfCharacter());
+    character.assignLane(gameMap.getLaneK(2));
     gameMap.setMoving(false);
+}
+
+Core::Core(std::ifstream &input) : gameMap(input), character(input) {
+    initializeGUI();
+
+    score = 0;
+    virtualScore = 0;
+    input >> score >> virtualScore;
+    int laneID, gameStateID;
+    input >> laneID;
+    character.assignLane(gameMap.getLaneK(laneID));
+    input >> gameStateID;
+    gameState = static_cast<GameState>(gameStateID);
+}
+
+Core::~Core() {
 }
 
 float Core::getSpeedMultiplier() {
@@ -19,11 +36,14 @@ float Core::getSpeedMultiplier() {
 
 bool Core::detectCollision() {
     Lane *lanePtr = character.getLanePtr();
-    if (lanePtr->getLaneName() != Lane::LaneName::RoadLane)
-        return false;
-    int leftHitbox = character.getCoordinateX() - Config::WIDTH_OF_CHARACTER / 2;
-    int rightHitbox = character.getCoordinateX() + Config::WIDTH_OF_CHARACTER / 2;
-    return static_cast<RoadLane *>(lanePtr)->checkCollision(leftHitbox, rightHitbox);
+    if (lanePtr->getLaneName() == Lane::LaneName::RoadLane) {
+        int leftHitbox = character.getCoordinateX() - Config::WIDTH_OF_CHARACTER / 2;
+        int rightHitbox = character.getCoordinateX() + Config::WIDTH_OF_CHARACTER / 2;
+        return static_cast<RoadLane *>(lanePtr)->checkCollision(leftHitbox, rightHitbox);
+    } else if (lanePtr->getLaneName() == Lane::LaneName::FireLane) {
+        return static_cast<FireLane *>(lanePtr)->isOnFire();
+    }
+    return false;
 }
 
 bool Core::detectBlockMovement(int direction) {
@@ -72,8 +92,9 @@ void Core::update(float dt) {
 
 void Core::draw() {
     ClearBackground(BLACK);
-    gameMap.draw();
+    gameMap.drawUpper(character.getLanePtr());
     character.draw();
+    gameMap.drawLower(character.getLanePtr());
     drawScore();
 }
 
@@ -100,20 +121,28 @@ void Core::executeMovement(int direction, float dt) {
 void Core::getInputs(float dt) {
     if (gameState == GameState::Lost)
         return;
+    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP) || IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)
+        || IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+        character.prepareMovement(true);
+    } else {
+        character.prepareMovement(false);
+    }
     if (IsKeyReleased(KEY_W) || IsKeyReleased(KEY_UP))
         executeMovement(Character::MOVE_UP, dt);
     else if (IsKeyReleased(KEY_S) || IsKeyReleased(KEY_DOWN))
         executeMovement(Character::MOVE_DOWN, dt);
-    else if (IsKeyReleased(KEY_A) || IsKeyReleased(KEY_LEFT))
+    else if (IsKeyReleased(KEY_A) || IsKeyReleased(KEY_LEFT)) {
+        character.setHorizontalFlipped(false);
         executeMovement(Character::MOVE_LEFT, dt);
-    else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT))
+    } else if (IsKeyReleased(KEY_D) || IsKeyReleased(KEY_RIGHT)) {
+        character.setHorizontalFlipped(true);
         executeMovement(Character::MOVE_RIGHT, dt);
+    }
 }
 
 void Core::drawScore() {
     scoreFrame->draw();
-    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(),
-               {130, 25}, 48, 0,
+    DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(), {130, 25}, 48, 0,
                WHITE);
 }
 
@@ -129,7 +158,19 @@ bool Core::isLost() {
         return true;
     if (character.getLanePtr() != gameMap.getFirstLane())
         return false;
-    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT;
+    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE / 2;
+}
+
+int Core::getScore() const {
+    return score;
+}
+
+void Core::save(std::ofstream &output) {
+    gameMap.save(output);
+    character.save(output);
+    output << score << " " << virtualScore << " ";
+    output << gameMap.getLaneID(character.getLanePtr()) << " " << static_cast<int>(gameState)
+           << std::endl;
 }
 
 void Core::moveCharacter(int direction, float dt) {

@@ -6,20 +6,22 @@
 class Unstoppable4 : public Enemy {
 public:
     Unstoppable4(Direction direct, int coordinateXOfEnemy);
+    Unstoppable4(std::ifstream& input);
+
+    TextureID getTextureID() const {
+        return TextureID::Unstoppable4;
+    }
 
     EnemyID getEnemyID() const {
         return EnemyID::Unstoppable4;
     }
 
     int getSpeed() const {
-        return 100;
+        return 300;
     }
 
     int getWidth() const {
-        return 100;
+        return 209;
     }
-
-private:
-    void initializeGUI();
 };
 #endif

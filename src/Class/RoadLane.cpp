@@ -24,7 +24,66 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
     spawnTime = (float)(enemyWidth + Config::ENEMY_DISTANCE) / enemySpeed;
     checkHasTrafficLight();
 
-    update(100 + rand() % 100); // advance forward to populate the lane
+    update(10 + rand() % 10); // advance forward to populate the lane
+}
+
+RoadLane::RoadLane(std::ifstream &input)
+: Lane(Lane::LaneName::RoadLane, input) {
+    initializeGUI();
+    int directValue, enemyIDValue, numOfEnemies;
+    input >> hasTrafficLight >> isRedSignal >> breakTimer >> spawnTimer >> spawnTime >> directValue
+        >> enemyIDValue >> numOfEnemies;
+    direct = static_cast<Direction>(directValue);
+    enemyID = static_cast<Enemy::EnemyID>(enemyIDValue);
+    enemies.resize(numOfEnemies);
+    for (Enemy *&enemy : enemies) switch (enemyID) {
+            case Enemy::EnemyID::Unstoppable1:
+                enemy = new Unstoppable1(input);
+                break;
+            case Enemy::EnemyID::Unstoppable2:
+                enemy = new Unstoppable2(input);
+                break;
+            case Enemy::EnemyID::Unstoppable3:
+                enemy = new Unstoppable3(input);
+                break;
+            case Enemy::EnemyID::Unstoppable4:
+                enemy = new Unstoppable4(input);
+                break;
+            case Enemy::EnemyID::Unstoppable5:
+                enemy = new Unstoppable5(input);
+                break;
+            case Enemy::EnemyID::Stoppable1:
+                enemy = new Stoppable1(input);
+                break;
+            case Enemy::EnemyID::Stoppable2:
+                enemy = new Stoppable2(input);
+                break;
+            case Enemy::EnemyID::Stoppable3:
+                enemy = new Stoppable3(input);
+                break;
+            case Enemy::EnemyID::Stoppable4:
+                enemy = new Stoppable4(input);
+                break;
+            case Enemy::EnemyID::Stoppable5:
+                enemy = new Stoppable5(input);
+                break;
+            default:
+                break;
+        }
+}
+
+void RoadLane::save(std::ofstream &output) {
+    Lane::saveCoordinates(output);
+    output << hasTrafficLight << " " << isRedSignal << " " << breakTimer << " " << spawnTimer << " "
+           << spawnTime << " " << static_cast<int>(direct) << " " << static_cast<int>(enemyID)
+           << " " << enemies.size() << std::endl;
+    for (std::deque<Enemy *>::iterator it = enemies.begin(), last = --enemies.end();
+         it != enemies.end(); ++it) {
+        (*it)->save(output);
+        if (it != last)
+            output << " ";
+    }
+    output << std::endl;
 }
 
 void RoadLane::manageTraffic(float dt) {
@@ -63,6 +122,20 @@ void RoadLane::manageEnemies(Enemy *enemy) {
 }
 
 void RoadLane::initializeGUI() {
+    mTexture = std::make_shared<GUITexture>();
+    mTexture->setTexture(TextureHolder::get(TextureID::RoadLane));
+    mTexture->setSize({Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE});
+
+    // mIdleAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieIdleAnim));
+    // mIdleAnimation.setRepeating(true);
+    // mIdleAnimation.setDuration(2);
+    // mIdleAnimation.setSpriteSheetGridSize({6, 5});
+    // mIdleAnimation.setNumFrames(30);
+    mTrafficLightAnimation.setSpriteSheet(TextureHolder::get(TextureID::TrafficLightAnim));
+    mTrafficLightAnimation.setRepeating(false);
+    mTrafficLightAnimation.setDuration(BREAK_TIME);
+    mTrafficLightAnimation.setSpriteSheetGridSize({7, 7});
+    mTrafficLightAnimation.setNumFrames(45);
 }
 
 void RoadLane::checkHasTrafficLight() {
@@ -82,29 +155,33 @@ void RoadLane::checkHasTrafficLight() {
 void RoadLane::update(float dt) {
     manageTraffic(dt);
     breakTimer += dt;
+    mTrafficLightAnimation.update(dt);
     while (breakTimer >= BREAK_TIME) {
         breakTimer -= BREAK_TIME;
         isRedSignal = !isRedSignal;
+        if (isRedSignal) {
+            mTrafficLightAnimation.restart();
+            mTrafficLightAnimation.update(breakTimer);
+        }
     }
 }
 
 void RoadLane::draw() {
     float coordinateYOfLane = getCoordinateYOfLane() - Config::SIZE_OF_A_LANE / 2;
-    DrawRectangle(0, coordinateYOfLane, Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE, GRAY);
+    mTexture->setPosition({0, coordinateYOfLane});
+    mTexture->draw();
+
+    if (hasTrafficLight) {
+        const float yOffset = Config::SIZE_OF_A_LANE - 114;
+        if (direct == Direction::Right) {
+            mTrafficLightAnimation.draw({0, coordinateYOfLane + yOffset});
+        } else {
+            mTrafficLightAnimation.draw({Config::WINDOW_WIDTH - 50, coordinateYOfLane + yOffset});
+        }
+    }
 
     for (Enemy *enemy : enemies) {
         enemy->draw(coordinateYOfLane);
-    }
-
-    if (hasTrafficLight) {
-        if (direct == Direction::Right) {
-            if (isRedSignal)
-                DrawRectangle(0, coordinateYOfLane, 50, Config::SIZE_OF_A_LANE, BLACK);
-        } else {
-            if (isRedSignal)
-                DrawRectangle(Config::WINDOW_WIDTH - 50, coordinateYOfLane, 50,
-                              Config::SIZE_OF_A_LANE, BLACK);
-        }
     }
 }
 
@@ -127,16 +204,16 @@ void RoadLane::createEnemy(Enemy::EnemyID enemyID, float startingX) {
             enemies.push_back(new Unstoppable1(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable2:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable2(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable3:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable3(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable4:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable4(direct, startingX));
             break;
         case Enemy::EnemyID::Unstoppable5:
-            enemies.push_back(new Unstoppable1(direct, startingX));
+            enemies.push_back(new Unstoppable5(direct, startingX));
             break;
         case Enemy::EnemyID::Stoppable1:
             enemies.push_back(new Stoppable1(direct, startingX));

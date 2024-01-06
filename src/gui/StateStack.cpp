@@ -1,4 +1,5 @@
 #include "StateStack.h"
+#include "ResourceHolders/MusicPlayer.h"
 
 #include <cassert>
 
@@ -7,6 +8,7 @@ StateStack::StateStack(State::Context context)
 }
 
 void StateStack::update(float dt) {
+    mContext.music->update();
     for (auto it = mStack.rbegin(); it != mStack.rend(); it++) {
         if ((*it)->update(dt) == false) {
             break;
@@ -23,6 +25,10 @@ void StateStack::draw() {
 
 void StateStack::pushState(StateIDs stateID) {
     mPendingList.push_back(PendingChange(Action::Push, stateID));
+}
+
+void StateStack::pushParameterizedState(StateIDs stateID, BaseParameter::Ptr parameter) {
+    mPendingList.push_back(PendingChange(Action::PushParameterized, stateID, std::move(parameter)));
 }
 
 void StateStack::popState() {
@@ -43,7 +49,10 @@ void StateStack::applyPendingChange() {
             case Action::Push:
                 mStack.push_back(createState(change.stateID));
                 break;
-
+            case Action::PushParameterized:
+                mStack.push_back(createState(change.stateID));
+                mStack.back()->setParameter(std::move(change.parameter));
+                break;
             case Action::Pop:
                 mStack.pop_back();
                 break;
@@ -63,7 +72,8 @@ State::Ptr StateStack::createState(StateIDs stateID) {
     return found->second();
 }
 
-StateStack::PendingChange::PendingChange(Action action, StateIDs stateID)
+StateStack::PendingChange::PendingChange(Action action, StateIDs stateID, BaseParameter::Ptr parameter)
 : action(action)
-, stateID(stateID) {
+, stateID(stateID),
+parameter(std::move(parameter)) {
 }

@@ -5,5 +5,7 @@ Unstoppable5::Unstoppable5(Direction direct, int coordinateXOfEnemy)
     initializeGUI();
 }
 
-void Unstoppable5::initializeGUI() {
+Unstoppable5::Unstoppable5(std::ifstream& input)
+: Enemy(input) {
+    initializeGUI();
 }

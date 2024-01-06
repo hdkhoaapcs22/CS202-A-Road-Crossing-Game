@@ -5,5 +5,7 @@ Stoppable2::Stoppable2(Direction direct, int coordinateXOfEnemy)
     initializeGUI();
 }
 
-void Stoppable2::initializeGUI() {
+Stoppable2::Stoppable2(std::ifstream& input)
+: Enemy(input) {
+    initializeGUI();
 }

@@ -16,6 +16,24 @@ SafeLane::SafeLane(float coordinateYOfLane, bool hasObstacle)
     }
 }
 
+SafeLane::SafeLane(std::ifstream& input)
+: Lane(Lane::LaneName::SafeLane, input) {
+    initializeGUI();
+    int numOfObstacles;
+    input >> numOfObstacles;
+    obstacles.resize(numOfObstacles);
+    for (Obstacle*& obstacle : obstacles) obstacle = new Obstacle(input);
+}
+
+void SafeLane::save(std::ofstream& output) {
+    Lane::saveCoordinates(output);
+    output << obstacles.size() << std::endl;
+    for (int i = 0; i < obstacles.size(); ++i) {
+        obstacles[i]->save(output);
+    }
+    output << std::endl;
+}
+
 SafeLane::~SafeLane() {
     for (Obstacle*& ptr : obstacles) {
         delete ptr;

@@ -63,4 +63,19 @@ void SettingsState::initButtons() {
         getContext().music->setVolume(std::max(getContext().music->getVolume() - 10, 0));
     });
     mButtons.push_back(std::move(musicDecreaseButton));
+
+    Button::Ptr muteButton = std::make_shared<Button>();
+    muteButton->setTexture(TextureHolder::get(TextureID::NonMutedButton));
+    muteButton->setRect(Rectangle{461, 137, 101, 68});
+    muteButton->setColor(BLANK);
+    muteButton->setCallback([this, muteButton]() {
+        if (getContext().music->getMuted()) {
+            getContext().music->setMuted(false);
+            muteButton->setTexture(TextureHolder::get(TextureID::NonMutedButton));
+        } else {
+            getContext().music->setMuted(true);
+            muteButton->setTexture(TextureHolder::get(TextureID::MutedButton));
+        }
+    });
+    mButtons.push_back(std::move(muteButton));
 }

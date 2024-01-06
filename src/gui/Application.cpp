@@ -103,6 +103,8 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::MenuGoBackButton, BASE_PATH + "MenuGoBackButton.png");
     TextureHolder::load(TextureID::FireObjectAnim, BASE_PATH + "FireObjectAnim.png");
     TextureHolder::load(TextureID::FirePatternAnim, BASE_PATH + "FirePatternAnim.png");
+    TextureHolder::load(TextureID::MutedButton, BASE_PATH + "MutedButton.png");
+    TextureHolder::load(TextureID::NonMutedButton, BASE_PATH + "NonMutedButton.png");
 }
 
 void Application::loadFonts() {

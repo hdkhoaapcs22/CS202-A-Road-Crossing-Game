@@ -24,6 +24,8 @@ Application::Application()
     loadTextures();
     loadFonts();
 
+    SettingsState::loadData(State::Context(mMusic));
+
     // SetWindowIcon(LoadImageFromTexture(
     //     TextureHolder::get(TextureID::IconLogo)));
 
@@ -32,6 +34,9 @@ Application::Application()
 }
 
 Application::~Application() {
+
+    SettingsState::saveData(State::Context(mMusic));
+
     CloseAudioDevice();
     CloseWindow();
 }
@@ -103,6 +108,13 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::MenuGoBackButton, BASE_PATH + "MenuGoBackButton.png");
     TextureHolder::load(TextureID::FireObjectAnim, BASE_PATH + "FireObjectAnim.png");
     TextureHolder::load(TextureID::FirePatternAnim, BASE_PATH + "FirePatternAnim.png");
+    TextureHolder::load(TextureID::MutedButton, BASE_PATH + "MutedButton.png");
+    TextureHolder::load(TextureID::NonMutedButton, BASE_PATH + "NonMutedButton.png");
+    TextureHolder::load(TextureID::RoadLaneEgypt, BASE_PATH + "RoadLaneEgypt.png");
+    TextureHolder::load(TextureID::RoadLaneIce, BASE_PATH + "RoadLaneIce.png");
+    TextureHolder::load(TextureID::RoadLaneDark, BASE_PATH + "RoadLaneDark.png");
+    TextureHolder::load(TextureID::RoadLanePirate, BASE_PATH + "RoadLanePirate.png");
+    TextureHolder::load(TextureID::CreditsContent, BASE_PATH + "CreditsContent.png");
 }
 
 void Application::loadFonts() {

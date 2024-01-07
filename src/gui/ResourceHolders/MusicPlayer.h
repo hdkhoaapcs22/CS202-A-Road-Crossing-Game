@@ -18,10 +18,15 @@ public:
 
     void setVolume(int volume);
     int getVolume() const;
+
+    void setMuted(bool muted);
+    bool getMuted() const;
 private:
     std::map<MusicID, std::string> mFilenames;
     Music mMusic;
     int mVolume;
+
+    bool isMuted;
 };
 
 #endif // SRC_GUI_RESOURCEHOLDERS_MUSICPLAYER_H

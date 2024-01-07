@@ -4,6 +4,9 @@ CreditsState::CreditsState(StateStack& stack, Context context)  : State(stack, c
     mBackground = std::make_shared<GUITexture>(Rectangle{0, 0, 1024, 640});
     mBackground->setTexture(TextureHolder::get(TextureID::PopUpMenu));
 
+    mContent = std::make_shared<GUITexture>(Rectangle{0, 0, 1024, 640});
+    mContent->setTexture(TextureHolder::get(TextureID::CreditsContent));
+
     initButtons();
 }
 
@@ -18,8 +21,8 @@ bool CreditsState::update(float dt) {
 }
 
 void CreditsState::draw() {
-    ClearBackground(AppColor::BACKGROUND_1);
     mBackground->draw();
+    mContent->draw();
     for (auto& button : mButtons) {
         button->draw();
     }

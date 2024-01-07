@@ -32,6 +32,8 @@ private:
     std::deque<Lane *> lanes;
     bool moving{true};
 
+    Lane::Biome biome{Lane::Biome::None};
+
 private:
     void moveLanes(float dt, float speedMultiplier, Lane *characterLanePtr);
     Lane *iteratorLanes(Lane *curLanePtr, const std::string &direction);

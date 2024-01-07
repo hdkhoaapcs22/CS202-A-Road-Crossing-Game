@@ -1,6 +1,8 @@
 #include "SettingsState.h"
 #include "../ResourceHolders/MusicPlayer.h"
 
+const std::string SettingsState::PATH_TO_SAVE_FILE = "save/settings.txt";
+
 SettingsState::SettingsState(StateStack& stack, Context context)
 : State(stack, context) {
     mBackground = std::make_shared<GUITexture>(Rectangle{0, 0, 1024, 640});
@@ -63,4 +65,46 @@ void SettingsState::initButtons() {
         getContext().music->setVolume(std::max(getContext().music->getVolume() - 10, 0));
     });
     mButtons.push_back(std::move(musicDecreaseButton));
+
+    Button::Ptr muteButton = std::make_shared<Button>();
+    if (getContext().music->getMuted())
+        muteButton->setTexture(TextureHolder::get(TextureID::MutedButton));
+    else
+        muteButton->setTexture(TextureHolder::get(TextureID::NonMutedButton));
+    muteButton->setRect(Rectangle{461, 137, 101, 68});
+    muteButton->setColor(BLANK);
+    muteButton->setCallback([this, muteButton]() {
+        if (getContext().music->getMuted()) {
+            getContext().music->setMuted(false);
+            muteButton->setTexture(TextureHolder::get(TextureID::NonMutedButton));
+        } else {
+            getContext().music->setMuted(true);
+            muteButton->setTexture(TextureHolder::get(TextureID::MutedButton));
+        }
+    });
+    mButtons.push_back(std::move(muteButton));
+}
+
+void SettingsState::loadData(Context context) {
+    std::ifstream fin(PATH_TO_SAVE_FILE);
+    std::string attribute;
+    while (fin >> attribute) {
+        if (attribute == "volume:") {
+            int volume;
+            fin >> volume;
+            context.music->setVolume(volume);
+        } else if (attribute == "muted:") {
+            bool muted;
+            fin >> muted;
+            context.music->setMuted(muted);
+        }
+    }
+    fin.close();
+}
+
+void SettingsState::saveData(Context context) {
+    std::ofstream fout(PATH_TO_SAVE_FILE);
+    fout << "volume: " << context.music->getVolume() << "\n";
+    fout << "muted: " << context.music->getMuted() << "\n";
+    fout.close();
 }

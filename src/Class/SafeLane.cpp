@@ -1,7 +1,7 @@
 #include "SafeLane.h"
 
-SafeLane::SafeLane(float coordinateYOfLane, bool hasObstacle)
-: Lane(coordinateYOfLane, Lane::LaneName::SafeLane) {
+SafeLane::SafeLane(float coordinateYOfLane, bool hasObstacle, Biome biome)
+: Lane(coordinateYOfLane, Lane::LaneName::SafeLane, biome) {
     initializeGUI();
 
     if (hasObstacle) {
@@ -16,8 +16,8 @@ SafeLane::SafeLane(float coordinateYOfLane, bool hasObstacle)
     }
 }
 
-SafeLane::SafeLane(std::ifstream& input)
-: Lane(Lane::LaneName::SafeLane, input) {
+SafeLane::SafeLane(std::ifstream& input, Biome biome)
+: Lane(Lane::LaneName::SafeLane, input, biome) {
     initializeGUI();
     int numOfObstacles;
     input >> numOfObstacles;

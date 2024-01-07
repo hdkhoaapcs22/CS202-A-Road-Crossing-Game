@@ -21,8 +21,8 @@
 
 class RoadLane : public Lane {
 public:
-    RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane);
-    RoadLane(std::ifstream &input);
+    RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane, Biome biome = Biome::None);
+    RoadLane(std::ifstream &input, Biome biome = Biome::None);
     void save(std::ofstream &output) override;
     void update(float dt) override;
     void draw() override;

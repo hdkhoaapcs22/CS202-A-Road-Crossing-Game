@@ -41,6 +41,13 @@ enum class TextureID {
     MenuGoBackButton,
     FireObjectAnim,
     FirePatternAnim,
+    MutedButton,
+    NonMutedButton,
+    RoadLaneEgypt,
+    RoadLaneIce,
+    RoadLaneDark,
+    RoadLanePirate,
+    CreditsContent,
 };
 
 enum class FontID {

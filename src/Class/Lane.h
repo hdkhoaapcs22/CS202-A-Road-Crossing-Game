@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include "../Config.h"
+#include "../gui/ResourceHolders/TextureHolder.h"
 
 #include "raylib.h"
 
@@ -14,9 +15,17 @@ public:
         FireLane
     };
 
+    enum class Biome {
+        None,
+        Egypt,
+        Ice,
+        Dark,
+        Pirate,
+    };
+
     Lane();
-    Lane(float coordinateYOfLane, LaneName laneName);
-    Lane(LaneName laneName, std::ifstream &input);
+    Lane(float coordinateYOfLane, LaneName laneName, Biome biome = Biome::None);
+    Lane(LaneName laneName, std::ifstream &input, Biome biome = Biome::None);
     virtual ~Lane() = default;
     void saveCoordinates(std::ofstream &output);
     virtual void save(std::ofstream &output) = 0;
@@ -30,9 +39,15 @@ public:
 
     void move(float deltaY);
 
+    Texture2D getBiomeTexture() const;
+
+    Biome getBiome() const;
+
 private:
     float coordinateYOfLane;
     LaneName laneName;
+
+    Biome biome;
 };
 
 #endif

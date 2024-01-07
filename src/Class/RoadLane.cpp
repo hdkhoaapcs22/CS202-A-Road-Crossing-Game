@@ -1,7 +1,7 @@
 #include "RoadLane.h"
 
-RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
-: Lane(coordinateYOfLane, Lane::LaneName::RoadLane)
+RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane, Biome biome)
+: Lane(coordinateYOfLane, Lane::LaneName::RoadLane, biome)
 , hasTrafficLight(false)
 , isRedSignal(false)
 , breakTimer(0)
@@ -27,8 +27,8 @@ RoadLane::RoadLane(Enemy::EnemyID enemyID, float coordinateYOfLane)
     update(10 + rand() % 10); // advance forward to populate the lane
 }
 
-RoadLane::RoadLane(std::ifstream &input)
-: Lane(Lane::LaneName::RoadLane, input) {
+RoadLane::RoadLane(std::ifstream &input, Biome biome)
+: Lane(Lane::LaneName::RoadLane, input, biome) {
     initializeGUI();
     int directValue, enemyIDValue, numOfEnemies;
     input >> hasTrafficLight >> isRedSignal >> breakTimer >> spawnTimer >> spawnTime >> directValue
@@ -123,7 +123,7 @@ void RoadLane::manageEnemies(Enemy *enemy) {
 
 void RoadLane::initializeGUI() {
     mTexture = std::make_shared<GUITexture>();
-    mTexture->setTexture(TextureHolder::get(TextureID::RoadLane));
+    mTexture->setTexture(getBiomeTexture());
     mTexture->setSize({Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE});
 
     // mIdleAnimation.setSpriteSheet(TextureHolder::get(TextureID::ZombieIdleAnim));

@@ -11,8 +11,8 @@ class FireLane : public Lane {
 public:
     static constexpr float CHARGE_TIME = 1.5;
 public:
-    FireLane(float coordinateYOfLane);
-    FireLane(std::ifstream& input);
+    FireLane(float coordinateYOfLane, Biome biome = Biome::None);
+    FireLane(std::ifstream& input, Biome biome = Biome::None);
     ~FireLane();
     void save(std::ofstream& output) override;
 

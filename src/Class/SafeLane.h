@@ -9,8 +9,8 @@
 
 class SafeLane : public Lane {
 public:
-    SafeLane(float coordinateYOfLane, bool hasObstacle = true);
-    SafeLane(std::ifstream &input);
+    SafeLane(float coordinateYOfLane, bool hasObstacle = true, Biome biome = Biome::None);
+    SafeLane(std::ifstream &input, Biome biome = Biome::None);
     void save(std::ofstream &output) override;
     ~SafeLane();
     void update(float dt);

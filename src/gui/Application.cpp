@@ -110,6 +110,10 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::FirePatternAnim, BASE_PATH + "FirePatternAnim.png");
     TextureHolder::load(TextureID::MutedButton, BASE_PATH + "MutedButton.png");
     TextureHolder::load(TextureID::NonMutedButton, BASE_PATH + "NonMutedButton.png");
+    TextureHolder::load(TextureID::RoadLaneEgypt, BASE_PATH + "RoadLaneEgypt.png");
+    TextureHolder::load(TextureID::RoadLaneIce, BASE_PATH + "RoadLaneIce.png");
+    TextureHolder::load(TextureID::RoadLaneDark, BASE_PATH + "RoadLaneDark.png");
+    TextureHolder::load(TextureID::RoadLanePirate, BASE_PATH + "RoadLanePirate.png");
 }
 
 void Application::loadFonts() {

@@ -2,8 +2,8 @@
 #include <random>
 #include "Config.h"
 
-FireLane::FireLane(float coordinateYOfLane)
-: Lane(coordinateYOfLane, Lane::LaneName::FireLane)
+FireLane::FireLane(float coordinateYOfLane, Biome biome)
+: Lane(coordinateYOfLane, Lane::LaneName::FireLane, biome)
 , isFire(0)
 , fireTime(randomFireTime())
 , fireTimer(0)
@@ -13,8 +13,8 @@ FireLane::FireLane(float coordinateYOfLane)
     update(10 + rand() % 10); // advance forward
 }
 
-FireLane::FireLane(std::ifstream& input)
-: Lane(Lane::LaneName::FireLane, input) {
+FireLane::FireLane(std::ifstream& input, Biome biome)
+: Lane(Lane::LaneName::FireLane, input, biome) {
     initializeGUI();
     input >> isFire;
     input >> fireTime;
@@ -65,7 +65,7 @@ bool FireLane::isOnFire() const {
 
 void FireLane::initializeGUI() {
     mTexture = std::make_shared<GUITexture>();
-    mTexture->setTexture(TextureHolder::get(TextureID::RoadLane));
+    mTexture->setTexture(getBiomeTexture());
     mTexture->setSize({Config::WINDOW_WIDTH, Config::SIZE_OF_A_LANE});
 
     mObject.setSpriteSheet(TextureHolder::get(TextureID::FireObjectAnim));

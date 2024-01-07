@@ -36,33 +36,41 @@ Map::Map(std::ifstream& input) {
     input >> size;
     lanes.resize(size);
     for (Lane*& lane : lanes) {
+        int biomeInt;
+        input >> biomeInt;
+        Lane::Biome laneBiome = static_cast<Lane::Biome>(biomeInt);
         int laneInt;
         input >> laneInt;
         Lane::LaneName laneName = static_cast<Lane::LaneName>(laneInt);
         switch (laneName) {
             case Lane::LaneName::RoadLane:
-                lane = new RoadLane(input);
+                lane = new RoadLane(input, laneBiome);
                 break;
             case Lane::LaneName::SafeLane:
-                lane = new SafeLane(input);
+                lane = new SafeLane(input, laneBiome);
                 break;
             case Lane::LaneName::FireLane:
-                lane = new FireLane(input);
+                lane = new FireLane(input, laneBiome);
                 break;
             default:
                 break;
         }
     }
     input >> moving;
+    int biomeInt;
+    input >> biomeInt;
+    biome = static_cast<Lane::Biome>(biomeInt);
 }
 
 void Map::save(std::ofstream& output) {
     output << lanes.size() << std::endl;
     for (Lane* lane : lanes) {
+        output << static_cast<int>(lane->getBiome()) << std::endl;
         output << static_cast<int>(lane->getLaneName()) << std::endl;
         lane->save(output);
     }
     output << moving << std::endl;
+    output << static_cast<int>(biome) << std::endl;
 }
 
 void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
@@ -153,9 +161,13 @@ Lane* Map::iteratorLanes(Lane* curLanePtr, const std::string& direction) {
 
 void Map::insertRoadLane(int numberOfSameLane) {
     for (int i = 0; i < numberOfSameLane; ++i) {
+        int changeBiome = rand() % 10;
+        if (changeBiome == 0) {
+            biome = static_cast<Lane::Biome>(rand() % 5);
+        }
         Enemy::EnemyID enemyID = static_cast<Enemy::EnemyID>(rand() % 10);
         lanes.push_back(
-            new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
+            new RoadLane(enemyID, lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE, biome));
     }
 }
 
@@ -166,9 +178,14 @@ void Map::insertSafeLane(int numberOfSameLane) {
 }
 
 void Map::insertFireLane(int numberOfSameLane) {
-    for (int i = 0; i < numberOfSameLane; ++i)
+    for (int i = 0; i < numberOfSameLane; ++i) {
+        int changeBiome = rand() % 10;
+        if (changeBiome == 0) {
+            biome = static_cast<Lane::Biome>(rand() % 5);
+        }
         lanes.push_back(
-            new FireLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE));
+            new FireLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE, biome));
+    }
 }
 
 void Map::initializeGUI() {

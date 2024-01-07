@@ -19,6 +19,7 @@ private:
     void initButtons();
 private:
     GUITexture::Ptr mBackground;
+    GUITexture::Ptr mContent;
     std::vector<Button::Ptr> mButtons;
 };
 

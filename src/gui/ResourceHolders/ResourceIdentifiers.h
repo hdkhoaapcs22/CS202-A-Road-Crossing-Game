@@ -47,6 +47,7 @@ enum class TextureID {
     RoadLaneIce,
     RoadLaneDark,
     RoadLanePirate,
+    CreditsContent,
 };
 
 enum class FontID {

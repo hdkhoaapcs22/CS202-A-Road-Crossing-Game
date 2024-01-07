@@ -114,6 +114,7 @@ void Application::loadTextures() {
     TextureHolder::load(TextureID::RoadLaneIce, BASE_PATH + "RoadLaneIce.png");
     TextureHolder::load(TextureID::RoadLaneDark, BASE_PATH + "RoadLaneDark.png");
     TextureHolder::load(TextureID::RoadLanePirate, BASE_PATH + "RoadLanePirate.png");
+    TextureHolder::load(TextureID::CreditsContent, BASE_PATH + "CreditsContent.png");
 }
 
 void Application::loadFonts() {

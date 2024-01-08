@@ -41,6 +41,7 @@ private:
     void insertSafeLane(int numberOfSameLane);
     void insertFireLane(int numberOfSameLane);
     void initializeGUI();
+    void generateLanes(float speedMultiplier = 1);
 };
 
 #endif

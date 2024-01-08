@@ -18,8 +18,7 @@ bool GameOverState::update(float dt) {
         button->update(dt);
     }
     if (IsKeyPressed(KEY_SPACE)) {
-        requestStackClear();
-        requestStackPush(StateIDs::Game);
+        this->restartGame();
     }
     return true;
 }
@@ -74,10 +73,14 @@ void GameOverState::initButtons() {
     retryButton->setPosition({534, 413});
     retryButton->setColor(BLANK);
     retryButton->setCallback([this]() {
-        requestStackClear();
-        requestStackPush(StateIDs::Game, std::make_unique<GameState::GameInit>(false, darkMode));
+        this->restartGame();
     });
     mButtons.push_back(std::move(retryButton));
+}
+
+void GameOverState::restartGame() {
+    requestStackClear();
+    requestStackPush(StateIDs::Game, std::make_unique<GameState::GameInit>(false, darkMode));
 }
 
 GameOverState::ScoreData::ScoreData(int score, bool darkMode)

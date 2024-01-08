@@ -1,7 +1,7 @@
 #include "Core.h"
+#include "FireLane.h"
 #include "RoadLane.h"
 #include "SafeLane.h"
-#include "FireLane.h"
 
 Core::Core() {
     initializeGUI();
@@ -12,7 +12,12 @@ Core::Core() {
     gameMap.setMoving(false);
 }
 
-Core::Core(std::ifstream &input) : gameMap(input), character(input) {
+Core::Core(std::ifstream &input)
+: gameMap(input)
+, character(input) {
+    input >> darkMode;
+    setDarkMode(darkMode);
+
     initializeGUI();
 
     score = 0;
@@ -95,6 +100,8 @@ void Core::draw() {
     gameMap.drawUpper(character.getLanePtr());
     character.draw();
     gameMap.drawLower(character.getLanePtr());
+    if (darkMode)
+        drawDarkMode();
     drawScore();
 }
 
@@ -140,6 +147,14 @@ void Core::getInputs(float dt) {
     }
 }
 
+void Core::drawDarkMode() {
+    float positionX = character.getCoordinateX() - darkCover->getTexture().width / 2;
+    float positionY = character.getLanePtr()->getCoordinateYOfLane()
+        - darkCover->getTexture().height / 2;
+    darkCover->setPosition({positionX, positionY});
+    darkCover->draw();
+}
+
 void Core::drawScore() {
     scoreFrame->draw();
     DrawTextEx(FontHolder::get(FontID::Acme, 48), std::to_string(score).c_str(), {130, 25}, 48, 0,
@@ -148,7 +163,6 @@ void Core::drawScore() {
 
 void Core::initializeGUI() {
     scoreFrame = std::make_shared<GUITexture>();
-
     scoreFrame->setTexture(TextureHolder::get(TextureID::Score));
     scoreFrame->setPosition({15, 14});
 }
@@ -158,16 +172,26 @@ bool Core::isLost() {
         return true;
     if (character.getLanePtr() != gameMap.getFirstLane())
         return false;
-    return gameMap.getFirstLane()->getCoordinateYOfLane() >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE / 2;
+    return gameMap.getFirstLane()->getCoordinateYOfLane()
+        >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE / 2;
 }
 
 int Core::getScore() const {
     return score;
 }
 
+void Core::setDarkMode(bool darkMode) {
+    this->darkMode = darkMode;
+    if (darkMode) {
+        darkCover = std::make_shared<GUITexture>();
+        darkCover->setTexture(TextureHolder::get(TextureID::DarkCover));
+    }
+}
+
 void Core::save(std::ofstream &output) {
     gameMap.save(output);
     character.save(output);
+    output << darkMode << std::endl;
     output << score << " " << virtualScore << " ";
     output << gameMap.getLaneID(character.getLanePtr()) << " " << static_cast<int>(gameState)
            << std::endl;

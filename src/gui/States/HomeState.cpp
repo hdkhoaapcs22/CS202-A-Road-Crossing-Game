@@ -16,14 +16,22 @@ HomeState::~HomeState() {
 }
 
 bool HomeState::update(float dt) {
-    if (mMenuState == MenuState::Main) {
-        for (auto &button : mMainButtons) {
-            button->update(dt);
-        }
-    } else {
-        for (auto &button : mResumeButtons) {
-            button->update(dt);
-        }
+    switch (mMenuState) {
+        case MenuState::Main:
+            for (auto &button : mMainButtons) {
+                button->update(dt);
+            }
+            break;
+        case MenuState::Resume:
+            for (auto &button : mResumeButtons) {
+                button->update(dt);
+            }
+            break;
+        case MenuState::ModeChoosing:
+            for (auto &button : mModeChoosingButtons) {
+                button->update(dt);
+            }
+            break;
     }
     return false;
 }
@@ -31,14 +39,22 @@ bool HomeState::update(float dt) {
 void HomeState::draw() {
     ClearBackground(AppColor::BACKGROUND_1);
     mBackground->draw();
-    if (mMenuState == MenuState::Main) {
-        for (auto &button : mMainButtons) {
-            button->draw();
-        }
-    } else {
-        for (auto &button : mResumeButtons) {
-            button->draw();
-        }
+    switch (mMenuState) {
+        case MenuState::Main:
+            for (auto &button : mMainButtons) {
+                button->draw();
+            }
+            break;
+        case MenuState::Resume:
+            for (auto &button : mResumeButtons) {
+                button->draw();
+            }
+            break;
+        case MenuState::ModeChoosing:
+            for (auto &button : mModeChoosingButtons) {
+                button->draw();
+            }
+            break;
     }
 }
 
@@ -86,8 +102,7 @@ void HomeState::initButtons() {
     newGameButton->setSize({240, 68});
     newGameButton->setColor(BLANK);
     newGameButton->setCallback([this]() {
-        requestStackPop();
-        requestStackPush(StateIDs::Game);
+        this->mMenuState = MenuState::ModeChoosing;
     });
     mResumeButtons.push_back(std::move(newGameButton));
 
@@ -122,4 +137,44 @@ void HomeState::initButtons() {
         buttonY += button->getSize().y + buttonGap;
     }
 
+    // Mode buttons
+
+    Button::Ptr classicModeButton = std::make_shared<Button>();
+    classicModeButton->setTexture(TextureHolder::get(TextureID::ClassicModeButton));
+    classicModeButton->setSize({240, 68});
+    classicModeButton->setColor(BLANK);
+    classicModeButton->setCallback([this]() {
+        requestStackPop();
+        requestStackPush(StateIDs::Game);
+    });
+    mModeChoosingButtons.push_back(std::move(classicModeButton));
+
+    Button::Ptr darkModeButton = std::make_shared<Button>();
+    darkModeButton->setTexture(TextureHolder::get(TextureID::DarkModeButton));
+    darkModeButton->setSize({240, 68});
+    darkModeButton->setColor(BLANK);
+    darkModeButton->setCallback([this]() {
+        requestStackPop();
+        requestStackPush(StateIDs::Game, std::make_unique<GameState::GameInit>(false, true));
+    });
+    mModeChoosingButtons.push_back(std::move(darkModeButton));
+
+    backButton = std::make_shared<Button>();
+    backButton->setTexture(TextureHolder::get(TextureID::MenuGoBackButton));
+    backButton->setSize({240, 68});
+    backButton->setColor(BLANK);
+    backButton->setCallback([this]() {
+        this->mMenuState = MenuState::Main;
+    });
+    mModeChoosingButtons.push_back(std::move(backButton));
+
+    buttonX = 392;
+    buttonY = 320;
+    buttonGap = 24;
+
+    for (auto &button : mModeChoosingButtons) {
+        button->setPosition({buttonX, buttonY});
+        buttonY += button->getSize().y + buttonGap;
+    }
 }
+

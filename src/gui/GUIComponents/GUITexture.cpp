@@ -34,6 +34,10 @@ void GUITexture::setTexture(Texture2D texture) {
     mTexture = texture;
 }
 
+Texture2D GUITexture::getTexture() const {
+    return mTexture;
+}
+
 void GUITexture::setHorizontalFlipped(bool flipped) {
     isHorizontalFlipped = flipped;
 }

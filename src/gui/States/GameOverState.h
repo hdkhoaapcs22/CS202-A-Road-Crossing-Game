@@ -12,11 +12,13 @@ class GameOverState : public State {
 public:
     class ScoreData : public BaseParameter {
     public:
-        ScoreData(int score);
+        ScoreData(int score, bool darkMode);
         int getScore() const;
+        bool isDarkMode() const;
 
     private:
         int score;
+        bool darkMode;
     };
 
 public:
@@ -36,6 +38,8 @@ private:
 
     int score;
     int highScore;
+
+    bool darkMode;
 };
 
 #endif // SRC_GUI_STATES_GAMEOVERSTATE_H

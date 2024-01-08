@@ -13,10 +13,12 @@ class GameState : public State {
 public:
     class GameInit : public BaseParameter {
     public:
-        GameInit(bool resume);
+        GameInit(bool resume, bool darkMode = false);
         bool isResume() const;
+        bool isDarkMode() const;
     private:
         bool resume;
+        bool darkMode;
     };
 
 public:
@@ -37,6 +39,7 @@ public:
 private:
     Core::Ptr mCore;
     bool isLost{false};
+    bool darkMode{false};
     std::vector<Button::Ptr> mButtons;
 
 private:

@@ -1,4 +1,5 @@
 #include "GameOverState.h"
+#include "GameState.h"
 #include <fstream>
 
 GameOverState::GameOverState(StateStack& stack, Context context)
@@ -51,6 +52,8 @@ void GameOverState::setParameter(BaseParameter::Ptr parameter) {
         highScore = score;
         fout.close();
     }
+
+    darkMode = scoreParameter->isDarkMode();
 }
 
 void GameOverState::initButtons() {
@@ -72,15 +75,19 @@ void GameOverState::initButtons() {
     retryButton->setColor(BLANK);
     retryButton->setCallback([this]() {
         requestStackClear();
-        requestStackPush(StateIDs::Game);
+        requestStackPush(StateIDs::Game, std::make_unique<GameState::GameInit>(false, darkMode));
     });
     mButtons.push_back(std::move(retryButton));
 }
 
-GameOverState::ScoreData::ScoreData(int score)
-: score(score) {
+GameOverState::ScoreData::ScoreData(int score, bool darkMode)
+: score(score), darkMode(darkMode) {
 }
 
 int GameOverState::ScoreData::getScore() const {
     return score;
+}
+
+bool GameOverState::ScoreData::isDarkMode() const {
+    return darkMode;
 }

@@ -32,6 +32,8 @@ public:
 
     int getScore() const;
 
+    void setDarkMode(bool darkMode);
+
 private:
     int score;
     int virtualScore;
@@ -42,11 +44,15 @@ private:
 
     GUITexture::Ptr scoreFrame;
 
+    GUITexture::Ptr darkCover;
+    bool darkMode{false};
+
 private:
     void moveCharacter(int direction, float dt);
     void executeMovement(int direction, float dt);
     void getInputs(float dt);
 
+    void drawDarkMode();
     void drawScore();
 
     void initializeGUI();

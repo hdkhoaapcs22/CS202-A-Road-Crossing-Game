@@ -41,7 +41,7 @@ bool GameState::update(float dt) {
             std::this_thread::sleep_for(
                 std::chrono::milliseconds(int(Character::DEAD_ANIMATION_TIME * 1000)));
             requestStackPush(StateIDs::GameOver,
-                             std::make_unique<GameOverState::ScoreData>(mCore->getScore()));
+                             std::make_unique<GameOverState::ScoreData>(mCore->getScore(), darkMode));
         });
         t.detach();
     }
@@ -77,6 +77,10 @@ void GameState::setParameter(BaseParameter::Ptr parameter) {
     if (initParameter->isResume()) {
         loadGame();
     }
+    if (initParameter->isDarkMode()) {
+        mCore->setDarkMode(true);
+        darkMode = true;
+    }
 }
 
 void GameState::initButtons() {
@@ -90,10 +94,15 @@ void GameState::initButtons() {
     mButtons.push_back(std::move(pauseButton));
 }
 
-GameState::GameInit::GameInit(bool resume)
-: resume(resume) {
+GameState::GameInit::GameInit(bool resume, bool darkMode)
+: resume(resume)
+, darkMode(darkMode) {
 }
 
 bool GameState::GameInit::isResume() const {
     return resume;
+}
+
+bool GameState::GameInit::isDarkMode() const {
+    return darkMode;
 }

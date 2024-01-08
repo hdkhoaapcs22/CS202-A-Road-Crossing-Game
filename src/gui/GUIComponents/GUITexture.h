@@ -17,6 +17,7 @@ public:
     void draw();
 
     void setTexture(Texture2D texture);
+    Texture2D getTexture() const;
 
     void setHorizontalFlipped(bool flipped);
     void setVerticalFlipped(bool flipped);

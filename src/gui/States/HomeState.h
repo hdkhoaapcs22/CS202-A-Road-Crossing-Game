@@ -20,7 +20,8 @@ public:
 private:
     enum class MenuState {
         Main,
-        Resume
+        Resume,
+        ModeChoosing,
     };
 
 private:
@@ -30,6 +31,7 @@ private:
     GUITexture::Ptr mBackground;
     std::vector<Button::Ptr> mMainButtons;
     std::vector<Button::Ptr> mResumeButtons;
+    std::vector<Button::Ptr> mModeChoosingButtons;
 
     MenuState mMenuState{MenuState::Main};
 };

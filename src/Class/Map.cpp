@@ -13,21 +13,7 @@ Map::Map() {
             new SafeLane(lanes.back()->getCoordinateYOfLane() - Config::SIZE_OF_A_LANE, false));
     numberOfSameLane = rand() % 4 + 1;
     insertRoadLane(numberOfSameLane);
-    while (lanes.size() <= Config::NUMBER_OF_LANES) {
-        numberOfSameLane = rand() % 4 + 1;
-        Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
-        switch (laneName) {
-            case Lane::LaneName::RoadLane:
-                insertRoadLane(numberOfSameLane);
-                break;
-            case Lane::LaneName::SafeLane:
-                insertSafeLane(numberOfSameLane);
-                break;
-            case Lane::LaneName::FireLane:
-                insertFireLane(numberOfSameLane / 2);
-                break;
-        }
-    }
+    generateLanes();
 }
 
 Map::Map(std::ifstream& input) {
@@ -80,21 +66,7 @@ void Map::update(float dt, float speedMultiplier, Lane* characterLanePtr) {
            >= Config::WINDOW_HEIGHT + Config::SIZE_OF_A_LANE) {
         delete lanes.front();
         lanes.pop_front();
-        while (lanes.size() <= Config::NUMBER_OF_LANES) {
-            int numberOfSameLane = rand() % 4 + 1;
-            Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
-            switch (laneName) {
-                case Lane::LaneName::RoadLane:
-                    insertRoadLane(numberOfSameLane);
-                    break;
-                case Lane::LaneName::SafeLane:
-                    insertSafeLane(numberOfSameLane);
-                    break;
-                case Lane::LaneName::FireLane:
-                    insertFireLane(numberOfSameLane);
-                    break;
-            }
-        }
+        generateLanes(speedMultiplier);
     }
     for (Lane* lane : lanes) lane->update(dt);
 }
@@ -189,6 +161,25 @@ void Map::insertFireLane(int numberOfSameLane) {
 }
 
 void Map::initializeGUI() {
+}
+
+void Map::generateLanes(float speedMultiplier) {
+    while (lanes.size() <= Config::NUMBER_OF_LANES) {
+        int difficulty = (speedMultiplier - 1) * 2 + 1;
+        int numberOfSameLane = rand() % difficulty + 1;
+        Lane::LaneName laneName = static_cast<Lane::LaneName>(rand() % 3);
+        switch (laneName) {
+            case Lane::LaneName::RoadLane:
+                insertRoadLane(numberOfSameLane);
+                break;
+            case Lane::LaneName::SafeLane:
+                insertSafeLane(numberOfSameLane);
+                break;
+            case Lane::LaneName::FireLane:
+                insertFireLane(numberOfSameLane / 2);
+                break;
+        }
+    }
 }
 
 Lane* Map::getNextLane(Lane* curLanePtr) {

@@ -32,6 +32,8 @@ public:
 private:
     void initButtons();
 
+    void restartGame();
+
 private:
     GUITexture::Ptr mBackground;
     std::vector<Button::Ptr> mButtons;
